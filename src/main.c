@@ -96,9 +96,6 @@ int main(int argc, char** kwargs)
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-
-
-
     // ######### APP SPECIFIC STUFF ######### 
 
     bool exit = false;

@@ -13,8 +13,10 @@ typedef struct
     
 } gq_Shader;
 
-gq_Shader* gq_LoadShader(char* vs_file, char* fs_file, char* gs_file);
-gq_Shader* gq_LoadShaderRaw(char* vs_raw, char* fs_raw, char* gs_raw);
+int gq_LoadFiles(gq_Shader* shader, const char* vertex, const char* fragment, const char* geometry);
+
+int gq_LoadShader(gq_Shader* shader);
+int gq_LoadShaderRaw(gq_Shader* shader);
 
 int gq_useShader(gq_Shader* shader);
 
