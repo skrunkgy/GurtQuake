@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <graphics/shaders.h>
 
+// We will be using seperate buffers for different vertex attributes
 typedef struct
 {
 
@@ -14,7 +15,12 @@ typedef struct
 
 } gq_Mesh;
 
+// Function for loading vertices into a mesh
 void gq_LoadOBJ(gq_Mesh* mesh, const char* filepath);
+
+// Generate the filled mesh to be used
 void gq_GenMesh(gq_Mesh* mesh);
+
+void gq_DrawMesh(gq_Mesh* mesh);
 
 #endif
