@@ -11,7 +11,6 @@ typedef struct
     float* gq_VertPositions;
     float*   gq_VertNormals;
     float*  gq_VertTxCoords;
-    gq_Shader* sProgram; // This will be the shader
 
 } gq_Mesh;
 
@@ -21,6 +20,6 @@ void gq_LoadOBJ(gq_Mesh* mesh, const char* filepath);
 // Generate the filled mesh to be used
 void gq_GenMesh(gq_Mesh* mesh);
 
-void gq_DrawMesh(gq_Mesh* mesh);
+void gq_DrawMesh(gq_Mesh* mesh, gq_Shader* shader);
 
 #endif
