@@ -14,6 +14,15 @@ typedef struct
 
 } gq_Mesh;
 
+typedef enum
+{
+    GQ_VA_POSITION = 0b0001,
+    GQ_VA_NORMALS = 0b0010,
+    GQ_VA_UV = 0b0100,
+    GQ_VA_COLOR = 0b1000
+
+} GQ_VERTEX_ATTRIBS;
+
 // Function for loading vertices into a mesh
 void gq_LoadOBJ(gq_Mesh* mesh, const char* filepath);
 

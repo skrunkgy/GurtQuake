@@ -7,4 +7,8 @@
 FILE* load_file(char* path);
 void store_file(void* fileptr, char* path);
 
+// Note: WILL NOT CLOSE FILE
+void* get_file_buffer(FILE* fptr);
+
+
 #endif

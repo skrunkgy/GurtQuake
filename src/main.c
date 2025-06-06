@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include <GL/glew.h>
 #include <stdio.h>
+#include <graphics/shaders.h>
 
 float triangle[] = {
 
@@ -53,33 +54,8 @@ int main(int argc, char** kwargs)
 
     // ######### SHADER MAGIC ######### 
 
-    unsigned int vShader, fShader, sProgram;
-
-    vShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vShader, 1, &vertex_shader, NULL);
-    glCompileShader(vShader);
-
-    fShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fShader, 1, &fragment_shader, NULL);
-    glCompileShader(fShader);
-
-    int  success;
-    char infoLog[512];
-    glGetShaderiv(vShader, GL_COMPILE_STATUS, &success);
-
-    if (!success)
-    {
-        glGetShaderInfoLog(vShader, 512, NULL, infoLog);
-        printf("%s\n", infoLog);
-    }
-
-    sProgram = glCreateProgram();
-    glAttachShader(sProgram, vShader);
-    glAttachShader(sProgram, fShader);
-    glLinkProgram(sProgram);
-
-    glDeleteShader(vShader);
-    glDeleteShader(fShader);
+    gq_Shader shader;
+    gq_LoadShader( &shader , NULL , "resources/shaders/test.fs" , NULL );
 
     unsigned int VBO;
     glGenBuffers(1, &VBO);
@@ -139,7 +115,7 @@ int main(int argc, char** kwargs)
         // rendering code
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(sProgram);
+        glUseProgram(shader.programID);
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
