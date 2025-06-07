@@ -3,12 +3,26 @@
 #include <stdio.h>
 #include <graphics/shaders.h>
 
-float triangle[] = {
+float positions[] = {
 
     -.5f, -.5f, .0f,
      .5f, -.5f, .0f,
      .0f,  .5f, .0f
 
+};
+
+float colors[] = {
+    1.0, 0.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 0.0, 1.0,
+};
+
+float indices1[] = {
+    1, 2, 3
+};
+
+float indices2[] = {
+    1, 2, 3
 };
 
 int main(int argc, char** kwargs)
@@ -42,7 +56,7 @@ int main(int argc, char** kwargs)
     unsigned int VBO;
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
     // glBindBuffer(GL_ARRAY_BUFFER, 0); // might cause no drawing, keep in mind!
 
     unsigned int VAO;
@@ -105,7 +119,7 @@ int main(int argc, char** kwargs)
         {
             printf(SDL_GetError());
         }
-        
+
     }
 
     // Destroy everything
