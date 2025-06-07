@@ -7,10 +7,8 @@
 // We will be using seperate buffers for different vertex attributes
 typedef struct
 {
-
-    float* gq_VertPositions;
-    float*   gq_VertNormals;
-    float*  gq_VertTxCoords;
+    float vbos[4];
+    unsigned int vao;
 
 } gq_Mesh;
 

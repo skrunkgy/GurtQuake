@@ -17,15 +17,16 @@ void store_file(void* fileptr, char* path)
 
 void* get_file_buffer(FILE* fptr)
 {
-    char* returnBuffer = malloc(128);
-    returnBuffer[0] = '\0';
+    char* returnBuffer = calloc(1, 1);
 
-    char buffer[128]; // Get rid of magic number
+    char buffer[512]; // Get rid of magic number
     
-    while (fgets(buffer, 128, fptr))
+    while (fgets(buffer, 512, fptr))
     {
-        returnBuffer = realloc(returnBuffer, sizeof(buffer));
-        strcat(returnBuffer, buffer);
+        char* newPTR = realloc(returnBuffer, strlen(returnBuffer) + strlen(buffer) + 2);
+        strcat(newPTR, buffer);
+        returnBuffer = newPTR;
     }
+
     return returnBuffer;
 }

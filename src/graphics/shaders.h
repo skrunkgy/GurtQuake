@@ -10,6 +10,9 @@ typedef struct
     
 } gq_Shader;
 
+// For internal use, but just compiles a shader
+void gq_CompileShader(unsigned int* shader, const char* filepath);
+
 // Read from files and create shader
 int gq_LoadShader(gq_Shader* shader, char* vertex, char* fragment, const char* geometry);
 
