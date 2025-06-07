@@ -15,39 +15,20 @@ void gq_SetupMesh(gq_Mesh* mesh, unsigned int tri_count)
     mesh->tri_count = tri_count;
 }
 
-void gq_AddAtrib(gq_Mesh* mesh, GQ_ATTRIBS attrib, void* data)
+// Add attributes
+void gq_AddAttrib(gq_Mesh* mesh, unsigned int count, unsigned int location, const float* data)
 {
 
     glBindVertexArray(mesh->vao);
 
-    // hack using (int)enumtype to avoid reusing code
-    glEnableVertexAttribArray((int)attrib);
+    // assume location is 0-3 (4 total) and responds to vbo
+    glEnableVertexAttribArray((int)location);
 
-    glGenBuffers(1, &(mesh->vbos[(int)attrib]));
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbos[(int)attrib]);
-
-    switch (attrib)
-    {
-        case GQ_POSITION:
-            glBufferData(GL_ARRAY_BUFFER, mesh->tri_count * 3, data, GL_STATIC_DRAW);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-            break;
-        case GQ_NORMALS:
-            glBufferData(GL_ARRAY_BUFFER, mesh->tri_count * 3, data, GL_STATIC_DRAW);
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-            break;
-        case GQ_UVS:
-            glBufferData(GL_ARRAY_BUFFER, mesh->tri_count * 2, data, GL_STATIC_DRAW);
-            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-            break;
-        case GQ_COLORS:
-            glBufferData(GL_ARRAY_BUFFER, mesh->tri_count * 3, data, GL_STATIC_DRAW);
-            glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-            break;
-        default:
-            printf("You dumbfuck! INCORRECT ARGUMENT\n");
-            break;
-    }
+    glGenBuffers(1, &(mesh->vbos[(int)location]));
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbos[(int)location]);
+    
+    glBufferData(GL_ARRAY_BUFFER, mesh->tri_count * count, data, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, count, GL_FLOAT, GL_FALSE, count * sizeof(float), (void*)0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
