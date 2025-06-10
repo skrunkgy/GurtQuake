@@ -1,3 +1,0 @@
-- Abstract app construction (basic SDL functions, project stuff)
-- SCRIPTING
-- Skybox generator

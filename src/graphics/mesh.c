@@ -9,26 +9,28 @@ void gq_LoadOBJ(gq_Mesh* mesh, const char* filepath)
     return;
 }
 
-void gq_SetupMesh(gq_Mesh* mesh, unsigned int tri_count)
+gq_Mesh gq_CreateMesh(unsigned int tri_count)
 {
-    glGenVertexArrays(1, &mesh->vao);
-    mesh->tri_count = tri_count;
+    gq_Mesh mesh;
+    glGenVertexArrays(1, &mesh.vao);
+    mesh.tri_count = tri_count;
+    return mesh;
 }
 
 // Add attributes
-void gq_AddAttrib(gq_Mesh* mesh, unsigned int count, unsigned int location, const float* data)
+void gq_AddAttrib(gq_Mesh* mesh, unsigned int count, unsigned int location, void* data)
 {
 
     glBindVertexArray(mesh->vao);
 
     // assume location is 0-3 (4 total) and responds to vbo
-    glEnableVertexAttribArray((int)location);
+    glEnableVertexAttribArray(location);
 
-    glGenBuffers(1, &(mesh->vbos[(int)location]));
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbos[(int)location]);
+    glGenBuffers(1, &(mesh->vbos[location]));
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbos[location]);
     
-    glBufferData(GL_ARRAY_BUFFER, mesh->tri_count * count, data, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, count, GL_FLOAT, GL_FALSE, count * sizeof(float), (void*)0);
+    glBufferData(GL_ARRAY_BUFFER, mesh->tri_count * count * sizeof(GLfloat), data, GL_STATIC_DRAW);
+    glVertexAttribPointer(location, count, GL_FLOAT, GL_FALSE, count * sizeof(GLfloat), (void*)0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

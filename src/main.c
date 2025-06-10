@@ -1,7 +1,10 @@
 #include <SDL3/SDL.h>
 #include <GL/glew.h>
 #include <stdio.h>
-#include <graphics/shaders.h>
+#include <graphics/graphics.h>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
 
 float positions[] = {
 
@@ -12,17 +15,9 @@ float positions[] = {
 };
 
 float colors[] = {
-    1.0, 0.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 0.0, 1.0,
-};
-
-float indices1[] = {
-    1, 2, 3
-};
-
-float indices2[] = {
-    1, 2, 3
+    1.0f, 0.0f, 0.0f,
+    0.0f, 1.0f, 0.0f,
+    0.0f, 0.0f, 1.0f
 };
 
 int main(int argc, char** kwargs)
@@ -41,6 +36,12 @@ int main(int argc, char** kwargs)
     window = SDL_CreateWindow("MAIN WINDOW", 800, 600, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
     ctx = SDL_GL_CreateContext(window);
 
+    int iX, iY, iComp;
+    void* icon_data = stbi_load("resources/icon.png", &iX, &iY, &iComp, 4);
+    SDL_Surface *icon = SDL_CreateSurfaceFrom(iX, iY, SDL_PIXELFORMAT_RGBA8888, icon_data, iY * 4);
+
+    SDL_SetWindowIcon(window, icon);
+
     glewInit();
 
     glViewport(0, 0, 800, 600);
@@ -51,22 +52,11 @@ int main(int argc, char** kwargs)
     // ######### SHADER MAGIC ######### 
 
     gq_Shader shader;
-    gq_LoadShader( &shader , NULL , "resources/shaders/test.fs" , NULL );
+    gq_LoadShader( &shader , "resources/shaders/test.vs" , "resources/shaders/test2.fs" , NULL );
 
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-    // glBindBuffer(GL_ARRAY_BUFFER, 0); // might cause no drawing, keep in mind!
-
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    gq_Mesh mesh = gq_CreateMesh(3);
+    gq_AddAttrib ( &mesh, 3, 0, positions );
+    gq_AddAttrib ( &mesh, 3, 1, colors );
 
     // ######### APP SPECIFIC STUFF ######### 
 
@@ -111,10 +101,9 @@ int main(int argc, char** kwargs)
         // rendering code
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shader.programID);
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        gq_DrawMesh(&mesh, &shader);
 
+        // swap windows
         if (!SDL_GL_SwapWindow(window))
         {
             printf(SDL_GetError());

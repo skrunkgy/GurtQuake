@@ -17,6 +17,6 @@ void gq_CompileShader(unsigned int* shader, const char* filepath);
 int gq_LoadShader(gq_Shader* shader, char* vertex, char* fragment, const char* geometry);
 
 // Using the shader
-void gq_useShader(gq_Shader* shader, GLuint vao);
+void gq_UseShader(gq_Shader* shader, GLuint vao);
 
 #endif
