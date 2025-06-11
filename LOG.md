@@ -40,4 +40,14 @@ I think I will be calling it a night. I have been killing my brain with how to c
 
 This was the savior of my life: https://codingwithzamp.com/setup-a-gtk-application-written-in-c-on-windows/
 
- 
+# 6/10
+
+Decided to convert everything to use c++. It looks, so much easier... and also use gtkmm :)
+
+BEFORE ADDING ANYTHING TO THE PROJECT, PLEASE PLEASE PLEASE GO THROUGH ALL SOURCES AND HEADERS AND TURN THEM INTO C++ CODE!!!
+
+I have decided to just start from scratch (well, keeping the makefile and the binaries, but other than that, the source and header files are gone. lets start again...)
+
+## Everything goes into main, and then we stow away...
+
+Basically, we add headers and shit later after we get a basic implementation working of what we want. The first thing we will do is abstract the app class.

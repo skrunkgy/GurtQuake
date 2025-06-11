@@ -2,6 +2,7 @@
 
 out vec4 FragOut;
 in vec3 vertexColor;
+in vec2 outPos;
 
 void main()
 {

@@ -1,5 +1,5 @@
-CFLAGS = $(shell pkg-config --cflags gtk4)
-LIBS = $(shell pkg-config --libs gtk4)
+CFLAGS = $(shell pkg-config --cflags gtkmm-4.0)
+LIBS = $(shell pkg-config --libs gtkmm-4.0)
 
-test-gtk: gtk.c
-	gcc $(CFLAGS) gtk.c -o gtk-test $(LIBS) -mwindows
+test-gtk: gtk.cc
+	g++ -std=c++17 gtk.cc -o editor $(shell pkg-config gtkmm-4.0 --cflags --libs)
