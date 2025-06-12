@@ -1,45 +1,9 @@
-#include <SDL3/SDL.h>
+#include "app.h"
 
-namespace gQuake
-{
-
-struct AppState
-{
-    bool fullscreen;
-    bool exit;
-};
-
-class App
-{
-
-public:
-
-    App();
-    App(const char* name, unsigned int default_size[2], const char* icon);
-    ~App();
-    void PollEvents();
-    void RenderScene();
-
-private:
-
-    SDL_Window *window;
-    AppState state;
-
-};
-
-App::App()
-{
-
-}
-
-App::App(const char* name, unsigned int default_size[2], const char* icon)
-{
-
-}
-
-}
+using namespace gQuake;
 
 int main(int argc, char** kwarg)
 {
-    gQuake::App app;
+    App app("GURTQUAKE", 800, 600, "resources/icon.png");
+    app.Run();
 }

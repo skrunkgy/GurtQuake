@@ -1,8 +1,8 @@
-app: src/* src/graphics/* src/util/*
-	gcc src/main.c src/graphics/shaders.c src/graphics/mesh.c src/util/filesystem.c -Iinclude -Isrc -L./ -lSDL3 -lglew32 -lopengl32 -lgdi32 -o app
+SDL_LIBS := -lSDL3 -lm -lkernel32 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lversion -luuid -ladvapi32 -lsetupapi -lshell32 -ldinput8
+GLEW_LIBS := -lglew32 -lopengl32
 
-test: src/test.c src/util/filesystem.c
-	gcc src/test.c src/util/filesystem.c -Isrc -o test
+app: src/*
+	g++ -static-libstdc++ -std=c++17 -DGLEW_STATIC src/main.cc src/app.cc -Iinclude -Isrc -Llib $(SDL_LIBS) $(GLEW_LIBS) -o app
 
 gengsb:
-	cd tools && gcc gengsb.c -o gengsb
+	cd tools && g++ gengsb.c -o gengsb

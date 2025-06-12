@@ -51,3 +51,17 @@ I have decided to just start from scratch (well, keeping the makefile and the bi
 ## Everything goes into main, and then we stow away...
 
 Basically, we add headers and shit later after we get a basic implementation working of what we want. The first thing we will do is abstract the app class.
+
+# 6/11
+
+So far I have finished basic app implementation. My next step is to start working on graphics. I want to somewhat figure out how to do this, but right now I am going to use a basic mesh class. doing the same thing with adding attributes!
+
+# 6/12
+
+Ok so I started implementation of meshes and shaders. Attributes are now all in one so we don't need multiple calls or a multiple arrays. We also get vectors, which is cool. We need to manually load floats first, however, and we will have functions for this at some point.
+
+Shaders are also barely implemented (just so I wouldn't have red squiggles), so the Render function won't work. Also, I have to make and call everything by hand in the App class (as if it were static). This is for now, until I get a way to load objects and stuff, maybe have a function for loading scenes!
+
+Scenes are gonna have to be after I asswipe an implementation for graphics. And then camera.
+
+I also plan to develop my own GUI stuff, but I need to see how I want to implement it. I would still consider using gtkmm, but I find it super heavy (and not portable), so GUI and editor might be an in-engine feat.
