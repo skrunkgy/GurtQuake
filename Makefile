@@ -1,8 +1,11 @@
 SDL_LIBS := -lSDL3 -lm -lkernel32 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lversion -luuid -ladvapi32 -lsetupapi -lshell32 -ldinput8
 GLEW_LIBS := -lglew32 -lopengl32
+CFLAGS := -static-libstdc++ -std=c++17 -o app
+
+SRC = src/app.cc src/mesh.cc src/shader.cc src/main.cc
 
 app: src/*
-	g++ -static-libstdc++ -std=c++17 -DGLEW_STATIC src/main.cc src/app.cc -Iinclude -Isrc -Llib $(SDL_LIBS) $(GLEW_LIBS) -o app
+	g++ $(CFLAGS) $(SRC) -Iinclude -Isrc -Llib $(SDL_LIBS) $(GLEW_LIBS)
 
 gengsb:
 	cd tools && g++ gengsb.c -o gengsb

@@ -14,6 +14,7 @@ public:
 
     Mesh();
     Mesh(std::vector<float> vertices);
+    Mesh(float* vertices);
     ~Mesh();
 
     // In the case we want to modify the actual array!
@@ -29,6 +30,7 @@ private:
     std::vector<float> m_vertices;
     unsigned int m_vbo;
     unsigned int m_vao;
+    unsigned int m_triCount;
 
 };
 

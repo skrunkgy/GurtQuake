@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <stdio.h>
 #include "app.h"
+#include "mesh.h"
 
 using namespace gQuake;
 
@@ -31,6 +32,20 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 
 void App::Run()
 {
+
+    // DONT LEAVE STUFF HERE
+
+    float t_vertices[] =
+    {
+        -.5, -.5, .0,
+         .5, -.5, .0,
+         .0,  .5, .0
+    };
+
+    Mesh t_Mesh;
+
+    // END OF STUFF
+
     SDL_Event event;
 
     while (!m_state.exit)

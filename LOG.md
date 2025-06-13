@@ -65,3 +65,7 @@ Shaders are also barely implemented (just so I wouldn't have red squiggles), so 
 Scenes are gonna have to be after I asswipe an implementation for graphics. And then camera.
 
 I also plan to develop my own GUI stuff, but I need to see how I want to implement it. I would still consider using gtkmm, but I find it super heavy (and not portable), so GUI and editor might be an in-engine feat.
+
+No longer statically linkining (moral issues??!?!?!!) Also we should try to use less libraries, (SDL for windowing is fine, as well as GLEW for getting function extensions), but not for images, meshes, shaders, etc. We (I) will write our (my) own file extensions and specifications, as well as tools to convert popular types into our (my) own files. For in house use :p
+
+For now, I won't gloss too much over file formats yet since I want to get to prototyping faster.
