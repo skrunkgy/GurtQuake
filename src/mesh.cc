@@ -6,7 +6,6 @@
 
 using namespace gQuake;
 
-// This code fucking sucks, do something about it!!
 Mesh::Mesh()
 {
     glGenBuffers(1, &m_vbo);
@@ -16,9 +15,8 @@ Mesh::Mesh()
 Mesh::Mesh(float* vertices)
 {
     m_vertices.insert(m_vertices.end(), vertices, vertices + sizeof(vertices) / sizeof(float));
-    Mesh();
+    Mesh(); // No need to rewrite things
 }
-// End of shitty code
 
 Mesh::~Mesh()
 {

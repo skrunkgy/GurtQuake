@@ -12,15 +12,20 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 {
 
     SDL_Init(SDL_INIT_VIDEO);
+
+    m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
+    m_context = SDL_GL_CreateContext(m_window);
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    glewInit();
-
-    m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
-    m_context = SDL_GL_CreateContext(m_window);
+    GLenum err = glewInit();
+    if (err != GLEW_OK)
+    {
+        printf("FUCK:: %s", glewGetErrorString(err));
+    }
 
     m_state = {false, false};
     m_state.fillColor = {.6, .5, .9, 1.0};
@@ -33,7 +38,7 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 void App::Run()
 {
 
-    // DONT LEAVE STUFF HERE
+    // DONT LEAVE STUFF HERE (t_ means test)
 
     float t_vertices[] =
     {
@@ -42,7 +47,8 @@ void App::Run()
          .0,  .5, .0
     };
 
-    Mesh t_Mesh;
+    Mesh t_Mesh(t_vertices);
+    t_Mesh.SetAttribLayout({3}); 
 
     // END OF STUFF
 
