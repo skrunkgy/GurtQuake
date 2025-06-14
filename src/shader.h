@@ -1,6 +1,8 @@
 #ifndef GQ_SHADER_H
 #define GQ_SHADER_H
 
+#include <string>
+
 namespace gQuake
 {
 
@@ -12,8 +14,14 @@ public:
     Shader();   // tweak these parameters to load files
     ~Shader();
 
+    // might not make these static to simplify code
+    static void CompileShader(const char* source_file, unsigned int &shader, GLenum type);
     static Shader LoadShader(const char* vertex_shader, const char* fragment_shader); // load from a .gshader in the future, use files for now
     void UseShader();
+
+private:
+
+    unsigned int m_program;
 
 };
 

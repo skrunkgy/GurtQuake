@@ -13,13 +13,12 @@ class Mesh
 public:
 
     Mesh();
-    Mesh(std::vector<float> vertices);
     Mesh(float* vertices);
     ~Mesh();
 
     // In the case we want to modify the actual array!
     std::vector<float>& GetVertices();
-    void SetUpMesh();
+    void Setup();
 
     // Call this AFTER setting the vertices of the mesh!
     void SetAttribLayout(std::initializer_list<int> counts);

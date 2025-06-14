@@ -12,10 +12,18 @@ Mesh::Mesh()
     glGenVertexArrays(1, &m_vao);
 }
 
+void Mesh::Setup()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), m_vertices.data(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 Mesh::Mesh(float* vertices)
 {
     m_vertices.insert(m_vertices.end(), vertices, vertices + sizeof(vertices) / sizeof(float));
     Mesh(); // No need to rewrite things
+    Setup();
 }
 
 Mesh::~Mesh()
