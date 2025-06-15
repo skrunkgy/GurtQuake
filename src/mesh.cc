@@ -19,9 +19,9 @@ void Mesh::Setup()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-Mesh::Mesh(float* vertices)
+Mesh::Mesh(float vertices[], unsigned int count)
 {
-    m_vertices.insert(m_vertices.end(), vertices, vertices + sizeof(vertices) / sizeof(float));
+    m_vertices.insert(m_vertices.end(), vertices, vertices + count);
     Mesh(); // No need to rewrite things
     Setup();
 }
@@ -50,7 +50,10 @@ void Mesh::SetAttribLayout(std::initializer_list<int> counts)
 
     // Better way to do this??
     int totalSize = 0;
-    for (int count : counts) totalSize += count;
+    for (int count : counts)
+    {
+        totalSize += count;
+    }
 
     m_triCount = m_vertices.size() / totalSize;
 
@@ -60,7 +63,7 @@ void Mesh::SetAttribLayout(std::initializer_list<int> counts)
         i++;
         offset += count; // becomes tri count after 
     }
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }

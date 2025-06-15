@@ -13,7 +13,7 @@ class Mesh
 public:
 
     Mesh();
-    Mesh(float* vertices);
+    Mesh(float vertices[], unsigned int count);
     ~Mesh();
 
     // In the case we want to modify the actual array!

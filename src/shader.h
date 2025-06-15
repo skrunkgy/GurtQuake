@@ -12,11 +12,12 @@ class Shader
 public:
 
     Shader();   // tweak these parameters to load files
+    Shader(const char* vertex_path, const char* fragment_path);
     ~Shader();
 
     // might not make these static to simplify code
-    static void CompileShader(const char* source_file, unsigned int &shader, GLenum type);
-    static Shader LoadShader(const char* vertex_shader, const char* fragment_shader); // load from a .gshader in the future, use files for now
+    void CompileShader(const char* source_file, GLenum type);
+    void LoadShader(const char* vertex_shader, const char* fragment_shader); // load from a .gshader in the future, use files for now
     void UseShader();
 
 private:

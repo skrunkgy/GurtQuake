@@ -47,8 +47,10 @@ void App::Run()
          .0,  .5, .0
     };
 
-    Mesh t_Mesh(t_vertices);
+    Mesh t_Mesh(t_vertices, 9);
     t_Mesh.SetAttribLayout({3}); 
+
+    Shader t_Shader("resources/shaders/null.vs", "resources/shaders/null.fs");
 
     // END OF STUFF
 
@@ -61,7 +63,12 @@ void App::Run()
             App::PollEvents(event.type);
         }
 
-        Render();
+        // TEMPORARY ROYAL TREATMENT
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        t_Mesh.Render(t_Shader);
+
+        SDL_GL_SwapWindow(m_window);
     }
 }
 

@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include "shader.h"
 
 
@@ -11,55 +12,75 @@ Shader::Shader()
     m_program = glCreateProgram();
 }
 
+Shader::Shader(const char* vertex_path, const char* fragment_path)
+{
+    LoadShader(vertex_path, fragment_path);
+}
+
 Shader::~Shader()
 {
     glDeleteProgram(m_program);
 }
 
-void Shader::CompileShader(const char* source_file, unsigned int &shader, GLenum type)
+void Shader::CompileShader(const char* source_file, GLenum type)
 {
     std::ifstream file;
     file.open(source_file);
 
-    std::string source;
-    char buffer[512];
-
-    while (file.getline(buffer, 512))
+    if (!file.is_open())
     {
-        source.insert(source.end(), buffer, buffer + 512);
+        printf("FAILED TO OPEN FILE!\n");
     }
 
-    const char* stupidbitchbaby = source.c_str(); // WASTING MY MEMORY!!!
+    std::string source;
+    std::string buffer;
 
-    shader = glCreateShader(type);
-    glShaderSource(shader, 1, &stupidbitchbaby, NULL);
+    while (std::getline(file, buffer))
+    {
+        source.append(buffer + "\n");
+    }
+
+    const char* sourcePtr = source.c_str(); // WASTING MY MEMORY!!!
+
+    unsigned int shader = glCreateShader(type);
+    glShaderSource(shader, 1, &sourcePtr, NULL);
     glCompileShader(shader);
+
+    int success;
+    char info[512];
+
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(shader, 512, NULL, info);
+        printf("%s COMPILING ERROR:: %s\n", source_file, info);
+    }
+
+    glAttachShader(m_program, shader);
+    glDeleteShader(shader); // This "scheduele's" a deletion of the shader after linking it
 
 }
 
-Shader Shader::LoadShader(const char* vertex_path, const char* fragment_path)
+void Shader::LoadShader(const char* vertex_path, const char* fragment_path)
 {
-    Shader o_shader;
-    unsigned int vertShader, fragShader;
+    CompileShader(vertex_path, GL_VERTEX_SHADER);
+    CompileShader(fragment_path, GL_FRAGMENT_SHADER);
 
-    CompileShader(vertex_path, vertShader, GL_VERTEX_SHADER);
-    CompileShader(vertex_path, fragShader, GL_FRAGMENT_SHADER);
+    glLinkProgram(m_program);
 
-    glAttachShader(o_shader.m_program, vertShader);
-    glAttachShader(o_shader.m_program, fragShader);
+    int success;
+    char info[512];
 
-    glDeleteShader(vertShader);
-    glDeleteShader(fragShader);
-
-    glLinkProgram(o_shader.m_program);
-    
-    return o_shader;
-
-
+    glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+        glGetProgramInfoLog(m_program, 512, NULL, info);
+        printf("LINKING ERROR:: %s\n", info);
+    }
 }
 
 
 void Shader::UseShader()
 {
-    return;
+    glUseProgram(m_program);
 }
