@@ -9,11 +9,12 @@ using namespace gQuake;
 
 Shader::Shader()
 {
-    m_program = glCreateProgram();
+    
 }
 
 Shader::Shader(const char* vertex_path, const char* fragment_path)
 {
+    m_program = glCreateProgram();
     LoadShader(vertex_path, fragment_path);
 }
 

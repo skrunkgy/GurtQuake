@@ -69,3 +69,19 @@ I also plan to develop my own GUI stuff, but I need to see how I want to impleme
 No longer statically linkining (moral issues??!?!?!!) Also we should try to use less libraries, (SDL for windowing is fine, as well as GLEW for getting function extensions), but not for images, meshes, shaders, etc. We (I) will write our (my) own file extensions and specifications, as well as tools to convert popular types into our (my) own files. For in house use :p
 
 For now, I won't gloss too much over file formats yet since I want to get to prototyping faster.
+
+# 6/15
+
+Hi, forgot to log some stuff. Fixed multiple things and can now render a triangle with a shader. Great progress, but right now I am rendering stuff pretty primitavely by just injecting rendering code into the App::Run method. This is weird and messy (obviously for debugging), so heres my plan.
+
+## The Render Queue
+
+This is just gonna be a vector that points to different objects in memory. It goes through each one and calls their Render function. This is a bit iffy, but it works! Here is how it works:
+
+- There is a vector of type RenderObject* (pointer)
+- We add any derived object's pointer (like a &mesh) by casting it to a RenderObject pointer
+- We iterate through the vector and call ->Render()
+
+This is fine and dandy, but now we have pointers. Now our program SHOULD be managing pointers (because we won't always have access to our mesh object, lol), so at the end we free the pointer. I do this by checking its not a NULL pointer (haha lol segmentation fault) and then deleting it. If it is NULL, we just remove it from the vector.
+
+People seem fine with this implementation, but please look into HERE in case there is a memory leak

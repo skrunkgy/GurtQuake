@@ -2,14 +2,22 @@
 #include <GL/glew.h>
 #include <SDL3/SDL.h>
 #include "mesh.h"
+#include "render.h"
 #include <stdio.h>
 
 using namespace gQuake;
 
 Mesh::Mesh()
 {
+
+}
+
+Mesh::Mesh(float vertices[], unsigned int count)
+{
     glGenBuffers(1, &m_vbo);
     glGenVertexArrays(1, &m_vao);
+    m_vertices.insert(m_vertices.end(), vertices, vertices + count);
+    Setup();
 }
 
 void Mesh::Setup()
@@ -19,18 +27,12 @@ void Mesh::Setup()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-Mesh::Mesh(float vertices[], unsigned int count)
-{
-    m_vertices.insert(m_vertices.end(), vertices, vertices + count);
-    Mesh(); // No need to rewrite things
-    Setup();
-}
-
 Mesh::~Mesh()
 {
     m_vertices.clear();
     glDeleteBuffers(1, &m_vbo);
     glDeleteVertexArrays(1, &m_vao);
+    printf("Mesh has been destroyed\n");
 }
 
 // In the case we want to modify the actual array!
@@ -55,21 +57,29 @@ void Mesh::SetAttribLayout(std::initializer_list<int> counts)
         totalSize += count;
     }
 
-    m_triCount = m_vertices.size() / totalSize;
+    m_vertCount = m_vertices.size() / totalSize;
 
     for (int count : counts)
     {
         glVertexAttribPointer(i, count, GL_FLOAT, GL_FALSE, totalSize * sizeof(GLfloat), reinterpret_cast<void*>(offset));
+        glEnableVertexAttribArray(i);
         i++;
         offset += count; // becomes tri count after 
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
 }
 
-void Mesh::Render(Shader shader)
+void Mesh::AttachShader(Shader& shader)
 {
-    shader.UseShader();
-    glDrawArrays(GL_TRIANGLES, 0, m_triCount);
+    m_shader = shader;
+}
+
+void Mesh::Render()
+{
+    glBindVertexArray(m_vao);
+    m_shader.UseShader();
+    glDrawArrays(GL_TRIANGLES, 0, m_vertCount);
 }

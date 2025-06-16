@@ -3,8 +3,10 @@
 #include <SDL3/SDL.h>
 #include <GL/glew.h>
 #include <stdio.h>
+#include <vector>
 #include "app.h"
 #include "mesh.h"
+#include "gtypes.h"
 
 using namespace gQuake;
 
@@ -42,15 +44,19 @@ void App::Run()
 
     float t_vertices[] =
     {
+         .0,  .5, .0,
         -.5, -.5, .0,
-         .5, -.5, .0,
-         .0,  .5, .0
+         .5, -.5, .0
     };
 
     Mesh t_Mesh(t_vertices, 9);
     t_Mesh.SetAttribLayout({3}); 
 
     Shader t_Shader("resources/shaders/null.vs", "resources/shaders/null.fs");
+
+    t_Mesh.AttachShader(t_Shader);
+
+    m_renderQueue.push_back(reinterpret_cast<RenderObject*>(&t_Mesh));
 
     // END OF STUFF
 
@@ -63,12 +69,7 @@ void App::Run()
             App::PollEvents(event.type);
         }
 
-        // TEMPORARY ROYAL TREATMENT
-        glClear(GL_COLOR_BUFFER_BIT);
-        
-        t_Mesh.Render(t_Shader);
-
-        SDL_GL_SwapWindow(m_window);
+        Render();
     }
 }
 
@@ -86,6 +87,12 @@ void App::PollEvents(unsigned int eventType)
 void App::Render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+
+    for (RenderObject* rObject : m_renderQueue)
+    {
+        rObject->Render();
+    }
+
     SDL_GL_SwapWindow(m_window);
 }
 
@@ -93,5 +100,15 @@ App::~App()
 {
     SDL_DestroyWindow(m_window);
     SDL_GL_DestroyContext(m_context);
-    printf("Goodbye!");
+    while (m_renderQueue.size() > 0)
+    {
+        if (!m_renderQueue.at(0))
+        {
+            delete &m_renderQueue.at(0);
+            continue;
+        }
+        m_renderQueue.erase(m_renderQueue.begin());
+        
+    }
+    printf("Goodbye!\n");
 }
