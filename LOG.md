@@ -85,3 +85,24 @@ This is just gonna be a vector that points to different objects in memory. It go
 This is fine and dandy, but now we have pointers. Now our program SHOULD be managing pointers (because we won't always have access to our mesh object, lol), so at the end we free the pointer. I do this by checking its not a NULL pointer (haha lol segmentation fault) and then deleting it. If it is NULL, we just remove it from the vector.
 
 People seem fine with this implementation, but please look into HERE in case there is a memory leak
+
+## Loading (and storing) objects
+
+A BASIC way we can do this is to add a format that the engine tools can decypher. For example, add a uint32 enum type that basically relates to a type (such as GQ_MESH). Then we can select a function to read out some more header information, and then read our data like so (we can specify how many vertices, the layout, etc etc). We can then MANUALLY create our object, very easy.
+
+However, objects are going to need REFERENCES to other objects (such as a mesh to another shader). This becomes a problem because we cannot simply store a reference to an object inside a file, as we will lose the reference once the app is closed. here are some ways im thinking of solving this:
+
+- using an internal file system, and storing a virtual path
+- using IDs, and searching for those IDs
+
+These would require every object to at LEAST be instantiated. this is because in the case a mesh is loaded but not the shader, it won't be able to find the instance to it. very interesting challenge atm...
+
+# 6/16
+
+Did more reading, and the memory leak issue shouldn't be an issue. This is because functions are not tied to objects but are just namespaces and have access to some classes and pass a pointer as their first argument (python MAKES you pass this. if you dont, its a static method).
+
+The other problem however is overriding destructors. We need destructors to be called in case we go out of scope of our object but still have a pointer to it. We can do this by declaring our base class desctructor as virtual. We can then define derived destructors, but we can call the base destructor (like in the render queue we call delete RenderObject*, which whill call ~RenderObject). We also add a guard to make sure we aren't attempting to delete a NULL ptr (lots of seg faults :( )
+
+Anyways, the problem is that we can load meshes and dont have to explicitly load a shader until we decide to draw it. My starting approach is to have a Serialize base class (RenderObject will derive from this too lol) and then have methods for loading and storing objects also be virtual. When we load a scene file, we go through EVERY object, instantiate them, and then go through them again with Load() when they exist in memory. Something like this...
+
+BTW im really happy I got the render queue working :))) it looks like good code!

@@ -49,14 +49,18 @@ void App::Run()
          .5, -.5, .0
     };
 
-    Mesh t_Mesh(t_vertices, 9);
-    t_Mesh.SetAttribLayout({3}); 
+    // Testing out our scope situation (this works!)
+    {
+        Mesh *t_Mesh = new Mesh(t_vertices, 9);
+        t_Mesh->SetAttribLayout({3}); 
 
-    Shader t_Shader("resources/shaders/null.vs", "resources/shaders/null.fs");
+        Shader *t_Shader = new Shader("resources/shaders/null.vs", "resources/shaders/null.fs");
 
-    t_Mesh.AttachShader(t_Shader);
+        t_Mesh->AttachShader(*t_Shader);
 
-    m_renderQueue.push_back(reinterpret_cast<RenderObject*>(&t_Mesh));
+        m_renderQueue.push_back(reinterpret_cast<RenderObject*>(t_Mesh)); 
+    }
+    
 
     // END OF STUFF
 
@@ -100,15 +104,15 @@ App::~App()
 {
     SDL_DestroyWindow(m_window);
     SDL_GL_DestroyContext(m_context);
+
+    // Free our render queue
     while (m_renderQueue.size() > 0)
     {
-        if (!m_renderQueue.at(0))
+        if (m_renderQueue.at(0))
         {
-            delete &m_renderQueue.at(0);
-            continue;
+            delete m_renderQueue.at(0);
         }
         m_renderQueue.erase(m_renderQueue.begin());
-        
     }
     printf("Goodbye!\n");
 }

@@ -3,6 +3,8 @@
 #ifndef GQ_TYPES_H
 #define GQ_TYPES_H
 
+#include <stdio.h>
+
 namespace gQuake
 {
 

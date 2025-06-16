@@ -21,6 +21,7 @@ Shader::Shader(const char* vertex_path, const char* fragment_path)
 Shader::~Shader()
 {
     glDeleteProgram(m_program);
+    printf("Shader has been destroyed\n");
 }
 
 void Shader::CompileShader(const char* source_file, GLenum type)
@@ -58,7 +59,7 @@ void Shader::CompileShader(const char* source_file, GLenum type)
     }
 
     glAttachShader(m_program, shader);
-    glDeleteShader(shader); // This "scheduele's" a deletion of the shader after linking it
+    glDeleteShader(shader); // This "schedueles" a deletion of the shader after linking it
 
 }
 
