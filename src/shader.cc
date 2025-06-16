@@ -24,10 +24,12 @@ Shader::~Shader()
     printf("Shader has been destroyed\n");
 }
 
-void Shader::CompileShader(const char* source_file, GLenum type)
+void Shader::CompileShader(std::string source_file)
 {
     std::ifstream file;
     file.open(source_file);
+
+    std::string file_format = source_file.substr(source_file.size() - 2);
 
     if (!file.is_open())
     {
@@ -44,7 +46,22 @@ void Shader::CompileShader(const char* source_file, GLenum type)
 
     const char* sourcePtr = source.c_str(); // WASTING MY MEMORY!!!
 
-    unsigned int shader = glCreateShader(type);
+    unsigned int shader;
+
+    if (file_format == "vs")
+    {
+        shader = glCreateShader(GL_VERTEX_SHADER);
+    }
+    else if (file_format == "fs")
+    {
+        shader = glCreateShader(GL_FRAGMENT_SHADER);
+    }
+    else
+    {
+        printf("Invalid shader extension: %s\n", file_format.c_str());
+        return;
+    }
+     
     glShaderSource(shader, 1, &sourcePtr, NULL);
     glCompileShader(shader);
 
@@ -65,8 +82,8 @@ void Shader::CompileShader(const char* source_file, GLenum type)
 
 void Shader::LoadShader(const char* vertex_path, const char* fragment_path)
 {
-    CompileShader(vertex_path, GL_VERTEX_SHADER);
-    CompileShader(fragment_path, GL_FRAGMENT_SHADER);
+    CompileShader(vertex_path);
+    CompileShader(fragment_path);
 
     glLinkProgram(m_program);
 

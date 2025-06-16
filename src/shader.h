@@ -16,7 +16,7 @@ public:
     ~Shader();
 
     // might not make these static to simplify code
-    void CompileShader(const char* source_file, GLenum type);
+    void CompileShader(std::string source_file);
     void LoadShader(const char* vertex_shader, const char* fragment_shader); // load from a .gshader in the future, use files for now
     void UseShader();
 

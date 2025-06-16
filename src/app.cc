@@ -42,15 +42,15 @@ void App::Run()
 
     // DONT LEAVE STUFF HERE (t_ means test)
 
-    float t_vertices[] =
-    {
-         .0,  .5, .0,
-        -.5, -.5, .0,
-         .5, -.5, .0
-    };
-
     // Testing out our scope situation (this works!)
     {
+        float t_vertices[] =
+        {
+            .0,  .5, .0,
+            -.5, -.5, .0,
+            .5, -.5, .0
+        };
+
         Mesh *t_Mesh = new Mesh(t_vertices, 9);
         t_Mesh->SetAttribLayout({3}); 
 
@@ -108,10 +108,7 @@ App::~App()
     // Free our render queue
     while (m_renderQueue.size() > 0)
     {
-        if (m_renderQueue.at(0))
-        {
-            delete m_renderQueue.at(0);
-        }
+        if (m_renderQueue.at(0)) delete m_renderQueue.at(0); // NULL ptr guard
         m_renderQueue.erase(m_renderQueue.begin());
     }
     printf("Goodbye!\n");
