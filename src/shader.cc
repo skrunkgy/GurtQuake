@@ -24,12 +24,10 @@ Shader::~Shader()
     printf("Shader has been destroyed\n");
 }
 
-void Shader::CompileShader(std::string source_file)
+void Shader::CompileShader(std::filesystem::path source_file)
 {
     std::ifstream file;
     file.open(source_file);
-
-    std::string file_format = source_file.substr(source_file.size() - 2);
 
     if (!file.is_open())
     {
@@ -48,17 +46,17 @@ void Shader::CompileShader(std::string source_file)
 
     unsigned int shader;
 
-    if (file_format == "vs")
+    if (source_file.extension()  == ".vs")
     {
         shader = glCreateShader(GL_VERTEX_SHADER);
     }
-    else if (file_format == "fs")
+    else if (source_file.extension() == ".fs")
     {
         shader = glCreateShader(GL_FRAGMENT_SHADER);
     }
     else
     {
-        printf("Invalid shader extension: %s\n", file_format.c_str());
+        printf("Invalid shader extension: %s\n", source_file.extension().c_str());
         return;
     }
      

@@ -106,3 +106,7 @@ The other problem however is overriding destructors. We need destructors to be c
 Anyways, the problem is that we can load meshes and dont have to explicitly load a shader until we decide to draw it. My starting approach is to have a Serialize base class (RenderObject will derive from this too lol) and then have methods for loading and storing objects also be virtual. When we load a scene file, we go through EVERY object, instantiate them, and then go through them again with Load() when they exist in memory. Something like this...
 
 BTW im really happy I got the render queue working :))) it looks like good code!
+
+Changed it to load by extension, using <filesystem>. GOATED!
+
+I want to start working on 3d before I start working on loading objects, since we are making a 3d game. The first part is writing a camera, then writing a shader, then writing a way to import camera data to a shader. We should also be figuring out how to communciate with events to interact with our camera. This would be app specific, so I would have to eventually abstract events. Input handling should be engine sided, however.
