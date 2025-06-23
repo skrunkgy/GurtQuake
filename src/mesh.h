@@ -21,6 +21,7 @@ public:
     std::vector<float>& GetVertices();
     void Setup();
     void AttachShader(Shader& shader);
+    void Load(const char* filepath);
 
     // Call this AFTER setting the vertices of the mesh!
     void SetAttribLayout(std::initializer_list<int> counts);

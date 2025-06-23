@@ -110,3 +110,80 @@ BTW im really happy I got the render queue working :))) it looks like good code!
 Changed it to load by extension, using <filesystem>. GOATED!
 
 I want to start working on 3d before I start working on loading objects, since we are making a 3d game. The first part is writing a camera, then writing a shader, then writing a way to import camera data to a shader. We should also be figuring out how to communciate with events to interact with our camera. This would be app specific, so I would have to eventually abstract events. Input handling should be engine sided, however.
+
+# 6/17
+
+ATM its the next day (18) but I was starting to work on serialization (SLOWLY). I was gonna do the same thing with render queue but I think I am going to have a base class of Serialize, but it will return a void pointer and then we will have to recast it later. What I might also do is just use templates! We will have to write our own serialization for each object, so no point doing C++ serialization and figuring it out. Fuck it, we ball!
+
+# 6/23
+
+Hello, haha. Came back to this code and looked at the serializing problem. I think the serialize is just gonna be a purely virtual class. We will then use a small handful of functions to help load these functions, but these are very sketchy.
+
+First, have the virtual functions Store and Load which are void functions. We have a derivec class, lets say Mesh, which override these functions. I then have a small library (i called it gq_Cereal in testing) and it provides a function for loading any type using a template. The Cereal Load function creates a Mesh instance, and then calls its load function (the load function sets up the Mesh, loading certain data or whatever). The only problem with this is that it assumes the object is derived from Serialize. This SHOULDN'T be a problem, since I am managing all of the engine source. We will also need an enumerator.
+
+## Storing data
+
+My basic plan is to have a .gqd (gurtquake data) file, so we don't have to worry about extensions. The format will be as follows:
+
+- 4 byte unsigned integer (type)
+- 4 byte unsigned integer (size of body)
+- size n bit(s) data (body)
+
+This should be enough to read out data. The Load functions will deal with the data. We just read the first two fields, and use the second field to read out the data. The first field will select which function and class to load the data to. Seems SIMPLE ENOUGH! For now, however, I won't do it yet. Until I get 3d stuff down.
+
+## Baby steps
+
+First, I need to get a camera class, and require the app to have a main camera. Then, I will need to write shaders to support 3d, and also have a system for lights. I will also need to do skyboxes, because I think they look nice :). And also materials, those too.
+
+Once I do 3d, I will then get to work on making things serializable. Baby steps.
+
+Here's the test suite I made for serializing,
+
+```#include <stdio.h>
+
+class Serialize
+{
+
+public:
+    Serialize() {}
+    
+    virtual void Store() = 0;
+    
+    virtual void Load() = 0;
+
+};
+
+class Cum : public Serialize
+{
+
+public:
+    Cum() {}
+    void Store() {}
+    void Load()
+    {
+        printf("loaded CUM\n");
+    }
+
+};
+
+namespace gq_Cereal
+{
+
+template <class T>
+T& Load()
+{
+    T* temp = new T;
+    temp->Load();
+    
+    return *temp;
+}
+
+}
+
+
+
+int main()
+{
+    Cum fart = gq_Cereal::Load<Cum>();
+}
+```

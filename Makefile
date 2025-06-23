@@ -2,7 +2,7 @@ SDL_LIBS := -lSDL3 -lm -lkernel32 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -lole
 GLEW_LIBS := -lglew32 -lopengl32
 CFLAGS := -static-libstdc++ -std=c++17
 
-SRC = src/app.cc src/mesh.cc src/shader.cc src/main.cc
+SRC = src/app.cc src/mesh.cc src/shader.cc src/main.cc src/serialize.cc
 
 app: src/*
 	g++ $(CFLAGS) $(SRC) -Iinclude -Isrc -Llib $(SDL_LIBS) $(GLEW_LIBS) -o app

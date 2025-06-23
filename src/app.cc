@@ -52,6 +52,7 @@ void App::Run()
         };
 
         Mesh *t_Mesh = new Mesh(t_vertices, 9);
+
         t_Mesh->SetAttribLayout({3}); 
 
         Shader *t_Shader = new Shader("resources/shaders/null.vs", "resources/shaders/null.fs");

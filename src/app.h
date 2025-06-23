@@ -4,7 +4,6 @@
 #include <SDL3/SDL.h>
 #include <vector>
 #include "gtypes.h"
-#include "render.h"
 
 namespace gQuake
 {
