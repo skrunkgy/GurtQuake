@@ -139,7 +139,8 @@ Once I do 3d, I will then get to work on making things serializable. Baby steps.
 
 Here's the test suite I made for serializing,
 
-```#include <stdio.h>
+```
+#include <stdio.h>
 
 class Serialize
 {
@@ -187,3 +188,34 @@ int main()
     Cum fart = gq_Cereal::Load<Cum>();
 }
 ```
+
+# 6/24
+
+It has come to my attention that we also need to keep track of references when serializing data. For example, let's say a Player object needs to reference a Camera object. We don't want the player to just have a copy of a camera, we want it to be a reference for good practice. If we serialize the pointer, there is no guarantee that our Camera object will be in that address again (this would also be less likely if the Camera was allocated in heap).
+
+We can instead use pointers as UIDs (uhh idk what the stand for but i guess unordered ID). We would need a few passes, so lets see how we go
+
+- Player has reference Camera. Camera doesn't have any other references, so we can easily serialize it (also make sure to tag itself with the location). When we go to serialize the player, we need to store the camera's UID (the address) as a simple number, much like a regular pointer. Only this time, when writing our Deserialize function, we need to SPECIFICALLY state that we are looking at the UID, not a pointer. We can store these as a reference to a pointer and make a huge list of unresolved pointers, and go through all the instantiated objects and fill their pointers by referencing their UID in the tree (or list).
+
+Besides endianess, this is the solution we are looking at. The gq_Cereal function will help organize everything, but this engineering is gonna take a little bit. This is also very loose and raw.
+
+POTENTIAL BUGS:
+- If SOMEHOW object A shares a UID with object B, object C referencing A may be referencing B instead, which will cause errors
+- If the UID is not found (there is no object in the list with it), either throw an error OR it will point to a bad address and result in a segfault
+- Possible endinaness problems (this will result in ALL data fields being incorrect btw), the pointer may point to a bad address, segfault
+
+We will unfortunately have to write our own serialize and deserialize functions, and it might be difficult to create custom objects and have them too. My outlook is to use reflection in Lua to be able to serialize that data as well. That is a whole other can of worms and I will have to study how she works.
+
+## Camera
+
+The camera is going to store an aspect ratio, vertical FOV (i do not know why games store it this way), a position, and a basis matrix (fov!). I will store these seperately because I need some attributes of the Basis and Position seperate, and destructing them isn't really fun. (For example, we need pure Position for billboards unless we have lock it to only Y rotation, or pure Basis for skybox rendering).
+
+We will also need to store the projection matrix. This will be calculated on loading the Camera, or whenever an attribute of the camera is changed (like aspect ratio or fov).
+
+## App state
+
+The app state will hold different "defaults". A subsection of this is the graphics portion, such as the current skybox bounded or the current camera bounded. Of course, these can be stored in the scene, but one of them will have to be the main. For now, we will just define both and load them in the app state. The app will be responsible in handling both of these.
+
+## REITERATING ON SERIALIZATION
+
+I want to rewrite my serialization part. That is all, we will see how it all goes.
