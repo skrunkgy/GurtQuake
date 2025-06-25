@@ -219,3 +219,45 @@ The app state will hold different "defaults". A subsection of this is the graphi
 ## REITERATING ON SERIALIZATION
 
 I want to rewrite my serialization part. That is all, we will see how it all goes.
+
+# 6/25
+
+Hey I just learned something cool. When making my math library I was debating either using a templated vector class or defining each one. However, I learned about using aliases and unions!
+
+### Aliases
+
+You can use typdef to alias specific vectors, for example:
+```
+typedef Vector<2> vec2
+```
+
+### Unions
+
+Unions literally share a memory address for every propety, literally. That means if we had:
+```
+union {
+    float x;
+    double y;
+};
+```
+They BOTH start at the same memory address. So if we say x = 5, the first 4 bytes of y are changed. If we change y, the entire union is changed, and x gets overwritten. Very weird anyone would want this, but it DOES help us!
+
+### Vector Implementation
+
+We can instead rewrite our data as an array, and then "alias" our fields for specifically vec2, vec3, and vec4 as such:
+
+```
+// Example for 2d vector 
+template<> // <-- THIS IS A TEMPLATE SPECILIZATION
+struct Vector<2>
+{
+    union
+    {
+        float data[2];
+        struct { float x, y }; // NOTE, we use a struct as we need x and y to have different memory locations
+    }
+}
+```
+
+We can now use ```Vector<2>.x``` instead of ```Vector<2>.data[0]```. Here is the link to the article I found this from.
+https://www.reedbeta.com/blog/on-vector-math-libraries/
