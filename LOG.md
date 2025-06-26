@@ -261,3 +261,9 @@ struct Vector<2>
 
 We can now use ```Vector<2>.x``` instead of ```Vector<2>.data[0]```. Here is the link to the article I found this from.
 https://www.reedbeta.com/blog/on-vector-math-libraries/
+
+# 6/26
+
+There is a problem with template specialization, and that is we have to redefine our operator overloads. So it's best if we keep them to a minimum.
+
+I might do a derived classes instead, we shall see. Gonna just push this.
