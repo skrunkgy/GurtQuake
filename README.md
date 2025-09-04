@@ -16,4 +16,4 @@ Gonna add uniform buffer objects
 
 ### Meshes
 
-Meshes will be composed of several buffers. We will NOT use element buffers since they are really only useful for big meshes with complex geometry. They are not all as efficient when multiple parts of them even SLIGHTLY differ from some attributes.
+Meshes will have the option to be rendered via EBO or VBO. EBO is good for bigger connected vertices. VBO is good for manually constructed, or low poly meshes.

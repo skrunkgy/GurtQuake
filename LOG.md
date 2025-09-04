@@ -267,3 +267,23 @@ https://www.reedbeta.com/blog/on-vector-math-libraries/
 There is a problem with template specialization, and that is we have to redefine our operator overloads. So it's best if we keep them to a minimum.
 
 I might do a derived classes instead, we shall see. Gonna just push this.
+
+# 6/27
+
+I thought about using polymorphism, but it doesn't seem to be working. Not even using basic polymorphism works. UGH!!!
+
+# 9/1
+
+Hello, I decided to revisit this project, as it was looking a bit promising. It seems that I was stuck on making my math library, but it has come to my attention that making my own will be very tedious. I will stick to developing only the utils I need.
+
+# 9/2
+
+I start college semester today. I feel really bad for Dennis because his ECE251 professor is a piece of shit, according to others. I hope he is able to transfer out, or at least able to take it in the Winter. God bless him. Anyways, I have decided to modularize my code a little. I will still be using template specialization, but I wrote a template function to do some basics, so I don't have to keep writing code for arithmetic.
+
+I am using "partial template specialization", so I can still abstract the type. In the future, I might abstract the templates even MORE so that I can work with multiple types (lets say, add a vec2i with a vec2f). For now, I see no reason for integer vectors and will continue.
+
+# 9/3
+
+Fine, I will fold the whole "write only once" as templates are a pain in the ass. But I don't really have a choice. I looked at Godot's math library and GLM's library and they both repeat themselves. Godot doesn't even use a base template I think, so idk how they can convert to stuff. Imagine having to write all conversions between Vector's (I think you only need to write 6 but whatever, I can automate that).
+
+.inl files don't really work because of clang bitching about it not being a header file. So, I will just include the definitions in the same header until I can sort it out.

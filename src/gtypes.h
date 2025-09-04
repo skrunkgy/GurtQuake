@@ -1,5 +1,4 @@
-#ifndef GQ_TYPES_H
-#define GQ_TYPES_H
+#pragma once
 
 #include <stdio.h>
 
@@ -8,6 +7,11 @@ enum GQ_RETURN_CODE
 	GQ_SUCCESS,
 	GQ_ERR
 };
+
+typedef unsigned char uint_8;
+typedef unsigned short uint_16;
+typedef unsigned int uint_32;
+typedef unsigned long uint_64;
 
 namespace gQuake
 {
@@ -31,5 +35,3 @@ public:
 };
 
 }
-
-#endif
