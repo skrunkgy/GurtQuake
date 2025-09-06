@@ -287,3 +287,34 @@ I am using "partial template specialization", so I can still abstract the type. 
 Fine, I will fold the whole "write only once" as templates are a pain in the ass. But I don't really have a choice. I looked at Godot's math library and GLM's library and they both repeat themselves. Godot doesn't even use a base template I think, so idk how they can convert to stuff. Imagine having to write all conversions between Vector's (I think you only need to write 6 but whatever, I can automate that).
 
 .inl files don't really work because of clang bitching about it not being a header file. So, I will just include the definitions in the same header until I can sort it out.
+
+# 9/4
+
+I am debating whether to go through with Godot's approach and NOT use a base Vector class (instead have seperate Vector2, Vector3, etc..) or keeping the base Vector. I don't really see the point in keeping a base Vector since specialized templates make me redefine everything.
+
+Right now, I just switched to the Vector2 implementation, since the engine doesn't need anything beyond dimension 2-4.
+
+# 9/5
+
+I have some code to fix.
+
+# 9/6
+
+New day! I have been wrapping my head around this one issue. It seems that the * operator overload is finicky about the LHS and RHS (left and right hand side). Godot solves this by attaching another overload OUTSIDE the struct. This is because member overload operators implicitly pass an argument of its own instance (such as a Vector pointer).
+
+We wouldn't have this issue with addition/subtraction and division. +/- isn't an issue because they are both the same struct, which means the LHS will execute the overload while passing the RHS as the paramter. Division is not an issue because the RHS will always be parameter ( e.x. <2, 0> / 2 = <1, 0> ). Writing math libraries must be hard.
+
+https://github.com/godotengine/godot/blob/3c7f9b937214068bc892be0d2bd9a8a7026edae1/core/math/vector2.h#L310C64-L310C69 
+
+I am also learning that GLM doesn't declare their binary operator overloads in the struct, but rather outside. I am trying to declare them inside the function and they won't work. ????
+
+Ok I just fixed it. We don't need to template the scalar of our * operator or our member operator overload since it gets converted to the first template typename (but we can if we do template <typename A> template <typename B> instead of template <typename A, typename B>, for some reason), but for the non-member one we DO have to use another typename (this time the , separator works????)
+
+Ok, I changed it so that we only use another template when using the non-member operato overload. Also, I plan on switching to CMake as my project builer. This is because I now use Vscodium, which doesn't support MicroSUCKS c/c++ extension. I am using clangd, so I might want to invest in CMake anyways to generate my compile_commands.json.
+
+I am going insane refactoring this code. God.
+
+
+Ok, I fixed it around a bunch. The engine spins, the only issues are with shaders (not engine's problem!). But I am still breaking my fucking head over clangd and making CMake produce me a compile_commands.json.
+
+I FIGURED IT OUT!!! I have to add the command options " -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G 'MinGW Makefiles' " after my cmake command. 

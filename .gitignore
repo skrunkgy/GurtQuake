@@ -4,4 +4,10 @@
 .vscode/*
 *.dll
 lib
+include/GL
+include/SDL3
+include/stb
+build
 *.exe
+.cache
+trash

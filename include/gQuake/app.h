@@ -3,18 +3,17 @@
 
 #include <SDL3/SDL.h>
 #include <vector>
+#include "gmath/vector3.h"
 #include "gtypes.h"
-#include "gmath.h"
 
 namespace gQuake
 {
 
-// ###### app.h ######
 struct AppState
 {
 	bool fullscreen;
 	bool exit;
-	vec3 fillColor; //
+	vec3f fillColor; //
 };
 
 class App

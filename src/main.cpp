@@ -1,4 +1,4 @@
-#include "app.h"
+#include <gQuake/app.h>
 
 using namespace gQuake;
 

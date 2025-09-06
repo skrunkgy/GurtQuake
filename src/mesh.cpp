@@ -1,7 +1,7 @@
 #include <vector>
 #include <GL/glew.h>
 #include <SDL3/SDL.h>
-#include "mesh.h"
+#include <gQuake/graphics.h>
 #include <stdio.h>
 
 using namespace gQuake;

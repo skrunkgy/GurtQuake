@@ -2,13 +2,13 @@ SDL_LIBS := -lSDL3 -lm -lkernel32 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -lole
 GLEW_LIBS := -lglew32 -lopengl32
 CFLAGS := -static-libstdc++ -std=c++17
 
-SRC = src/app.cc src/mesh.cc src/shader.cc src/main.cc src/serialize.cc
+SRC = src/app.cpp src/mesh.cpp src/shader.cpp src/main.cpp
 
 app: src/*
 	g++ $(CFLAGS) $(SRC) -Iinclude -Isrc -Llib $(SDL_LIBS) $(GLEW_LIBS) -o app
 
 test: test/* src/gmath/*
-	g++ test/main.cc -o test/test -std=c++17
+	g++ test/main.cpp -o test/test -std=c++17
 	test/test.exe
 
 debug: src/*

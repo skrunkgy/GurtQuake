@@ -17,3 +17,7 @@ Gonna add uniform buffer objects
 ### Meshes
 
 Meshes will have the option to be rendered via EBO or VBO. EBO is good for bigger connected vertices. VBO is good for manually constructed, or low poly meshes.
+
+## Building
+
+

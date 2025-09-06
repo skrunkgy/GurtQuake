@@ -1,9 +1,8 @@
-#ifndef GQ_MESH_H
-#define GQ_MESH_H
+#pragma once
 
 #include <vector>
 #include "shader.h"
-#include "gtypes.h"
+#include "../gtypes.h"
 
 namespace gQuake
 {
@@ -38,5 +37,3 @@ private:
 };
 
 }
-
-#endif

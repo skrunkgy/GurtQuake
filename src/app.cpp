@@ -2,11 +2,8 @@
 
 #include <SDL3/SDL.h>
 #include <GL/glew.h>
-#include <stdio.h>
-#include <vector>
-#include "app.h"
-#include "mesh.h"
-#include "gtypes.h"
+#include <gQuake/app.h>
+#include <gQuake/graphics.h>
 
 using namespace gQuake;
 
@@ -55,7 +52,7 @@ void App::Run()
 
 		t_Mesh->SetAttribLayout({3}); 
 
-		Shader *t_Shader = new Shader("resources/shaders/null.vs", "resources/shaders/null.fs");
+		Shader *t_Shader = new Shader("resources/shaders/test.vs", "resources/shaders/test.fs");
 
 		t_Mesh->AttachShader(*t_Shader);
 

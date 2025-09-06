@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include "shader.h"
+#include <gQuake/graphics.h>
 
 
 using namespace gQuake;
