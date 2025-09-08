@@ -1,7 +1,5 @@
-#ifndef GQ_SHADER_H
-#define GQ_SHADER_H
+#pragma once
 
-#include <string>
 #include <filesystem>
 
 namespace gQuake
@@ -28,5 +26,3 @@ private:
 };
 
 }
-
-#endif

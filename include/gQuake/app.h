@@ -1,5 +1,4 @@
-#ifndef GQ_APP_H
-#define GQ_APP_H
+#pragma once
 
 #include <SDL3/SDL.h>
 #include <vector>
@@ -30,7 +29,7 @@ private:
 	SDL_Window* m_window;
 	AppState m_state;
 	SDL_GLContext m_context;
-	std::vector<RenderObject*> m_renderQueue;
+	std::vector<RenderObject*> m_renderQueue; // Perhaps abstract stuff to "renderer" class or something
 
 	void PollEvents(unsigned int eventType);
 	void Render();
@@ -38,5 +37,3 @@ private:
 };
 
 }
-
-#endif

@@ -1,7 +1,6 @@
 #include <GL/glew.h>
 #include <string>
 #include <fstream>
-#include <sstream>
 #include <gQuake/graphics.h>
 
 
@@ -70,7 +69,7 @@ void Shader::CompileShader(std::filesystem::path source_file)
 	if (!success)
 	{
 		glGetShaderInfoLog(shader, 512, NULL, info);
-		printf("%s COMPILING ERROR:: %s\n", source_file, info);
+		printf("%s COMPILING ERROR:: %s\n", source_file.c_str(), info);
 	}
 
 	glAttachShader(m_program, shader);

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stdio.h>
-
 enum GQ_RETURN_CODE
 {
 	GQ_SUCCESS,
@@ -19,17 +17,17 @@ namespace gQuake
 {
 
 // Pure virtual class for data types that can be serialized
-class Serialize
+class gqObject
 {
 public:
-	virtual ~Serialize() = default;
+	virtual ~gqObject() = default;
 	virtual GQ_RETURN_CODE Load() = 0;
 	virtual GQ_RETURN_CODE Store() = 0;
 	unsigned int UID;
 };
 
 // An object that can be attached to a render queue and rendered. Can be meshes or GUI (also purely virtual)
-class RenderObject
+class RenderObject : public gqObject
 {
 public:
 	virtual void Render() = 0;

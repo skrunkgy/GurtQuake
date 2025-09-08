@@ -1,5 +1,3 @@
-#define SDL_STATIC_PIC
-
 #include <SDL3/SDL.h>
 #include <GL/glew.h>
 #include <gQuake/app.h>

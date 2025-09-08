@@ -16,6 +16,10 @@ public:
 	Mesh(float vertices[], unsigned int count);
 	~Mesh();
 
+	// For serialization
+	GQ_RETURN_CODE Load() {return GQ_SUCCESS;};
+	GQ_RETURN_CODE Store() {return GQ_SUCCESS;};;
+
 	// In the case we want to modify the actual array!
 	std::vector<float>& GetVertices();
 	void Setup();

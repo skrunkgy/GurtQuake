@@ -317,4 +317,24 @@ I am going insane refactoring this code. God.
 
 Ok, I fixed it around a bunch. The engine spins, the only issues are with shaders (not engine's problem!). But I am still breaking my fucking head over clangd and making CMake produce me a compile_commands.json.
 
-I FIGURED IT OUT!!! I have to add the command options " -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G 'MinGW Makefiles' " after my cmake command. 
+I FIGURED IT OUT!!! I have to add the command options " -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G 'MinGW Makefiles' " after my cmake command.
+
+# 9/7
+
+I got it to work. The problem was that glew needed the -DGLEW_STATIC compiler flag (or the compile definition or something). I also needed to link a bunch of libaries (almost a lot of them, the CMAKE_CXX_STANDARD_LIBRARIES had a bunch of them) the only issue right now is that there is no cout.
+
+I FIXED THIS ISSUE! Turns out it was the "WIN32" flag in the add_executable command in my CMakeslist.txt. Everything works now!
+
+My to do now is to make it platform independent, allow users to use system libraries or vendor libraries, static or dynamically link, etc. But for now I will continue to roll with this. Very happy!
+
+# 9/8
+
+Ok I need to figure out what the hell to do with this engine now. First, I need to get to work on a Camera class, and then temporarily give controls to it. I also need to be able to provide shaders with camera data, which means I need to get to work on the math section.
+
+Then, I need to work on getting things to 3d.
+
+Then, I need to get to work on serialization. The problem with this is that without reflection, I will have to program most of the serialization code by HAND! So far, the types I would have to program are:
+- Meshes
+- Camera
+- Shaders
+I also still have the problem of "object A needs a reference to object B", but they a) may not be loaded yet and b) don't know the location of it. I think the way to do it is to have two passes when loading a scene. First time is to load the objects into memory, and the second time is to retrieve the pointers. Again, this would be easier with reflection, but we gotta do what we gotta do. I can make fallback resources for stuff too, like the Source engine does. I will make a prototype of this later.

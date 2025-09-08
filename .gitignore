@@ -1,13 +1,14 @@
 # I HATE MY CHUD LIFE
 
-.vscode
-.vscode/*
-*.dll
 lib
-include/GL
-include/SDL3
-include/stb
 build
 *.exe
 .cache
 trash
+
+include/GL
+include/SDL3
+include/stb
+
+# This is my personal batch command to build my thing
+compile.bat
