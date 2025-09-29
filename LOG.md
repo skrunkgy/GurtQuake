@@ -338,3 +338,13 @@ Then, I need to get to work on serialization. The problem with this is that with
 - Camera
 - Shaders
 I also still have the problem of "object A needs a reference to object B", but they a) may not be loaded yet and b) don't know the location of it. I think the way to do it is to have two passes when loading a scene. First time is to load the objects into memory, and the second time is to retrieve the pointers. Again, this would be easier with reflection, but we gotta do what we gotta do. I can make fallback resources for stuff too, like the Source engine does. I will make a prototype of this later.
+
+# 9/12
+
+Reading into it and I realized I could POTENTIALLY automate serialization by using preprocessor directives. Must read more into this lol.
+
+We can serialize data using fstream and shit.
+
+# 9/29
+
+Will work on 3d. Test commit
