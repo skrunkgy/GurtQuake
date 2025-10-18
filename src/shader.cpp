@@ -14,7 +14,7 @@ Shader::Shader()
 Shader::Shader(const char* vertex_path, const char* fragment_path)
 {
 	m_program = glCreateProgram();
-	LoadShader(vertex_path, fragment_path);
+	load_shader(vertex_path, fragment_path);
 }
 
 Shader::~Shader()
@@ -23,7 +23,7 @@ Shader::~Shader()
 	printf("Shader has been destroyed\n");
 }
 
-void Shader::CompileShader(std::filesystem::path source_file)
+void Shader::compile_shader(std::filesystem::path source_file)
 {
 	std::ifstream file;
 	file.open(source_file);
@@ -77,10 +77,10 @@ void Shader::CompileShader(std::filesystem::path source_file)
 
 }
 
-void Shader::LoadShader(const char* vertex_path, const char* fragment_path)
+void Shader::load_shader(const char* vertex_path, const char* fragment_path)
 {
-	CompileShader(vertex_path);
-	CompileShader(fragment_path);
+	compile_shader(vertex_path);
+	compile_shader(fragment_path);
 
 	glLinkProgram(m_program);
 
@@ -96,7 +96,7 @@ void Shader::LoadShader(const char* vertex_path, const char* fragment_path)
 }
 
 
-void Shader::UseShader()
+void Shader::use_shader()
 {
 	glUseProgram(m_program);
 }

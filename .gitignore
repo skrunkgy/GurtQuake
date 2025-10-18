@@ -13,3 +13,6 @@ include/stb
 # This is my personal batch command to build my thing
 compile.bat
 compile.sh
+
+# gquake move
+gquake

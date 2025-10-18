@@ -2,9 +2,17 @@
 #include <GL/glew.h>
 #include <SDL3/SDL.h>
 #include <gQuake/graphics.h>
+#include <gQuake/app.h>
+#include <gQuake/gtypes.h>
 #include <stdio.h>
 
 using namespace gQuake;
+
+// Will override all render objects and ones inherited i hope!
+void RenderObject::poke()
+{
+	App::add_to_render_queue(this);
+}
 
 Mesh::Mesh()
 {
@@ -16,10 +24,10 @@ Mesh::Mesh(float vertices[], unsigned int count)
 	glGenBuffers(1, &m_vbo);
 	glGenVertexArrays(1, &m_vao);
 	m_vertices.insert(m_vertices.end(), vertices, vertices + count);
-	Setup();
+	setup();
 }
 
-void Mesh::Setup()
+void Mesh::setup()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), m_vertices.data(), GL_STATIC_DRAW);
@@ -35,13 +43,13 @@ Mesh::~Mesh()
 }
 
 // In the case we want to modify the actual array!
-std::vector<float>& Mesh::GetVertices()
+std::vector<float>& Mesh::get_vertices()
 {
 	return m_vertices;
 }
 
 // Call this AFTER setting the vertices of the mesh!
-void Mesh::SetAttribLayout(std::initializer_list<int> counts)
+void Mesh::set_attrib_layout(std::initializer_list<int> counts)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBindVertexArray(m_vao);
@@ -71,14 +79,14 @@ void Mesh::SetAttribLayout(std::initializer_list<int> counts)
 
 }
 
-void Mesh::AttachShader(Shader& shader)
+void Mesh::attach_shader(Shader& shader)
 {
 	m_shader = shader;
 }
 
-void Mesh::Render()
+void Mesh::draw()
 {
 	glBindVertexArray(m_vao);
-	m_shader.UseShader();
+	m_shader.use_shader();
 	glDrawArrays(GL_TRIANGLES, 0, m_vertCount);
 }

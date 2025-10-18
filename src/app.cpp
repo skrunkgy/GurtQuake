@@ -1,12 +1,23 @@
+#include "gQuake/gtypes.h"
 #include <SDL3/SDL.h>
 #include <GL/glew.h>
 #include <gQuake/app.h>
 #include <gQuake/graphics.h>
+#include <stdexcept>
 
 using namespace gQuake;
 
 App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
-{
+{	
+
+
+	if (!App::s_instance)
+	{
+		throw std::runtime_error("Already an instance of this class, skipping construction");
+		return;
+	}
+
+	App::s_instance = this;
 
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -32,13 +43,17 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 
 }
 
-void App::Run()
+void App::run()
 {
 
 	// DONT LEAVE STUFF HERE (t_ means test)
 
 	// Testing out our scope situation (this works!)
 	{
+
+		m_tree = new LevelRoot();
+
+		// set up a test mesh
 		float t_vertices[] =
 		{
 			.0,  .5, .0,
@@ -47,18 +62,17 @@ void App::Run()
 		};
 
 		Mesh *t_Mesh = new Mesh(t_vertices, 9);
-
-		t_Mesh->SetAttribLayout({3}); 
-
+		t_Mesh->set_attrib_layout({3}); 
 		Shader *t_Shader = new Shader("resources/shaders/test.vs", "resources/shaders/test.fs");
+		t_Mesh->attach_shader(*t_Shader);
 
-		t_Mesh->AttachShader(*t_Shader);
-
-		m_renderQueue.push_back(reinterpret_cast<RenderObject*>(t_Mesh)); 
+		// Instead, put it as a child of the scene root
+		// m_renderQueue.push(dynamic_cast<RenderObject*>(t_Mesh)); 
+		m_tree->add_child(t_Mesh);
 	}
 	
 
-	// END OF STUFF
+	// END OF TEST STUFF
 
 	SDL_Event event;
 
@@ -66,14 +80,16 @@ void App::Run()
 	{
 		while(SDL_PollEvent(&event))
 		{
-			App::PollEvents(event.type);
+			App::poll_events(event.type);
 		}
 
-		Render();
+		m_tree->traverse();
+
+		render();
 	}
 }
 
-void App::PollEvents(unsigned int eventType)
+void App::poll_events(unsigned int eventType)
 {
 	switch (eventType)
 	{
@@ -84,13 +100,19 @@ void App::PollEvents(unsigned int eventType)
 	}
 }
 
-void App::Render()
+void App::add_to_render_queue(RenderObject* object)
+{
+	App::s_instance->m_renderQueue.push(object);
+}
+
+void App::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	for (RenderObject* rObject : m_renderQueue)
+	while (!m_renderQueue.empty())
 	{
-		rObject->Render();
+		m_renderQueue.front()->draw();
+		m_renderQueue.pop();
 	}
 
 	SDL_GL_SwapWindow(m_window);
@@ -102,10 +124,14 @@ App::~App()
 	SDL_GL_DestroyContext(m_context);
 
 	// Free our render queue
-	while (m_renderQueue.size() > 0)
+	while (!m_renderQueue.empty())
 	{
-		if (m_renderQueue.at(0)) delete m_renderQueue.at(0); // NULL ptr guard
-		m_renderQueue.erase(m_renderQueue.begin());
+		if (m_renderQueue.front()) delete m_renderQueue.front(); // NULL ptr guard
+		m_renderQueue.pop();
 	}
+
+	// Free the tree
+	m_tree->free();
+
 	printf("Goodbye!\n");
 }

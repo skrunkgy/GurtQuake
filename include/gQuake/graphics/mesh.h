@@ -17,18 +17,21 @@ public:
 	~Mesh();
 
 	// For serialization
-	GQ_RETURN_CODE Load() {return GQ_SUCCESS;};
-	GQ_RETURN_CODE Store() {return GQ_SUCCESS;};;
+	// GQ_RETURN_CODE load() {return GQ_SUCCESS;};
+	// GQ_RETURN_CODE store() {return GQ_SUCCESS;};
+	// void load(const char* filepath);
 
 	// In the case we want to modify the actual array!
-	std::vector<float>& GetVertices();
-	void Setup();
-	void AttachShader(Shader& shader);
-	void Load(const char* filepath);
+	std::vector<float>& get_vertices();
+	void setup();
+	void attach_shader(Shader& shader);
+
+	// For inserting into the render queue
+	void poke();
 
 	// Call this AFTER setting the vertices of the mesh!
-	void SetAttribLayout(std::initializer_list<int> counts);
-	void Render();
+	void set_attrib_layout(std::initializer_list<int> counts);
+	void draw();
 
 private:
 

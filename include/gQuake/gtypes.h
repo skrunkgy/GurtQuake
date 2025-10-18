@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 enum GQ_RETURN_CODE
 {
 	GQ_SUCCESS,
@@ -16,22 +18,37 @@ typedef double float64;
 namespace gQuake
 {
 
-// Pure virtual class for data types that can be serialized
+// Node for a tree
 class gqObject
 {
+private:
+	std::vector<gqObject*> m_children;
+
 public:
 	virtual ~gqObject() = default;
-	virtual GQ_RETURN_CODE Load() = 0;
-	virtual GQ_RETURN_CODE Store() = 0;
-	unsigned int UID;
+	virtual void poke() = 0;
+
+	void add_child(gqObject* child);
+	void pop_child(int index);
+	void traverse(); // Method to perform on each 
+	void free(); // Similar to traverse, but to free and delete the objects
+};
+
+class LevelRoot : public gqObject
+{
+public:
+	LevelRoot();
+	~LevelRoot();
+	void poke();
 };
 
 // An object that can be attached to a render queue and rendered. Can be meshes or GUI (also purely virtual)
 class RenderObject : public gqObject
 {
 public:
-	virtual void Render() = 0;
 	virtual ~RenderObject() = default;
+	virtual void draw() = 0;
+	void poke();
 };
 
 }

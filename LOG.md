@@ -348,3 +348,102 @@ We can serialize data using fstream and shit.
 # 9/29
 
 Will work on 3d. Test commit
+
+# 10/1
+
+HAPPY SPOOKY MONTH! Still working on this piece of shit. At the moment, I need to just begin grinding 3d and actual functionality. Loading objects must become abstracted so I can focus on actual important shit. I don't even want to think about the hell I am about to go in.
+
+# 10/6
+
+I am retargetting to Linux development, as I soon plan to use Arch as a main driver after Windows 11 loses support. Maybe. Right now my VSCodium doesn't see my libraries for some reason, which sucks. However using an external shell, I can compile it and run it just fine (first moving the executable to the root)
+
+# 10/17
+
+I am beginning to think that I should move from a "GUI that does everything" and "generic scripting to influence behavior" and just make the engine into a or something dynamic library or something. I would include a header, and maybe a default file.
+
+The thing about Godot and Unity is that they do hacky things in order to provide more convenience to the end user. The point of this engine is just to abstract the processes that would be tedious, such as designing a level manager, creating materials, etc. So I want to change the outline of this project to fit the scope I can handle.
+
+## The App Class
+The app class is gonna manage the top level stuff about the application that runs. There should only be ONE instance of this class. We can always grab an instance of the class in the event we need to access one of its attributes.
+
+The app basically abstracts a bunch of SDL stuff. It also holds some important information and features...
+- pointer to the window
+- context (opengl)
+- an app state (idk what ill do with this, but it holds shit like flil color and windows)
+- RenderQueue, a queue for rendering stuff (its a vector at this moment, but ill make it a queue)
+- a static pointer to an instance, this is filled when created
+
+The app has a some functions
+- PollEvents, handles an event when called
+- Render, goes to the render queue and draws every object
+- Run, puts everything together, creates the game loop, etc
+
+We could implement an Init() that is called before run. We probably could. I probably will
+
+### Problems to address
+
+The app right now only has a vector for render queues because we are not really going to pop every render object every frame yet. This is because we have no way to insert them, becase we don't have an object tree. Once we can have a reference to an object tree where we can grab components off and constantly push/pop objects into the queue. This means we need an object tree...
+
+### Trees
+
+One thing the app needs will be a tree. We won't do a binary tree (although that wouldn't be a bad idea !), this is so we can do a whole lot of traversing. This means, however, we need an abstract class to represent object stuff...
+
+The tree will store TreeObject type (maybe gObject, even though GObject is already a thing in the GTK library `:(` ). Each TreeObject will have some virtual methods, such as when they are accessed, what they should do every loop (maybe), etc. I just read about the Visitor Pattern, so every time the TreeObject does something like Process(), it will visit recursively each node. For example, if we had a RenderObject that derives from TreeObject, we can override the OnVisit() function like so
+
+```cpp
+class TreeObject
+{
+public:
+    virtual void OnVisit();
+}
+
+class RenderObject : public TreeObject
+{
+public:
+    void OnVisit()
+    {
+        App.GetInstance().AddToQueue(this);
+    }
+}
+```
+
+Simple `:)`
+
+## Meshes, Shaders, Camera
+
+At the moment, these are the only header files related to the graphics. The meshes are supposed to represent objects consisting of vertices, while I attached a shader to them. I should probably make a material type that uses shaders and passes arguments to them, or something of this sort.
+
+Shaders are just shaders, only used to draw meshes.
+
+The camera is just a mathematical representation of one and will be able to pass its own arguments to shaders. I am thinking about maybe associating a camera with a framebuffer or something, but I don't know. We could have Camera.Draw() where it accesses the RenderQueue, and passes itself to all the shaders. Then again, I wouldn't need to if I used OpenGL Uniform Buffer Objects (shared stuff)
+
+## The rest...
+
+gmath is just a collection of types and methods for math needs. I need this to store data about the camera and do operations with it, as well as calculate texture normals once I need that.
+
+gtypes is going to store the base classes such as the Queue object I will create maybe, TreeObject, etc...
+
+## TODO:
+In this commit I will
+- Rename member functions to snake case (foo_bar) instead of camel case (FooBar)
+- Create a tree type, along with tree nodes (i am on the fence about th,is because one object can be considered the root. does this mean a gqObject can be a scene ??? i guess for now!)
+- Remove unused code (things for like serialization, references to camera, things that aren't used at all yet). Also mark if something is unimplemented
+
+### So far...
+I am implementing the traverse method for the gqObject, and I am setting it up somewhat like this
+```cpp
+void gqObject::traverse(void (*callable)())
+{
+    callable();
+    if (!m_children.empty())
+    for (gqObject* child : m_children)
+    {
+        child->traverse(callable);
+    }
+    else return;
+}
+```
+
+I am doing it like this because I want to both poke and to call the delete function. However, I don't think I can do this since I would have to MANUALLY call the destructor (not cool).
+
+Thus I will remove the callable parameter, but it was cool to learn about.

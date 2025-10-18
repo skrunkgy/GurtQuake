@@ -1,3 +1,5 @@
+// vector3.h - header for the Vector3 class (UNFINISHED, UNIMPLEMENTED)
+
 #pragma once
 
 #include "../gtypes.h"

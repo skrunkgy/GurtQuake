@@ -4,5 +4,5 @@ out vec4 FragOut;
 
 void main()
 {
-    FragOut = vec3(0.55, 0.631, 0.498, 1.0); // vanessas favorite color :))
+    FragOut = vec4(0.153, 0.588, 0.337, 1.0); // vanessas hand-picked color :))
 }
