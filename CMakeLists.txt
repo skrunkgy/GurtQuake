@@ -9,8 +9,8 @@ add_executable(gquake src/main.cpp src/app.cpp src/mesh.cpp src/shader.cpp src/g
 
 # Other libraries and headers
 target_include_directories(gquake PRIVATE "include")
-target_include_directories(gquake PRIVATE "/usr/include")
-target_include_directories(gquake PRIVATE "/usr/lib")
+# target_include_directories(gquake PRIVATE "/usr/include")
+# target_include_directories(gquake PRIVATE "/usr/lib")
 link_directories("lib")
 
 # Set SDL3 libraries

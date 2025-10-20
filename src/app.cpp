@@ -11,11 +11,11 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 {	
 
 
-	// if (!App::s_instance)
-	// {
-	// 	throw std::runtime_error("Already an instance of this class, skipping construction");
-	// 	return;
-	// }
+	if (!App::s_instance)
+	{
+		throw std::runtime_error("Already an instance of this class, skipping construction");
+		return;
+	}
 
 	App::s_instance = this;
 

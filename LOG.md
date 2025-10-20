@@ -447,3 +447,17 @@ void gqObject::traverse(void (*callable)())
 I am doing it like this because I want to both poke and to call the delete function. However, I don't think I can do this since I would have to MANUALLY call the destructor (not cool).
 
 Thus I will remove the callable parameter, but it was cool to learn about.
+
+# 10/20
+
+I am thinking about making the callable parameter again, since I can make use of lambda functions! So far, I was able to make it compile on both systems.
+
+My clangd on Windows is bitching that it can't find the header files, although it compiles. Maybe VSCodium just needs a restart. I was able to fix the "undefined static member" error by inlining a definition. However... this makes me worry that a function might be trying to access the instance before the App is created. But the app should be the first thing that is created, no? Will have to look more into this...
+
+```cpp
+static App* s_instance;
+```
+to
+```cpp
+inline static App* s_instance = nullptr;
+```
