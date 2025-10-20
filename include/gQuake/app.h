@@ -33,7 +33,7 @@ private:
 	std::queue<RenderObject*> m_renderQueue; // Perhaps abstract stuff to "renderer" class or something
 	gqObject* m_tree;
 
-	static App* s_instance; // In case I need to access something
+	inline static App* s_instance = nullptr;
 
 	void poll_events(unsigned int eventType);
 	void render();

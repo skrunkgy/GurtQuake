@@ -27,7 +27,7 @@ public:
 	void attach_shader(Shader& shader);
 
 	// For inserting into the render queue
-	void poke();
+	// void poke(); // Inherits the RenderObject poke(), no need to implement (yet)
 
 	// Call this AFTER setting the vertices of the mesh!
 	void set_attrib_layout(std::initializer_list<int> counts);
