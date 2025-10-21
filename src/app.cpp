@@ -11,7 +11,7 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 {	
 
 
-	if (!App::s_instance)
+	if (App::s_instance != nullptr)
 	{
 		throw std::runtime_error("Already an instance of this class, skipping construction");
 		return;
