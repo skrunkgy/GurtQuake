@@ -34,7 +34,7 @@ public:
 
 	void add_child(gqObject* child);
 	void pop_child(int index);
-	void traverse(); // Method to perform on each 
+	void traverse(); // Method to perform on each node
 	void free(); // Similar to traverse, but to free and delete the objects
 };
 

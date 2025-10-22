@@ -471,3 +471,25 @@ I am heavily considering using function pointers or lambdas for traversing trees
 I'm also reconsidering having pointers attached to objects. Although it would save memory for some stuff, you wouldn't be able to change the parameters of one without changing it for all. Well actually you can. If each shader has some sort of arguments list and we just fill in those arguments to a single shader before drawing it, we would save on compiling shaders for every object that is created. As for Meshes, we could also be saving data if we didn't have a single instance for each one. So I guess I'll keep it!
 
 I'll make a commit, and then try to use a function pointer to see how well this works.
+
+On second thought, I don't know how I would implement this. The function NEEDS an instance of itself, so maybe I can do something like
+
+```cpp
+#include <functional>
+using namespace std;
+void traverse(*gqObject self, function<void(*gqObject)> method);
+
+m_tree->traverse(this, void [](gqObject* self) { // CRUCIAL it is kept as [] (known as )
+        // ... code here
+    });
+```
+Or something like this? Will try to play with it later
+
+```cpp
+void traverse(gqObject* self, void (*method)(gqObject*));
+
+m_tree->traverse(this, void [](gqObject* self) {
+        // ... code here
+    });
+```
+I can also do this with function pointers, but I think I'd rather use <functional> since I can use clauses. Clauses might let me update external stuff. I don't know. This is all new shit to me.
