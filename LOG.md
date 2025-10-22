@@ -493,3 +493,5 @@ m_tree->traverse(this, void [](gqObject* self) {
     });
 ```
 I can also do this with function pointers, but I think I'd rather use <functional> since I can use clauses. Clauses might let me update external stuff. I don't know. This is all new shit to me.
+
+7:45pm update I DID IT!!!! Please see this commit

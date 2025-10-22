@@ -80,7 +80,9 @@ void App::run()
 			App::poll_events(event.type);
 		}
 
-		m_tree->traverse();
+		m_tree->traverse([](gqObject* t) {
+			t->poke();
+		});
 
 		render();
 	}

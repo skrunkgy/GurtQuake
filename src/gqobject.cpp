@@ -1,35 +1,29 @@
 #include <gQuake/gtypes.h>
+#include <functional>
 #include <iostream>
 
 namespace gQuake
 {
 
-void gqObject::traverse()
+// Generic traverse function that takes function object
+void gqObject::traverse(std::function<void(gqObject*)> func)
 {
-    poke();
     if (!m_children.empty())
     {
         for ( gqObject* child : m_children)
         {
-            child->traverse();
+            child->traverse(func);
         }
     }
-    else return;
+    func(this);
 }
 
 // For freeing the tree
 void gqObject::free()
 {
-    if (!m_children.empty())
-    {
-        for (int i = 0; i < m_children.size(); i++)
-        {
-            m_children.at(i)->free();
-            m_children.erase(m_children.begin() + i);
-            
-        } //andrw is epicaswomssauke
-    }
-    delete this;
+    this->traverse([](gqObject* t){
+        delete t;
+    });
 }
 
 void gqObject::add_child(gqObject* child)
@@ -49,6 +43,8 @@ LevelRoot::~LevelRoot()
     std::cout << "LevelRoot desotryed\n";
 }
 
-void LevelRoot::poke() {}
+void LevelRoot::poke() {
+    std::cout << "Shit\n";
+}
 
 }

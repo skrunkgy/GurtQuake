@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 
 enum GQ_RETURN_CODE
 {
@@ -34,7 +35,7 @@ public:
 
 	void add_child(gqObject* child);
 	void pop_child(int index);
-	void traverse(); // Method to perform on each node
+	void traverse(std::function<void(gqObject*)> func); // Method to perform on each node
 	void free(); // Similar to traverse, but to free and delete the objects
 };
 
