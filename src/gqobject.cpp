@@ -49,9 +49,6 @@ LevelRoot::~LevelRoot()
     std::cout << "LevelRoot desotryed\n";
 }
 
-void LevelRoot::poke()
-{
-    std::cout << "YOOHOO!\n";
-}
+void LevelRoot::poke() {}
 
 }

@@ -461,3 +461,13 @@ to
 ```cpp
 inline static App* s_instance = nullptr;
 ```
+
+# 10/22
+
+I fixed the Windows clangd stuff. I had to add an argument to the extension called "--query-driver=" and then provide the compiler in the compile_commands.json. Fuck clangd, but it's the best we've got in our total revolution against MicroCock.
+
+I am heavily considering using function pointers or lambdas for traversing trees. This is so I can provide more general behavior any time I want to do tree poking, and so that I'm not rewriting code all the time.
+
+I'm also reconsidering having pointers attached to objects. Although it would save memory for some stuff, you wouldn't be able to change the parameters of one without changing it for all. Well actually you can. If each shader has some sort of arguments list and we just fill in those arguments to a single shader before drawing it, we would save on compiling shaders for every object that is created. As for Meshes, we could also be saving data if we didn't have a single instance for each one. So I guess I'll keep it!
+
+I'll make a commit, and then try to use a function pointer to see how well this works.

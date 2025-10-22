@@ -9,15 +9,14 @@ add_executable(gquake src/main.cpp src/app.cpp src/mesh.cpp src/shader.cpp src/g
 
 # Other libraries and headers
 target_include_directories(gquake PRIVATE "include")
-# target_include_directories(gquake PRIVATE "/usr/include")
-# target_include_directories(gquake PRIVATE "/usr/lib")
 link_directories("lib")
 
 # Set SDL3 libraries
 
-target_link_libraries(gquake ${CMAKE_CXX_STANDARD_LIBRARIES})
+# target_link_libraries(gquake ${CMAKE_CXX_STANDARD_LIBRARIES})
 
 add_compile_definitions(GLEW_STATIC)
+
 if (WIN32)
     target_link_libraries(gquake glew32 opengl32)
 else ()

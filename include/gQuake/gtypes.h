@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
 enum GQ_RETURN_CODE
@@ -25,6 +26,9 @@ private:
 	std::vector<gqObject*> m_children;
 
 public:
+
+	std::string name; // Unused.. for now..
+
 	virtual ~gqObject() = default;
 	virtual void poke() = 0;
 

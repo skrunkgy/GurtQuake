@@ -4,6 +4,7 @@
 #include <gQuake/app.h>
 #include <gQuake/graphics.h>
 #include <stdexcept>
+#include <iostream>
 
 using namespace gQuake;
 
@@ -46,12 +47,10 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 void App::run()
 {
 
-	// DONT LEAVE STUFF HERE (t_ means test)
+	// Besides this, this is our scene root
+	m_tree = new LevelRoot();
 
-	// Testing out our scope situation (this works!)
-	{
-
-		m_tree = new LevelRoot();
+	{ // DONT LEAVE STUFF HERE (t_ means test), all of these should be able to be out of scope
 
 		// set up a test mesh
 		float t_vertices[] =
@@ -67,13 +66,11 @@ void App::run()
 		t_Mesh->attach_shader(*t_Shader);
 
 		// Instead, put it as a child of the scene root
-		// m_renderQueue.push(dynamic_cast<RenderObject*>(t_Mesh)); 
 		m_tree->add_child(t_Mesh);
-	}
-	
 
-	// END OF TEST STUFF
+	} // END OF TEST STUFF
 
+	// Main app loop
 	SDL_Event event;
 
 	while (!m_state.exit)
@@ -133,5 +130,5 @@ App::~App()
 	// Free the tree
 	m_tree->free();
 
-	printf("Goodbye!\n");
+	std::cout << "Goodbye!\n";
 }
