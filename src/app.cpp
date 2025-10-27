@@ -95,7 +95,7 @@ void App::poll_events(SDL_Event event)
 			SDL_QuitEvent();
 			m_state.exit = true;
 			break;
-		case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+		case SDL_EVENT_WINDOW_RESIZED:
 			glViewport(0, 0, event.window.data1, event.window.data2);
 			break;
 	}
