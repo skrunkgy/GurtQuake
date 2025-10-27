@@ -495,3 +495,18 @@ m_tree->traverse(this, void [](gqObject* self) {
 I can also do this with function pointers, but I think I'd rather use <functional> since I can use clauses. Clauses might let me update external stuff. I don't know. This is all new shit to me.
 
 7:45pm update I DID IT!!!! Please see this commit
+
+### Future To Do
+
+I finished the previous todo, so now we have
+- A tree system that holds generic objects
+- Ways to traverse and perform procedures on these objects (very extensible!)
+- A REAL queue for our render queue (still considering making a seperate renderer class?)
+
+Now, we kinda need to start tackling 3d now, as well as absracting some more of the app class. Firstly, we should tackle
+- Uniform Buffer Objects (global shader blocks)
+- A camera class that can send matrix data as needed
+- Begin working on importing models
+- Camera movement
+
+One at a time.. please..

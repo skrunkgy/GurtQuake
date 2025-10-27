@@ -28,14 +28,18 @@ public:
 private:
 
 	SDL_Window* m_window;
+
+	// Perhaps extract stuff to a renderer class?
 	AppState m_state;
 	SDL_GLContext m_context;
-	std::queue<RenderObject*> m_renderQueue; // Perhaps abstract stuff to "renderer" class or something
+	std::queue<RenderObject*> m_renderQueue;
+	// Camera m_MainCamera;
+
 	gqObject* m_tree;
 
 	inline static App* s_instance = nullptr;
 
-	void poll_events(unsigned int eventType);
+	void poll_events(SDL_Event event);
 	void render();
 
 };

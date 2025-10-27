@@ -1,8 +1,7 @@
-#include "gQuake/gtypes.h"
 #include <SDL3/SDL.h>
 #include <GL/glew.h>
-#include <gQuake/app.h>
-#include <gQuake/graphics.h>
+#include <SDL3/SDL_events.h>
+#include <gquake/gquake.h>
 #include <stdexcept>
 #include <iostream>
 
@@ -77,7 +76,7 @@ void App::run()
 	{
 		while(SDL_PollEvent(&event))
 		{
-			App::poll_events(event.type);
+			App::poll_events(event);
 		}
 
 		m_tree->traverse([](gqObject* t) {
@@ -88,13 +87,16 @@ void App::run()
 	}
 }
 
-void App::poll_events(unsigned int eventType)
+void App::poll_events(SDL_Event event)
 {
-	switch (eventType)
+	switch (event.type)
 	{
 		case SDL_EVENT_QUIT:
 			SDL_QuitEvent();
 			m_state.exit = true;
+			break;
+		case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+			glViewport(0, 0, event.window.data1, event.window.data2);
 			break;
 	}
 }

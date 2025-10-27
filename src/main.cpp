@@ -1,4 +1,4 @@
-#include <gQuake/app.h>
+#include <gquake/gquake.h>
 
 using namespace gQuake;
 

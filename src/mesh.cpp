@@ -1,18 +1,10 @@
 #include <vector>
 #include <GL/glew.h>
 #include <SDL3/SDL.h>
-#include <gQuake/graphics.h>
-#include <gQuake/app.h>
-#include <gQuake/gtypes.h>
+#include <gquake/gquake.h>
 #include <stdio.h>
 
 using namespace gQuake;
-
-// Will override all render objects and ones inherited i hope!
-void RenderObject::poke()
-{
-	App::add_to_render_queue(this);
-}
 
 Mesh::Mesh()
 {

@@ -36,7 +36,7 @@ public:
 	void add_child(gqObject* child);
 	void pop_child(int index);
 	void traverse(std::function<void(gqObject*)> func); // Method to perform on each node
-	void free(); // Similar to traverse, but to free and delete the objects
+	void free(); // An inline method that makes use of traverse
 };
 
 class LevelRoot : public gqObject

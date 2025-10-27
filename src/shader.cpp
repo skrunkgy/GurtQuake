@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include <string>
 #include <fstream>
-#include <gQuake/graphics.h>
+#include <gquake/gquake.h>
 
 
 using namespace gQuake;

@@ -1,9 +1,8 @@
-#include <gQuake/gtypes.h>
+#include <gquake/gquake.h>
 #include <functional>
 #include <iostream>
 
-namespace gQuake
-{
+using namespace gQuake;
 
 // Generic traverse function that takes function object
 void gqObject::traverse(std::function<void(gqObject*)> func)
@@ -18,7 +17,7 @@ void gqObject::traverse(std::function<void(gqObject*)> func)
     func(this);
 }
 
-// For freeing the tree
+// For freeing the tree (also a demonstraiton)
 void gqObject::free()
 {
     this->traverse([](gqObject* t){
@@ -36,6 +35,16 @@ void gqObject::pop_child(int index)
     m_children.erase(m_children.cbegin() + index);
 }
 
+// Render Object
+
+// Will override all render objects and ones inherited i hope!
+void RenderObject::poke()
+{
+	App::add_to_render_queue(this);
+}
+
+// Level Root extended type
+
 LevelRoot::LevelRoot() {}
 
 LevelRoot::~LevelRoot()
@@ -43,8 +52,4 @@ LevelRoot::~LevelRoot()
     std::cout << "LevelRoot desotryed\n";
 }
 
-void LevelRoot::poke() {
-    std::cout << "Shit\n";
-}
-
-}
+void LevelRoot::poke() {}
