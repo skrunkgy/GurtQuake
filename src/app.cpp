@@ -10,15 +10,6 @@ using namespace gQuake;
 App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 {	
 
-
-	if (App::s_instance != nullptr)
-	{
-		throw std::runtime_error("Already an instance of this class, skipping construction");
-		return;
-	}
-
-	App::s_instance = this;
-
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
@@ -81,8 +72,8 @@ void App::run()
 		}
 		
 		// Traverses tree and pokes it
-		m_tree->traverse([](gqObject* t) {
-			t->poke();
+		m_tree->traverse([this](gqObject* t) {
+			t->poke(this);
 		});
 
 		render();
@@ -105,7 +96,7 @@ void App::poll_events(SDL_Event event)
 
 void App::add_to_render_queue(RenderObject* object)
 {
-	App::s_instance->m_renderQueue.push(object);
+	m_renderQueue.push(object);
 }
 
 void App::render()

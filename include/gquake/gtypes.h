@@ -20,6 +20,8 @@ typedef double float64;
 namespace gQuake
 {
 
+class App;
+
 // Node for a tree
 class gqObject
 {
@@ -31,7 +33,7 @@ public:
 	std::string name; // Unused.. for now..
 
 	virtual ~gqObject() = default;
-	virtual void poke() = 0;
+	virtual void poke(App* app) = 0;
 
 	void add_child(gqObject* child);
 	void pop_child(int index);
@@ -44,7 +46,7 @@ class SceneRoot : public gqObject
 public:
 	SceneRoot();
 	~SceneRoot();
-	void poke();
+	void poke(App* app);
 };
 
 // An object that can be attached to a render queue and rendered. Can be meshes or GUI (also purely virtual)
@@ -53,7 +55,7 @@ class RenderObject : public gqObject
 public:
 	virtual ~RenderObject() = default;
 	virtual void draw() = 0;
-	void poke();
+	void poke(App* app);
 };
 
 }

@@ -38,9 +38,9 @@ void gqObject::pop_child(int index)
 // Render Object
 
 // Will override all render objects and ones inherited i hope!
-void RenderObject::poke()
+void RenderObject::poke(App* app)
 {
-	App::add_to_render_queue(this);
+	app->add_to_render_queue(this);
 }
 
 // Scene Root extended type
@@ -52,4 +52,4 @@ SceneRoot::~SceneRoot()
     std::cout << "SceneRoot desotryed\n";
 }
 
-void SceneRoot::poke() {}
+void SceneRoot::poke(App* app) {}

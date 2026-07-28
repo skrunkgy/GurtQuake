@@ -516,3 +516,5 @@ One at a time.. please..
 I don't want to make anything too complicated. I think I will try to make much of this very simple. I won't do scripting yet, but maybe I can use dynamic libraries...
 
 I still plan to use a level schema, but I will call them "scenes" instead. For now, I will not give a shit about serialization. I also don't want to use CMakeLists, since this project is supposed to be a bit smaller.
+
+I wanted to move away from using a static instance (a singleton?), but this came with silly stuff. The gqObject::poke() now needs a pointer to the App to be passed, but everything works now.

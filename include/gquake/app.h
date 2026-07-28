@@ -23,7 +23,7 @@ public:
 	App(const char* name, unsigned int x, unsigned int y, const char* icon);
 	~App();
 	void run();
-	static void add_to_render_queue(RenderObject*);
+	void add_to_render_queue(RenderObject*);
 
 private:
 
@@ -36,8 +36,6 @@ private:
 	// Camera m_MainCamera;
 
 	gqObject* m_tree;
-
-	inline static App* s_instance = nullptr;
 
 	void poll_events(SDL_Event event);
 	void render();

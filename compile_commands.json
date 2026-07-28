@@ -1,0 +1,67 @@
+[
+  {
+    "file": "src/app.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-I",
+      "include",
+      "src/app.cpp",
+      "-o",
+      "gquake"
+    ],
+    "directory": "/home/andrew/Projects/GurtQuake",
+    "output": "gquake"
+  },
+  {
+    "file": "src/gqobject.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-I",
+      "include",
+      "src/gqobject.cpp",
+      "-o",
+      "gquake"
+    ],
+    "directory": "/home/andrew/Projects/GurtQuake",
+    "output": "gquake"
+  },
+  {
+    "file": "src/main.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-I",
+      "include",
+      "src/main.cpp",
+      "-o",
+      "gquake"
+    ],
+    "directory": "/home/andrew/Projects/GurtQuake",
+    "output": "gquake"
+  },
+  {
+    "file": "src/mesh.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-I",
+      "include",
+      "src/mesh.cpp",
+      "-o",
+      "gquake"
+    ],
+    "directory": "/home/andrew/Projects/GurtQuake",
+    "output": "gquake"
+  },
+  {
+    "file": "src/shader.cpp",
+    "arguments": [
+      "/usr/bin/g++",
+      "-I",
+      "include",
+      "src/shader.cpp",
+      "-o",
+      "gquake"
+    ],
+    "directory": "/home/andrew/Projects/GurtQuake",
+    "output": "gquake"
+  }
+]
