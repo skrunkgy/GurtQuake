@@ -20,14 +20,4 @@ Meshes will have the option to be rendered via EBO or VBO. EBO is good for bigge
 
 ## Building
 
-Currently the CMakesList only supports static linking with your libraries in ../GurtQuake/lib (you need SDL and glew). Also only on windows ATM.
-
-Use CMake (it says required version 3.10, so far its good). You will also need a C++ compiler, in this example I'm using MinGW. The commands are:
-`
-$ mkdir build
-$ cmake -S /path/to/GurtQuake -B /path/to/build
-`
-
-Optionally, you can generate a compile_commands.json list. I use this for clangd. Just append `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G "MinGW Makefiles"` to your cmake command. 
-
-For newbs, if using a "Makefiles" generator, it will spit out a Makefile in the build directory that you must use the "make" command to build an executable.
+Use makefile

@@ -15,4 +15,5 @@ compile.bat
 compile.sh
 
 # gquake move
+gquake
 ./gquake

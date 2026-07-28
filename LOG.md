@@ -510,3 +510,9 @@ Now, we kinda need to start tackling 3d now, as well as absracting some more of 
 - Camera movement
 
 One at a time.. please..
+
+# 7/28 
+
+I don't want to make anything too complicated. I think I will try to make much of this very simple. I won't do scripting yet, but maybe I can use dynamic libraries...
+
+I still plan to use a level schema, but I will call them "scenes" instead. For now, I will not give a shit about serialization. I also don't want to use CMakeLists, since this project is supposed to be a bit smaller.

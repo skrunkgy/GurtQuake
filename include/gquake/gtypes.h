@@ -39,11 +39,11 @@ public:
 	void free(); // An inline method that makes use of traverse
 };
 
-class LevelRoot : public gqObject
+class SceneRoot : public gqObject
 {
 public:
-	LevelRoot();
-	~LevelRoot();
+	SceneRoot();
+	~SceneRoot();
 	void poke();
 };
 

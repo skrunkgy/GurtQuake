@@ -27,12 +27,12 @@ void gqObject::free()
 
 void gqObject::add_child(gqObject* child)
 {
-    m_children.push_back(child);
+	m_children.push_back(child);
 }
 
 void gqObject::pop_child(int index)
 {
-    m_children.erase(m_children.cbegin() + index);
+	m_children.erase(m_children.cbegin() + index);
 }
 
 // Render Object
@@ -43,13 +43,13 @@ void RenderObject::poke()
 	App::add_to_render_queue(this);
 }
 
-// Level Root extended type
+// Scene Root extended type
 
-LevelRoot::LevelRoot() {}
+SceneRoot::SceneRoot() {}
 
-LevelRoot::~LevelRoot()
+SceneRoot::~SceneRoot()
 {
-    std::cout << "LevelRoot desotryed\n";
+    std::cout << "SceneRoot desotryed\n";
 }
 
-void LevelRoot::poke() {}
+void SceneRoot::poke() {}

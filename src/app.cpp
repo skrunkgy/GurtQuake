@@ -24,15 +24,15 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 	m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
 	m_context = SDL_GL_CreateContext(m_window);
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
 	{
-		printf("FUCK:: %s", glewGetErrorString(err));
+		printf("OPENGL ERROR:: %s", glewGetErrorString(err));
 	}
 
 	m_state = {false, false};
@@ -47,7 +47,7 @@ void App::run()
 {
 
 	// Besides this, this is our scene root
-	m_tree = new LevelRoot();
+	m_tree = new SceneRoot();
 
 	{ // DONT LEAVE STUFF HERE (t_ means test), all of these should be able to be out of scope
 
@@ -73,12 +73,14 @@ void App::run()
 	SDL_Event event;
 
 	while (!m_state.exit)
-	{
+	{	
+		// Polls events
 		while(SDL_PollEvent(&event))
 		{
 			App::poll_events(event);
 		}
-
+		
+		// Traverses tree and pokes it
 		m_tree->traverse([](gqObject* t) {
 			t->poke();
 		});
