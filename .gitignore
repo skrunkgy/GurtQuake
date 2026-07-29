@@ -1,14 +1,5 @@
-# I HATE MY CHUD LIFE
-
-lib
-build
-*.exe
-.cache
-trash
-
 # made by bear or whatever you wanna use
 compile_commands.json
 
 # gquake move
-gquake
-./gquake
+gamebin
