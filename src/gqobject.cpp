@@ -2,7 +2,7 @@
 #include <functional>
 #include <iostream>
 
-using namespace gQuake;
+using namespace gquake;
 
 // Generic traverse function that takes function object
 void gqObject::traverse(std::function<void(gqObject*)> func)

@@ -17,7 +17,7 @@ typedef unsigned long uint_64;
 typedef float float32;
 typedef double float64;
 
-namespace gQuake
+namespace gquake
 {
 
 class App;

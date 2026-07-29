@@ -6,13 +6,8 @@ build
 .cache
 trash
 
-include/GL
-include/SDL3
-include/stb
-
-# This is my personal batch command to build my thing
-compile.bat
-compile.sh
+# made by bear or whatever you wanna use
+compile_commands.json
 
 # gquake move
 gquake

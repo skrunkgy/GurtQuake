@@ -5,7 +5,7 @@
 #include "gmath/vector3.h"
 #include "gtypes.h"
 
-namespace gQuake
+namespace gquake
 {
 
 struct AppState

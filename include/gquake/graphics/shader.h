@@ -2,7 +2,7 @@
 
 #include <filesystem>
 
-namespace gQuake
+namespace gquake
 {
 
 class Shader

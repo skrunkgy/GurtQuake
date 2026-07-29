@@ -4,7 +4,7 @@
 #include <gquake/gquake.h>
 
 
-using namespace gQuake;
+using namespace gquake;
 
 Shader::Shader()
 {

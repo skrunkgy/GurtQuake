@@ -4,7 +4,7 @@
 #include <gquake/gquake.h>
 #include <stdio.h>
 
-using namespace gQuake;
+using namespace gquake;
 
 Mesh::Mesh()
 {

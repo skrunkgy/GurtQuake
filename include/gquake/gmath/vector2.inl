@@ -5,7 +5,7 @@ vector2.inl - inline functions for the Vector2 class
 
 #include "vector2.h"
 
-namespace gQuake {
+namespace gquake {
 
 template <typename T>
 Vector2<T>::Vector2():

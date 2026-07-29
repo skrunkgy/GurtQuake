@@ -2,7 +2,7 @@
 
 #include <gquake/gquake.h>
 
-namespace gQuake
+namespace gquake
 {
 
 template <class T, int rows, int columns>

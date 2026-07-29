@@ -1,6 +1,6 @@
 #include <gquake/gquake.h>
 
-using namespace gQuake;
+using namespace gquake;
 
 int main(int argc, char** kwarg)
 {

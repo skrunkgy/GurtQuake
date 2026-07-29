@@ -4,7 +4,7 @@
 #include "shader.h"
 #include "../gtypes.h"
 
-namespace gQuake
+namespace gquake
 {
 
 class Mesh : public RenderObject

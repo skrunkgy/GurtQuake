@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <iostream>
 
-using namespace gQuake;
+using namespace gquake;
 
 App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 {	

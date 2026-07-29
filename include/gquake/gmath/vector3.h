@@ -4,7 +4,7 @@
 
 #include "../gtypes.h"
 
-namespace gQuake
+namespace gquake
 {
 
 template<class T>
