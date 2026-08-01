@@ -2,4 +2,8 @@
 compile_commands.json
 
 # gquake move
-gamebin
+/gquake
+/gqtest
+
+# shit produced by clang
+.cache

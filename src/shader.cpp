@@ -96,7 +96,6 @@ void Shader::load_shader(const char* vertex_path, const char* fragment_path)
 	}
 }
 
-
 void Shader::use_shader()
 {
 	glUseProgram(m_program);

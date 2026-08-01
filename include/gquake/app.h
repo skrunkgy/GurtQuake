@@ -2,7 +2,6 @@
 
 #include <SDL3/SDL.h>
 #include <queue>
-#include <array>
 #include "gmath.h"
 #include "gtypes.h"
 
@@ -13,7 +12,7 @@ struct AppState
 {
 	bool fullscreen;
 	bool exit;
-	std::array<float, 3> fillColor; //
+	vec3 fillColor; //
 };
 
 class App

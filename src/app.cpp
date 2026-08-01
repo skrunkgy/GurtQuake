@@ -27,7 +27,7 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 	m_state.fillColor = {.6, .5, .9};
 
 	glViewport(0, 0, x, y);
-	glClearColor(m_state.fillColor[0], m_state.fillColor[1], m_state.fillColor[2], 1.0);
+	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
 }
 
 void App::run()
@@ -45,7 +45,6 @@ void App::run()
 		};
 
 		Mesh *t_Mesh = new Mesh(t_vertices, 9);
-		t_Mesh->set_attrib_layout({3}); 
 		Shader *t_Shader = new Shader("resources/shaders/test.vs", "resources/shaders/test.fs");
 		t_Mesh->attach_shader(*t_Shader);
 

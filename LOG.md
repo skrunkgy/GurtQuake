@@ -518,3 +518,8 @@ I don't want to make anything too complicated. I think I will try to make much o
 I still plan to use a level schema, but I will call them "scenes" instead. For now, I will not give a shit about serialization. I also don't want to use CMakeLists, since this project is supposed to be a bit smaller.
 
 I wanted to move away from using a static instance (a singleton?), but this came with silly stuff. The gqObject::poke() now needs a pointer to the App to be passed, but everything works now.
+
+# 8/1
+Will remove GLEW dependency, as it doesn't support Wayland. I will use glbinding instead.
+
+Rearranged the Mesh constructor, I will be implementing a set layout (or at least at compile time, I can perhaps use directives or something?). Meshes will use a simple Vertice layout of {Position[3], UV[2], Normal[3]}, but I might add Other[8] in case I want to do something else. Perhaps make an option for a layout!
