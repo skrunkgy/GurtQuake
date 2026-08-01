@@ -1,5 +1,4 @@
 // vector2.h - a vector2 class (UNFINISHED, IMPLEMENTED)
-
 #pragma once
 
 #include "../gtypes.h"

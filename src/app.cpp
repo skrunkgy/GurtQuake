@@ -2,7 +2,6 @@
 #include <GL/glew.h>
 #include <SDL3/SDL_events.h>
 #include <gquake/gquake.h>
-#include <stdexcept>
 #include <iostream>
 
 using namespace gquake;
