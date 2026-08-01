@@ -6,6 +6,7 @@
 #include <queue>
 #include "gmath.h"
 #include "gtypes.h"
+#include "graphics.h"
 
 namespace gquake
 {
@@ -35,7 +36,7 @@ private:
 	AppState m_state;
 	SDL_GLContext m_context;
 	std::queue<RenderObject*> m_renderQueue;
-	// Camera m_MainCamera;
+	Camera m_MainCamera;
 
 	gqObject* m_tree;
 

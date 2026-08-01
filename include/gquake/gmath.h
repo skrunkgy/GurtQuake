@@ -5,6 +5,7 @@
 #include "gmath/qualifier.h"
 #include "gmath/vector2.h"
 #include "gmath/vector3.h"
+#include "gmath/functions.h"
 
 typedef gquake::vec<2, float> vec2;
 typedef gquake::vec<3, float> vec3;
