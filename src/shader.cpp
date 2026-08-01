@@ -1,10 +1,11 @@
-#include <GL/glew.h>
+#include <glbinding/gl/gl.h>
 #include <string>
 #include <fstream>
 #include <gquake/gquake.h>
 
 
 using namespace gquake;
+using namespace gl;
 
 Shader::Shader()
 {

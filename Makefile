@@ -1,2 +1,2 @@
 all:
-	g++ -I include -lGLEW -lGL -lSDL3 src/* -o gamebin
+	g++ -I include -lglbinding -lGL -lSDL3 src/* -o gamebin

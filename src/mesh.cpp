@@ -1,10 +1,11 @@
 #include <vector>
-#include <GL/glew.h>
+#include <glbinding/gl/gl.h>
 #include <SDL3/SDL.h>
 #include <gquake/gquake.h>
 #include <stdio.h>
 
 using namespace gquake;
+using namespace gl;
 
 Mesh::Mesh()
 {

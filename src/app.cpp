@@ -1,10 +1,13 @@
 #include <SDL3/SDL.h>
-#include <GL/glew.h>
+#include <SDL3/SDL_video.h>
+#include <glbinding/gl/gl.h>
+#include <glbinding/glbinding.h>
 #include <SDL3/SDL_events.h>
 #include <gquake/gquake.h>
 #include <iostream>
 
 using namespace gquake;
+using namespace gl;
 
 App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 {	
@@ -18,11 +21,7 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	GLenum err = glewInit();
-	if (err != GLEW_OK)
-	{
-		printf("OPENGL ERROR:: %s\n", glewGetErrorString(err));
-	}
+	glbinding::initialize(SDL_GL_GetProcAddress);
 
 	m_state = {false, false};
 	m_state.fillColor = {.6, .5, .9};
