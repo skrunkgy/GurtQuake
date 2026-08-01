@@ -1,3 +1,5 @@
+// Outlines the Mesh, which inherits from the RenderObject
+
 #pragma once
 
 #include <vector>

@@ -1,3 +1,5 @@
+// Provides some math functions
+
 #include "qualifier.h"
 #include "../gtypes.h"
 

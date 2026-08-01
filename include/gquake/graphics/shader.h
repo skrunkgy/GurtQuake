@@ -1,3 +1,5 @@
+// Shader class for creating and using shaders for Mesh
+
 #pragma once
 
 #include <filesystem>

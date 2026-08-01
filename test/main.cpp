@@ -1,3 +1,5 @@
+// Suite for testing parts of my code, like classes and functions/methods
+
 #include "../include/gquake/gmath.h"
 #include <stdio.h>
 

@@ -1,3 +1,7 @@
+// Vector of size 3 specialization!
+
+#pragma once
+
 #include "qualifier.h"
 
 namespace gquake

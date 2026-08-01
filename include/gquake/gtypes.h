@@ -1,3 +1,6 @@
+// 	Provides the typedefs and some base classes for the engine. Some of this will be rearranged, or the file will be broken up as well. God help.
+
+
 #pragma once
 
 #include <string>
@@ -49,7 +52,7 @@ public:
 	void poke(App* app);
 };
 
-// An object that can be attached to a render queue and rendered. Can be meshes or GUI (also purely virtual)
+// An object that can be attached to a render queue and rendered. Can be meshes or GUI (also MOSTLY purely virtual)
 class RenderObject : public gqObject
 {
 public:

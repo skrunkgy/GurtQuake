@@ -1,3 +1,5 @@
+// Header for stuff related to the App class. This class manages the application and routines for it.
+
 #pragma once
 
 #include <SDL3/SDL.h>

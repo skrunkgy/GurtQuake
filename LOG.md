@@ -520,6 +520,10 @@ I still plan to use a level schema, but I will call them "scenes" instead. For n
 I wanted to move away from using a static instance (a singleton?), but this came with silly stuff. The gqObject::poke() now needs a pointer to the App to be passed, but everything works now.
 
 # 8/1
+
 Will remove GLEW dependency, as it doesn't support Wayland. I will use glbinding instead.
 
 Rearranged the Mesh constructor, I will be implementing a set layout (or at least at compile time, I can perhaps use directives or something?). Meshes will use a simple Vertice layout of {Position[3], UV[2], Normal[3]}, but I might add Other[8] in case I want to do something else. Perhaps make an option for a layout!
+
+## Camera class 
+The camera class will be a purley mathetmatical representation, and inheret the gqObject class. It will interact with the pipeline by presenting some matrices (a view matrix and perspective matrix). Upon poke it will just update its own matrices, which will be passed to the pipelin. My biggest concern is using a uniform buffer object so that all shaders have access to this. For now, however, I will manually pass them as uniform parameters...

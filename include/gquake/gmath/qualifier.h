@@ -1,4 +1,5 @@
-// vector2.h - a vector2 class (UNFINISHED, IMPLEMENTED)
+// Provides a basic template for specialized templates. This does nothing!
+
 #pragma once
 
 #include "../gtypes.h"
