@@ -9,7 +9,6 @@ using namespace gquake;
 
 App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 {	
-
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
@@ -23,25 +22,22 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
 	{
-		printf("OPENGL ERROR:: %s", glewGetErrorString(err));
+		printf("OPENGL ERROR:: %s\n", glewGetErrorString(err));
 	}
 
 	m_state = {false, false};
 	m_state.fillColor = {.6, .5, .9};
 
 	glViewport(0, 0, x, y);
-	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
-
+	glClearColor(m_state.fillColor[0], m_state.fillColor[1], m_state.fillColor[2], 1.0);
 }
 
 void App::run()
 {
-
 	// Besides this, this is our scene root
 	m_tree = new SceneRoot();
 
-	{ // DONT LEAVE STUFF HERE (t_ means test), all of these should be able to be out of scope
-
+	{
 		// set up a test mesh
 		float t_vertices[] =
 		{
@@ -55,27 +51,23 @@ void App::run()
 		Shader *t_Shader = new Shader("resources/shaders/test.vs", "resources/shaders/test.fs");
 		t_Mesh->attach_shader(*t_Shader);
 
-		// Instead, put it as a child of the scene root
+		// Insert it into our tree
 		m_tree->add_child(t_Mesh);
-
-	} // END OF TEST STUFF
+	}
 
 	// Main app loop
 	SDL_Event event;
 
 	while (!m_state.exit)
 	{	
-		// Polls events
-		while(SDL_PollEvent(&event))
+		while(SDL_PollEvent(&event)) // Poll events
 		{
 			App::poll_events(event);
 		}
-		
-		// Traverses tree and pokes it
-		m_tree->traverse([this](gqObject* t) {
+
+		m_tree->traverse([this](gqObject* t) { // traverse tree, pass lambda
 			t->poke(this);
 		});
-
 		render();
 	}
 }

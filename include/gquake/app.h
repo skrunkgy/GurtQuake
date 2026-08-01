@@ -2,7 +2,8 @@
 
 #include <SDL3/SDL.h>
 #include <queue>
-#include "gmath/vector3.h"
+#include <array>
+#include "gmath.h"
 #include "gtypes.h"
 
 namespace gquake
@@ -12,7 +13,7 @@ struct AppState
 {
 	bool fullscreen;
 	bool exit;
-	vec3f fillColor; //
+	std::array<float, 3> fillColor; //
 };
 
 class App

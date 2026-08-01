@@ -1,12 +1,11 @@
-#include "../src/gmath/gmath.h"
+#include "../include/gquake/gmath/vector2.h"
 #include <stdio.h>
 
-using namespace gQuake;
+using namespace gquake;
 
 int main()
 {
-	vec2f b = {1.0, 4.0};
-	vec2f c = b * 3;
-
-	printf("(%f, %f)\n", c.x, c.y);
+	vec<2, float> b;
+	
+	printf("(%f, %f)\n", b.x, b.y);
 }

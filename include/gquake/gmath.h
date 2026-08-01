@@ -7,4 +7,4 @@ algebra or whatever will be stored in here. It will also
 
 #pragma once
 
-#include "gmath/vector.h"
+#include "gmath/vector2.h"
