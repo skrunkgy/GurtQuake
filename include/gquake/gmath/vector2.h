@@ -14,10 +14,19 @@ struct vec<2, T>
 	};
 	
 	// Constructors
-	vec() { this->x = T(0); this->y = T(0); }
+	vec()
+	{ 
+		this->x = T(0); this->y = T(0);
+	}
 	template<typename U>
-	vec(const vec<2, U> &o) { this->x = o.x; this->y = o.y; }
-	vec(T _x, T _y) 		  { this->x =  _x; this->y =  _y; }
+	vec(const vec<2, U> &o)
+	{ 
+		this->x = o.x; this->y = o.y; 
+	}
+	vec(T _x, T _y) 
+	{ 
+		this->x =  _x; this->y =  _y; 
+	}
 
 	// Assignment
 	template<typename U>
@@ -109,7 +118,7 @@ struct vec<2, T>
 			case 0:
 				return this->x; break;
 			case 1:
-				return this-y; break;
+				return this->y; break;
 			default:;
 		}
 	}
@@ -122,7 +131,7 @@ struct vec<2, T>
 			case 0:
 				return this->x; break;
 			case 1:
-				return this-y; break;
+				return this->y; break;
 			default:;
 		}
 	}
