@@ -59,7 +59,7 @@ Mesh::~Mesh()
 }
 
 // In the case we want to modify the actual array!
-std::vector<float>& Mesh::get_vertices()
+std::vector<float_32>& Mesh::get_vertices()
 {
 	return m_vertices;
 }

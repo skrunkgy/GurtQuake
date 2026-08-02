@@ -56,7 +56,7 @@ void Shader::compile_shader(std::filesystem::path source_file)
 	}
 	else
 	{
-		printf("Invalid shader extension: %ls\n", source_file.extension().c_str());
+		printf("Invalid shader extension: %s\n", source_file.extension().c_str());
 		return;
 	}
 	 
@@ -70,7 +70,7 @@ void Shader::compile_shader(std::filesystem::path source_file)
 	if (!success)
 	{
 		glGetShaderInfoLog(shader, 512, NULL, info);
-		printf("%ls COMPILING ERROR:: %s\n", source_file.c_str(), info);
+		printf("%s COMPILING ERROR:: %s\n", source_file.c_str(), info);
 	}
 
 	glAttachShader(m_program, shader);

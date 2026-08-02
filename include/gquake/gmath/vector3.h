@@ -12,6 +12,7 @@ struct vec<3, T>
 {
 	union
 	{
+		T data[3];
 		struct {T x, y, z; };
 		struct {T r, g, b; };
 		struct {T u, v, s; };

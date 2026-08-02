@@ -7,12 +7,8 @@ using namespace gquake;
 
 int main()
 {
-	vec2 a = {0, 0};
-	vec2 b = {1, 1};
+	
+	mat4x4 test;
 
-	vec2 c = b * 4;
-
-	printf("(%f, %f)\n", c.x, c.y);
-
-	//
+	printf("%f\n", test[0][1]); // Prints the first column second row
 }

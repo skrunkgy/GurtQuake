@@ -16,9 +16,12 @@ public:
 
 private:
 	vec3 m_position;
-	float32 m_fov;
-	float32 m_asp;
+	float_32 m_fov;
+	float_32 m_asp;
+	
+	mat4x4 m_view;
+	mat4x4 m_proj;
+	void _update_matrices(); // update both view and projection
 
 };
-
 }

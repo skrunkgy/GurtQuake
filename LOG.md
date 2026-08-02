@@ -527,3 +527,44 @@ Rearranged the Mesh constructor, I will be implementing a set layout (or at leas
 
 ## Camera class 
 The camera class will be a purley mathetmatical representation, and inheret the gqObject class. It will interact with the pipeline by presenting some matrices (a view matrix and perspective matrix). Upon poke it will just update its own matrices, which will be passed to the pipelin. My biggest concern is using a uniform buffer object so that all shaders have access to this. For now, however, I will manually pass them as uniform parameters...
+
+## Using our own types
+Not to say I don't trust the C++ standard, but I am debating where and when to use the default types (int, float, bool, etc) and when to use the gquake types (uint_32, float32, etc). I should also change the naming scheme with `[x][name]_[bits]` with x being unsigned or nothing if it's signed. Whatever
+
+## Matrices 
+I don't feel like making 9 different special templates, so I think I will make the matrix classes NOT specialized. You shouldn't be accessing their individual parts anyways!
+
+# 8/2
+
+Today I just had a revelation. Which could speed up development of the engine a bit.
+
+## NO MORE SPECIALIZATION????
+That's right. I may keep the vector specialization, but it seems that I can just declare a struct that inherets a templated struct. For example:
+```cpp
+struct vector<int n, typename T>
+{
+	T data[n];
+
+	vector()
+	{
+		// ...
+	}
+	// other operations
+};
+
+struct vec3 : vector<3, float>
+{
+	union
+	{
+		float data[3];
+		struct { float x,y,z; };
+	};
+
+	vec3() : vector()
+	{
+		// ...
+	}
+}
+```
+
+There is an issue in my research. Redeclaring `float data[3]` results in something called "variable shadowing" (or something like that). This means both the `data` in the parent class and child class coexist. I think this is because C++ does this weird thing where class members are actually called something like name_Member or something. This isn't a HUGE issue, but this just means I can't use an anonymous union to couple member names and the data in the parent class. This is fine, and also means I don't have to rework the vector implementation since those NEED anonymous unions and structs. Anyone who wants to use my matrix implementation will just use `[c][r]`, which will be overloaded.

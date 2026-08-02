@@ -9,7 +9,6 @@ namespace gquake
 
 class Shader
 {
-
 public:
 
 	Shader();
@@ -26,5 +25,4 @@ private:
 	unsigned int m_program;
 
 };
-
 }

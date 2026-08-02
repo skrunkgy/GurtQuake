@@ -32,12 +32,12 @@ App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
 
 void App::run()
 {
-	// Besides this, this is our scene root
+	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
 	{
 		// set up a test mesh
-		float t_vertices[] =
+		float_32 t_vertices[] =
 		{
 			.0,  .5, .0,
 			-.5, -.5, .0,

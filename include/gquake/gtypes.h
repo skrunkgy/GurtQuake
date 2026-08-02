@@ -1,6 +1,5 @@
 // 	Provides the typedefs and some base classes for the engine. Some of this will be rearranged, or the file will be broken up as well. God help.
 
-
 #pragma once
 
 #include <string>
@@ -17,8 +16,8 @@ typedef unsigned char uint_8;
 typedef unsigned short uint_16;
 typedef unsigned int uint_32;
 typedef unsigned long uint_64;
-typedef float float32;
-typedef double float64;
+typedef float float_32;
+typedef double float_64;
 
 namespace gquake
 {
