@@ -568,3 +568,5 @@ struct vec3 : vector<3, float>
 ```
 
 There is an issue in my research. Redeclaring `float data[3]` results in something called "variable shadowing" (or something like that). This means both the `data` in the parent class and child class coexist. I think this is because C++ does this weird thing where class members are actually called something like name_Member or something. This isn't a HUGE issue, but this just means I can't use an anonymous union to couple member names and the data in the parent class. This is fine, and also means I don't have to rework the vector implementation since those NEED anonymous unions and structs. Anyone who wants to use my matrix implementation will just use `[c][r]`, which will be overloaded.
+
+I added an AUTOFOR directive that inserts a simple `for i in range(n)` insertion. I might make more of these, but I don't know the general rule of having lots of these. ALSO!!! inline more functions!!
