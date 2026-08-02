@@ -12,6 +12,7 @@ class Camera : public gqObject
 {
 public:
 	Camera();
+	~Camera();
 	void poke(App* app); // Update matrices with stuff
 
 private:
@@ -24,4 +25,5 @@ private:
 	void _update_matrices(); // update both view and projection
 
 };
+
 }

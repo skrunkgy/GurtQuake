@@ -8,6 +8,8 @@
 #include "gtypes.h"
 #include "graphics.h"
 
+#pragma once
+
 namespace gquake
 {
 

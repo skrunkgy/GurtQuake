@@ -18,6 +18,10 @@ Gonna add uniform buffer objects
 
 Meshes will have the option to be rendered via EBO or VBO. EBO is good for bigger connected vertices. VBO is good for manually constructed, or low poly meshes.
 
+## Wayland
+
+Wayland doesn't support changing the icon from the program. I may fix this by creating a .desktop file in the resources and setting an SDL hint.
+
 ## Building
 
 Use makefile
