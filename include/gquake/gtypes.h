@@ -1,4 +1,5 @@
-// 	Provides the typedefs and some base classes for the engine. Some of this will be rearranged, or the file will be broken up as well. God help.
+// 	Provides the typedefs and some base classes for the engine. 
+// 	NOTE: Some of this will be rearranged, or the file will be broken up as well. God help.
 
 #pragma once
 
@@ -33,7 +34,7 @@ private:
 public:
 
 	std::string name; // Unused.. for now..
-
+	
 	virtual ~gqObject() = default;
 	virtual void poke(App* app) = 0;
 

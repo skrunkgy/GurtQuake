@@ -10,7 +10,6 @@ namespace gquake
 class Shader
 {
 public:
-
 	Shader();
 	Shader(const char* vertex_path, const char* fragment_path);
 	~Shader();
@@ -21,7 +20,6 @@ public:
 	void use_shader();
 
 private:
-
 	unsigned int m_program;
 
 };

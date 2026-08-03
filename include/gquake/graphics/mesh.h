@@ -12,7 +12,6 @@ namespace gquake
 class Mesh : public RenderObject
 {
 public:
-
 	Mesh();
 	Mesh(float_32 vertices[], unsigned int count);
 	~Mesh();
@@ -32,7 +31,6 @@ public:
 	void draw();
 
 private:
-
 	std::vector<float_32> m_vertices;
 	Shader m_shader;
 	unsigned int m_vbo;

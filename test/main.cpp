@@ -10,5 +10,5 @@ int main()
 	
 	mat4x4 test;
 
-	printf("%f\n", test[0][1]); // Prints the first column second row
+	printf("%f\n", test[2][2]); // Prints the first column second row
 }

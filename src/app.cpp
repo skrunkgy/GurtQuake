@@ -9,7 +9,7 @@
 using namespace gquake;
 using namespace gl;
 
-App::App(const char* name, unsigned int x, unsigned int y, const char* icon)
+App::App(const char* name, uint_32 x, uint_32 y, const char* icon)
 {	
 	SDL_Init(SDL_INIT_VIDEO);
 

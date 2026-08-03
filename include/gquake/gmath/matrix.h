@@ -29,7 +29,7 @@ struct matrix
 	// Access, returns a subarray (just the pointer to the first element of specified column)
 	T* operator[](uint_32 i)
 	{
-		return this->data + sizeof(T) * c * i;
+		return this->data + (r * i);
 	}
 
 	// Addition

@@ -573,3 +573,7 @@ I added an AUTOFOR directive that inserts a simple `for i in range(n)` insertion
 
 ## Issues with linker
 In the previous commit, I fixed an issue when camera.h was giving me issues. This was because even with a header guard, multiple object files were given a separate definition of the functions (multiple definitions problem). I will have to be careful when I move forward with my math library...
+
+## Pointers????? tf????
+Interesting, pointers increment by the correct amount of bytes automatically! (WTF???) The matrix access modifier now does pointer arithmetic like `this->pointer + row_size * i` instead of `this->pointer + sizeof(T) * row_size * i`... I don't get why it changed, unless I remembered something wrong... whatever...
+- I remembered it wrong lol, compiler automatically increments by proper amount of bytes!
