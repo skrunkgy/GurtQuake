@@ -8,7 +8,7 @@ using namespace gquake;
 int main()
 {
 	
-	mat4x4 test;
+	vec2 test(1.0, 1.0);
 
-	printf("%f\n", test[2][2]); // Prints the first column second row
+	printf("%f\n", (3.0 * test).x); // Prints the first column second row
 }

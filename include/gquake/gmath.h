@@ -14,5 +14,5 @@
 #include "gmath/matrix_types.h"
 #include "gmath/functions.h"
 
-typedef gquake::vec<2, float_32> vec2;
-typedef gquake::vec<3, float_32> vec3;
+typedef gquake::vector<2, float_32> vec2;
+typedef gquake::vector<3, float_32> vec3;

@@ -3,7 +3,6 @@
 #include <fstream>
 #include <gquake/gquake.h>
 
-
 using namespace gquake;
 using namespace gl;
 

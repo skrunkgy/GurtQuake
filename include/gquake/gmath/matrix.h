@@ -6,8 +6,6 @@
 #include "qualifier.h"
 #include <stdlib.h>
 
-#define AUTOFOR(i, n) for(auto i = 0; i < n; i++) // Too lazy
-
 namespace gquake
 {
 
@@ -26,15 +24,36 @@ struct matrix
 		memcpy(&data, _data, c * r);
 	}
 
+	// Assignment
+	template<typename U>
+	matrix<c, r, T>& operator= (const matrix<c, r, U>& o)
+	{
+		AUTOFOR(i, c * r)
+		{
+			this->data[i] = o.data[i];
+		}
+		return *this;
+	}
+	
+	// Assignment: vector -> matrix
+	// template<typename U>
+	// matrix<1, r, T>& operator= (const vector<r, U>& o)
+	// {
+	// 	AUTOFOR(i, r)
+	// 	{
+	// 		this->data[i] = o.data[i];
+	// 	}
+	// }
+
 	// Access, returns a subarray (just the pointer to the first element of specified column)
-	T* operator[](uint_32 i)
+	T* operator[] (uint_32 i)
 	{
 		return this->data + (r * i);
 	}
 
-	// Addition
+	// Unary arithmetic
 	template<typename U>
-	matrix<c, r, T> operator+(matrix<c, r, U> &o)
+	matrix<c, r, T> operator+ (matrix<c, r, U> &o)
 	{
 		matrix<c, r, T> result;
 		AUTOFOR(i, c * r)
@@ -46,6 +65,6 @@ struct matrix
 
 };
 
-
+// Binary arithmetic operators
 
 }

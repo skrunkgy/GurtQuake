@@ -1,4 +1,4 @@
-// Vector of size 3 specialization!
+// vectortor of size 3 specialization!
 
 #pragma once
 
@@ -8,7 +8,7 @@ namespace gquake
 {
 
 template<typename T>
-struct vec<3, T>
+struct vector<3, T>
 {
 	union
 	{
@@ -19,22 +19,23 @@ struct vec<3, T>
 	};
 	
 	// Constructors
-	vec()
-	{
+	vector()
+	{ 
 		this->x = T(0); this->y = T(0); this->z = T(0);
 	}
-	template<typename U> vec(const vec<3, U> &o)
-	{
-		this->x = o.x; this->y = o.y; this->z = o.z;
+	template<typename U>
+	vector(const vector<3, U> &o)
+	{ 
+		this->x = o.x; this->y = o.y; this->z = o.z; 
 	}
-	vec(T _x, T _y, T _z)
-	{
-		this->x = _x; this->y = _y; this->z = _z;
+	vector(T _x, T _y, T _z) 
+	{ 
+		this->x = _x; this->y = _y; this->z = _z; 
 	}
 
 	// Assignment
 	template<typename U>
-	vec<3, T>& operator=(const vec<3, U> &o)
+	vector<3, T>& operator= (const vector<3, U> &o)
 	{
 		this->x = o.x;
 		this->y = o.y;
@@ -42,34 +43,33 @@ struct vec<3, T>
 		return *this;
 	}
 	
-	// binary operators
+	// Unary arithmetic operators
 	template <typename U>
-	vec<3, T> operator+ (const vec<3, U> &o)
+	vector<3, T> operator+ (const vector<3, U> &o)
 	{
-		return vec<2, T>(x + o.x, y + o.y, z + o.z);
+		return vector<3, T>(x + o.x, y + o.y, z + o.z);
 	}
 
 	template <typename U>
-	vec<2, T> operator- (const vec<3, U> &o)
+	vector<3, T> operator- (const vector<3, U> &o)
 	{
-		return vec<2, T>(this->x - o.x, this->y - o.y, this->z - o.z);
+		return vector<3, T>(this->x - o.x, this->y - o.y, this->z - o.z);
 	}
 	
 	template <typename U>
-	vec<2, T> operator* (U scalar)
+	vector<3, T> operator* (U scalar)
 	{
-		return vec<2, T>(this->x * scalar, this->y * scalar, this->z * scalar);
+		return vector<3, T>(this->x * scalar, this->y * scalar, this->z * scalar);
 	}
 
 	template <typename U>
-	vec<2, T> operator/ (U scalar)
+	vector<3, T> operator/ (U scalar)
 	{
-		return vec<2, T>(this->x / scalar, this->y / scalar, this->z / scalar);
+		return vector<3, T>(this->x / scalar, this->y / scalar, this->z / scalar);
 	}
 
-	// Unary operators
 	template <typename U>
-	vec<2, T>& operator+= (const vec<2, U> &o)
+	vector<3, T>& operator+= (const vector<3, U> &o)
 	{
 		this->x += o.x;
 		this->y += o.y;
@@ -78,7 +78,7 @@ struct vec<3, T>
 	}
 
 	template <typename U>
-	vec<2, T>& operator-= (const vec<2, U> &o)
+	vector<3, T>& operator-= (const vector<3, U> &o)
 	{
 		this->x -= o.x;
 		this->y -= o.y;
@@ -87,16 +87,16 @@ struct vec<3, T>
 	}
 
 	template <typename U>
-	vec<2, T>& operator*= (U scalar)
+	vector<3, T>& operator*= (U scalar)
 	{
 		this->x *= scalar;
 		this->y *= scalar;
-		this->z *= scalar;
+		this->y *= scalar;
 		return *this;
 	}
 
 	template <typename U>
-	vec<2, T>& operator/= (U scalar)
+	vector<3, T>& operator/= (U scalar)
 	{
 		this->x /= scalar;
 		this->y /= scalar;
@@ -104,23 +104,35 @@ struct vec<3, T>
 		return *this;
 	}
 
+	// Matrix multiplication (left to right)
+	template<uint_32 r, typename U>
+	matrix<1, r, T> operator* (const matrix<3, r, U>& o)
+	{
+		matrix<1, r, T> new_mat;
+		AUTOFOR(i, r)
+		{
+			new_mat[i] = this->x * o[i][0] + this->y * o[i][1] + this->z * o[i][2];
+		}
+		return new_mat;
+	}
+
 	// Comparisons
 	// Will not use greater or lesser, since these are multi component
 	template <typename U>
-	bool operator== (const vec<2, U> &o)
+	bool operator== (const vector<3, U> &o)
 	{
 		return this->x == o.x && this->y == o.y && this->z == o.z;
 	}
 
 	template <typename U>
-	bool operator!= (const vec<2, U> &o)
+	bool operator!= (const vector<3, U> &o)
 	{
 		return this->x != o.x || this->y != o.y || this->z != o.z;
 	}
 
 	// Access modifier
 	template<typename length_type>
-	T& operator[](length_type i)
+	T& operator[] (length_type i)
 	{
 		switch(i)
 		{	
@@ -135,7 +147,7 @@ struct vec<3, T>
 	}
 
 	template<typename length_type>
-	const T& operator[](length_type i)
+	const T& operator[] (length_type i)
 	{
 		switch(i)
 		{	
@@ -149,5 +161,19 @@ struct vec<3, T>
 		}
 	}
 };
+
+// Binary operators
+
+template<typename T, typename U>
+vector<3, T> operator* (U scalar, const vector<3, T>& v)
+{
+	return vector<3, T>(v.x * scalar, v.y * scalar, v.y * scalar);
+}
+
+template<typename T, typename U>
+vector<3, T> operator/ (U scalar, const vector<3, T>& v)
+{
+	return vector<3, T>(v.x / scalar, v.y / scalar, v.z / scalar);
+}
 
 }

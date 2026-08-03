@@ -577,3 +577,8 @@ In the previous commit, I fixed an issue when camera.h was giving me issues. Thi
 ## Pointers????? tf????
 Interesting, pointers increment by the correct amount of bytes automatically! (WTF???) The matrix access modifier now does pointer arithmetic like `this->pointer + row_size * i` instead of `this->pointer + sizeof(T) * row_size * i`... I don't get why it changed, unless I remembered something wrong... whatever...
 - I remembered it wrong lol, compiler automatically increments by proper amount of bytes!
+
+# 8/3
+Found out that functions that are defined in the class definitions are automatically inlined, while functions defined outside of the class are NOT defined. For tidyness, I will keep all struct functions "in class" while class functions will be defined outside, and inline any if I feel the need to!
+
+I also learned about using binary operators for symmetry purposes. For instance, when I have `vector operator*(int)`, vector * int would compile but not int * vector. Our "unary" definition can be kept inside the struct since all it implicitly passes a "this" pointer. However, if we want to do a binary definition like `vector operator+(int, vector)`, we need it to be a "non-member" so it doesn't pass the implicit pointer. I am pretty sure in C++20 there is a way to explictly state not to use the implicit pointer, but for now it's whatever. Looking at the GLM source, the binary operations are defined outside of the class too.
