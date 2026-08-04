@@ -9,8 +9,10 @@
 using namespace gquake;
 using namespace gl;
 
-App::App(const char* name, uint_32 x, uint_32 y, const char* icon)
+App::App(const char* name, uint_32 x, uint_32 y)
 {	
+	
+	SDL_SetHint("SDL_HINT_APP_ID", "com.gurtgames.gquake"); // Set app ID before INIT
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);

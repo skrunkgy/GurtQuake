@@ -21,7 +21,7 @@ struct AppState
 class App
 {
 public:
-	App(const char* name, unsigned int x, unsigned int y, const char* icon);
+	App(const char* name, unsigned int x, unsigned int y);
 	~App();
 	void run();
 	void add_to_render_queue(RenderObject*);

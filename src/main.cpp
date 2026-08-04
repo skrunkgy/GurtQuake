@@ -4,7 +4,7 @@ using namespace gquake;
 
 int main(int argc, char** kwarg)
 {
-	App app("GURTQUAKE", 800, 600, "resources/icon.png");
+	App app("GURTQUAKE", 800, 600);
 	app.run();
 	return 0;
 }

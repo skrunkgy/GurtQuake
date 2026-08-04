@@ -1,0 +1,11 @@
+# This is an example .desktop folder for Wayland users to put inside ~./local/share/applications
+
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=GurtQuake
+Terminal=false
+Path=/path/to/GurtQuake
+Exec=/path/to/GurtQuake/gquake
+Icon=/path/to/GurtQuake/resources/icon.png
