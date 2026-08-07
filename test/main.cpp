@@ -8,7 +8,14 @@ using namespace gquake;
 int main()
 {
 	
-	vec2 test(1.0, 1.0);
+	vector<2, float_32> a(1.0, 2.0);
 
-	printf("%f\n", (3.0 * test).x); // Prints the first column second row
+	mat2x2 b(
+		{
+			1.0, 0.0,
+			0.0, 1.0
+		}
+	);
+
+	printf("%f\n", (a * b)[1]); // Prints the first column second row
 }

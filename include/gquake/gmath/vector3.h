@@ -3,6 +3,7 @@
 #pragma once
 
 #include "qualifier.h"
+#include <cassert>
 
 namespace gquake
 {
@@ -104,16 +105,21 @@ struct vector<3, T>
 		return *this;
 	}
 
-	// Matrix multiplication (left to right)
-	template<uint_32 r, typename U>
-	matrix<1, r, T> operator* (const matrix<3, r, U>& o)
+	template<uint_32 m, typename U> // n is the RHS number of columns
+	vector<m, T> operator* (matrix<3, m, U> mat)
 	{
-		matrix<1, r, T> new_mat;
-		AUTOFOR(i, r)
+		vector<m, T> result;
+		// code should be self explanatory :p 
+		AUTOFOR(rm_row, m)
 		{
-			new_mat[i] = this->x * o[i][0] + this->y * o[i][1] + this->z * o[i][2];
+			T dot = T(0);
+			AUTOFOR(i, 3)
+			{
+				dot += (*this)[i] * mat[i][rm_row];
+			}
+			result[rm_row] = dot;
 		}
-		return new_mat;
+		return result;
 	}
 
 	// Comparisons
@@ -131,33 +137,35 @@ struct vector<3, T>
 	}
 
 	// Access modifier
-	template<typename length_type>
-	T& operator[] (length_type i)
+	template<typename int_type>
+	T& operator[] (int_type i)
 	{
+		assert (i < 3);
 		switch(i)
 		{	
+			default:
 			case 0:
 				return this->x; break;
 			case 1:
 				return this->y; break;
 			case 2:
 				return this->z; break;
-			default:;
 		}
 	}
 
-	template<typename length_type>
-	const T& operator[] (length_type i)
+	template<typename int_type>
+	const T& operator[] (int_type i) const
 	{
+		assert (i < 3);
 		switch(i)
 		{	
+			default:
 			case 0:
 				return this->x; break;
 			case 1:
 				return this->y; break;
 			case 2:
 				return this->z; break;
-			default:;
 		}
 	}
 };

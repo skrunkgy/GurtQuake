@@ -582,3 +582,21 @@ Interesting, pointers increment by the correct amount of bytes automatically! (W
 Found out that functions that are defined in the class definitions are automatically inlined, while functions defined outside of the class are NOT defined. For tidyness, I will keep all struct functions "in class" while class functions will be defined outside, and inline any if I feel the need to!
 
 I also learned about using binary operators for symmetry purposes. For instance, when I have `vector operator*(int)`, vector * int would compile but not int * vector. Our "unary" definition can be kept inside the struct since all it implicitly passes a "this" pointer. However, if we want to do a binary definition like `vector operator+(int, vector)`, we need it to be a "non-member" so it doesn't pass the implicit pointer. I am pretty sure in C++20 there is a way to explictly state not to use the implicit pointer, but for now it's whatever. Looking at the GLM source, the binary operations are defined outside of the class too.
+
+# 8/5 
+
+I was having issues with the matrix header. But I think it was because I absolutely butchered the code for it. I also added another operator overloader for a const expression for the [] access operator. GLM puts all their binary operations OUTSIDE of the struct, for some reason. I do not know why, but I also do not care. This may have to do with the specification, but I don't really care atm.
+
+What is the different between using cont before a function definition and after? For example
+```cpp
+const void func() const;
+```
+I think const before is for the return value, and const after is telling the compiler that it shouldn't affect any of the data members of the class, thus the const after is only for class definitions.
+
+# 8/6
+
+Problemo!!! I have said that column major order for GL compatability, yet I have been doing the math row major order. I am so fucking stupid. Standby.
+
+# 8/7 
+
+I hate autocomplete on md. Fuck you lazyvim. Anyways, I am working on multiplication with matrices and vectors. There was an issue with component access because I wanted to throw an error for an out of range case. However, GLM does this by using an `assert` macro. Should've just done this lol. To whom it may concern, most of this code looks plagiarized from GLM but its HEAVILY INSPIRED !!!! I know what all of this code does, but I do not want all the fancy stuff from GLM itself. This engine is for research purposes, and also a flex on my resume. But I also just love building stuff like this. Please hire me Epic.

@@ -1,8 +1,7 @@
-#include <SDL3/SDL.h>
 #include <SDL3/SDL_video.h>
+#include <SDL3/SDL_events.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/glbinding.h>
-#include <SDL3/SDL_events.h>
 #include <gquake/gquake.h>
 #include <iostream>
 
