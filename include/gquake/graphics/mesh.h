@@ -2,18 +2,48 @@
 
 #pragma once
 
-#include <vector>
-#include "shader.h"
+#include <initializer_list>
+#include "../gmath.h"
 #include "../gtypes.h"
+#include "shader.h"
+
+#define ATTRIB_COUNT 3
 
 namespace gquake
 {
+
+// Quick note on the Vertex...
+// I was planning on doing separate buffers for the positions, normals etc, but I might just do this instead. I MAY still do an indexed buffer, but those aren't very hard to configure.
+
+
+struct Vertex
+{
+
+	
+	vec3 position; 
+	// vec2 uv;
+	// vec3 normal;
+	// float_32[8] other; // do not use
+	
+	
+	// these constructors are only for position data
+	Vertex() {
+		this->position = vec3();
+	}
+	Vertex(vec3 _pos)
+	{
+		this->position = _pos;
+	}
+};
+
 
 class Mesh : public RenderObject
 {
 public:
 	Mesh();
-	Mesh(float_32 vertices[], unsigned int count);
+
+	Mesh(Vertex vertices[], unsigned int count);
+	Mesh(std::initializer_list<Vertex> vertices);
 	~Mesh();
 
 	// Serialization would look like this
@@ -21,7 +51,6 @@ public:
 	// GQ_RETURN_CODE store(const char* path) {return GQ_SUCCESS;};
 	
 	// In the case we want to modify the actual array
-	std::vector<float_32>& get_vertices();
 	void attach_shader(Shader& shader);
 
 	// For inserting into the render queue
@@ -31,7 +60,6 @@ public:
 	void draw();
 
 private:
-	std::vector<float_32> m_vertices;
 	Shader m_shader;
 	unsigned int m_vbo;
 	unsigned int m_vao;

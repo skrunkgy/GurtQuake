@@ -37,15 +37,13 @@ void App::run()
 	m_tree = new SceneRoot();
 
 	{
-		// set up a test mesh
-		float_32 t_vertices[] =
-		{
-			.0,  .5, .0,
-			-.5, -.5, .0,
-			.5, -.5, .0
-		};
 
-		Mesh *t_Mesh = new Mesh(t_vertices, 9);
+		Mesh *t_Mesh = new Mesh({
+			vec3( .0,  .5, .0),
+			vec3(-.5, -.5, .0),
+			vec3( .5, -.5, .0)
+		});
+
 		Shader *t_Shader = new Shader("resources/shaders/test.vs", "resources/shaders/test.fs");
 		t_Mesh->attach_shader(*t_Shader);
 

@@ -600,3 +600,10 @@ Problemo!!! I have said that column major order for GL compatability, yet I have
 # 8/7 
 
 I hate autocomplete on md. Fuck you lazyvim. Anyways, I am working on multiplication with matrices and vectors. There was an issue with component access because I wanted to throw an error for an out of range case. However, GLM does this by using an `assert` macro. Should've just done this lol. To whom it may concern, most of this code looks plagiarized from GLM but its HEAVILY INSPIRED !!!! I know what all of this code does, but I do not want all the fancy stuff from GLM itself. This engine is for research purposes, and also a flex on my resume. But I also just love building stuff like this. Please hire me Epic.
+
+# 8/8 
+
+## The Vertex Class
+Created a Vertex class, and moving around how I do mesh. I will not store a vector of vertices anymore, since I only need the vertice list at initialization (IDEALLY)
+Problem: I can't do anonymous aggregates with "complex" data types (like my vector). This means my vertex class will be a bit more complicated!
+Solution: The structs I have can be reinterpreted as float_32 pointers, which makes it very easy to parse to our thingy.
