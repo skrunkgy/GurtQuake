@@ -23,6 +23,11 @@ class App
 public:
 	App(const char* name, unsigned int x, unsigned int y);
 	~App();
+	
+	// These will be user specified, for now
+	void init();
+	void loop(float_32 delta);
+
 	void run();
 	void add_to_render_queue(RenderObject*);
 

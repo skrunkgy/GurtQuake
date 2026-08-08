@@ -33,23 +33,8 @@ App::App(const char* name, uint_32 x, uint_32 y)
 
 void App::run()
 {
-	// Create a new scene and assign it to the tree
-	m_tree = new SceneRoot();
-
-	{
-
-		Mesh *t_Mesh = new Mesh({
-			vec3( .0,  .5, .0),
-			vec3(-.5, -.5, .0),
-			vec3( .5, -.5, .0)
-		});
-
-		Shader *t_Shader = new Shader("resources/shaders/test.vs", "resources/shaders/test.fs");
-		t_Mesh->attach_shader(*t_Shader);
-
-		// Insert it into our tree
-		m_tree->add_child(t_Mesh);
-	}
+	
+	init();
 
 	// Main app loop
 	SDL_Event event;
@@ -60,6 +45,8 @@ void App::run()
 		{
 			App::poll_events(event);
 		}
+
+		loop(.1666f); // TODO: Actually parse delta time
 
 		m_tree->traverse([this](gqObject* t) { // traverse tree, pass lambda
 			t->poke(this);

@@ -4,9 +4,6 @@
 #include <SDL3/SDL.h>
 #include <gquake/gquake.h>
 #include <stdio.h>
-#include <string.h>
-
-
 
 using namespace gquake;
 using namespace gl;
