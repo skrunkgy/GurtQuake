@@ -2,25 +2,42 @@
 
 #pragma once
 
-#include <filesystem>
+#include <string>
 
 namespace gquake
 {
+
+enum GQ_SHADER_TYPE
+{
+	GQ_VERTEX_SHADER,
+	GQ_FRAGMENT_SHADER,
+};
+
+enum GQ_UNIFORM_TYPE
+{
+	GQ_FLOAT,
+	GQ_INT,
+	GQ_UINT,
+	GQ_BOOL
+};
 
 class Shader
 {
 public:
 	Shader();
-	Shader(const char* vertex_path, const char* fragment_path);
+	Shader(const char* shader_path);
 	~Shader();
-
-	// might not make these static to simplify code
-	void compile_shader(std::filesystem::path source_file);
-	void load_shader(const char* vertex_shader, const char* fragment_shader); // load from a .gshader in the future, use files for now
+	
 	void use_shader();
+	
+	template <typename T>
+	void set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data);
 
 private:
 	unsigned int m_program;
+	std::string m_filepath;
+	void load_shader(const char* shader_path);
+	void compile_shader(const char* source_file, GQ_SHADER_TYPE type);
 
 };
 }

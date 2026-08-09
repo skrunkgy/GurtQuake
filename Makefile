@@ -1,3 +1,5 @@
+$RESOURCE_PATH = "/home/andrew/Projects/GurtQuake/resources/"
+
 gquake:
 	g++ -I include -lglbinding -lGL -lSDL3 src/* -o gquake
 

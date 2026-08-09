@@ -1,0 +1,33 @@
+#shader VERTEX
+
+layout (location = 0) in vec3 POSITION;
+// layout (location = 1) in vec2 UV;
+// layout (location = 2) in vec3 NORMAL;
+
+out vec2 outPos;
+
+void main()
+{
+    gl_Position = vec4(POSITION, 1.0);
+    outPos = POSITION.xy;
+}
+
+#shader FRAGMENT
+
+in vec2 outPos;
+out vec4 fragOut;
+
+void main()
+{
+    if (distance(outPos, vec2(0, 0)) < .2)
+    {
+        if (distance(vec2(outPos.x, outPos.y * .3), vec2(0, 0)) < .05)
+        {
+            fragOut = vec4(0, 0, 0, 1);
+            return;
+        }
+        fragOut = vec4(1);
+        return;
+    }
+    fragOut = vec4(0.153, 0.588, 0.337, 1.0); // vanessas hand-picked color :))
+}

@@ -607,3 +607,18 @@ I hate autocomplete on md. Fuck you lazyvim. Anyways, I am working on multiplica
 Created a Vertex class, and moving around how I do mesh. I will not store a vector of vertices anymore, since I only need the vertice list at initialization (IDEALLY)
 Problem: I can't do anonymous aggregates with "complex" data types (like my vector). This means my vertex class will be a bit more complicated!
 Solution: The structs I have can be reinterpreted as float_32 pointers, which makes it very easy to parse to our thingy.
+
+## Gen
+Today I was reminded of variadic functions! Awesome...
+
+I still have a bit more work before I can present something very awesome. For now, I will set uniform's manually (and not user buffer objects). I must:
+- Make functions for rotating things around an axis (against an axis)
+- Make functions for creating a view matrix and perspective matrix
+- Figure out how to control the camera with our SDL inputs ()
+
+Some QoL stuff:
+- Change it so I don't depend on file extensions for shader types
+
+# 8/9
+
+Today I am gonna redo the shader. Instead of parsing individual files, every shader will be one file. Firstly, it will check for the type of shader by scanning the file for a `#SHADER_TYPE` directive, and then automatically adding the `#version 460 core` header, and then parsing that with the rest of the file until either EOF or the next shader directive.

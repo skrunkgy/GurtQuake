@@ -1,4 +1,7 @@
+#include "gquake/graphics/shader.h"
+#include <glbinding/gl/functions.h>
 #include <glbinding/gl/gl.h>
+#include <glbinding/gl/types.h>
 #include <string>
 #include <fstream>
 #include <gquake/gquake.h>
@@ -11,10 +14,11 @@ Shader::Shader()
 	
 }
 
-Shader::Shader(const char* vertex_path, const char* fragment_path)
+Shader::Shader(const char* shader_path)
 {
 	m_program = glCreateProgram();
-	load_shader(vertex_path, fragment_path);
+	m_filepath = shader_path;
+	load_shader(shader_path);
 }
 
 Shader::~Shader()
@@ -23,43 +27,24 @@ Shader::~Shader()
 	printf("Shader has been destroyed\n");
 }
 
-void Shader::compile_shader(std::filesystem::path source_file)
+void Shader::compile_shader(const char* source, GQ_SHADER_TYPE type)
 {
-	std::ifstream file;
-	file.open(source_file);
 
-	if (!file.is_open())
+	uint_32 shader;
+	
+	switch (type)
 	{
-		printf("FAILED TO OPEN FILE!\n");
-	}
+		case GQ_VERTEX_SHADER:
+			shader = glCreateShader(GL_VERTEX_SHADER);
+			break;
 
-	std::string source;
-	std::string buffer;
-
-	while (std::getline(file, buffer))
-	{
-		source.append(buffer + "\n");
-	}
-
-	const char* sourcePtr = source.c_str(); // WASTING MY MEMORY!!!
-
-	unsigned int shader;
-
-	if (source_file.extension()  == ".vs")
-	{
-		shader = glCreateShader(GL_VERTEX_SHADER);
-	}
-	else if (source_file.extension() == ".fs")
-	{
-		shader = glCreateShader(GL_FRAGMENT_SHADER);
-	}
-	else
-	{
-		printf("Invalid shader extension: %s\n", source_file.extension().c_str());
-		return;
+		case GQ_FRAGMENT_SHADER:
+			shader = glCreateShader(GL_FRAGMENT_SHADER);
+			break;
+		default:;
 	}
 	 
-	glShaderSource(shader, 1, &sourcePtr, NULL);
+	glShaderSource(shader, 1, &source, NULL);
 	glCompileShader(shader);
 
 	int success;
@@ -69,7 +54,7 @@ void Shader::compile_shader(std::filesystem::path source_file)
 	if (!success)
 	{
 		glGetShaderInfoLog(shader, 512, NULL, info);
-		printf("%s COMPILING ERROR:: %s\n", source_file.c_str(), info);
+		printf("%s COMPILING ERROR:: %s\n", m_filepath.c_str(), info);
 	}
 
 	glAttachShader(m_program, shader);
@@ -77,10 +62,52 @@ void Shader::compile_shader(std::filesystem::path source_file)
 
 }
 
-void Shader::load_shader(const char* vertex_path, const char* fragment_path)
+std::string peek_word(std::fstream &file)
 {
-	compile_shader(vertex_path);
-	compile_shader(fragment_path);
+	std::string word;
+	uint_32 position = file.tellg();
+	file >> word;
+	file.seekg(position);
+	return word;
+}
+
+void Shader::load_shader(const char* shader_path)
+{
+	
+	// Creates multiple shaders based on a file
+	std::string word_buffer;
+	std::string shader_source;
+	std::fstream file(shader_path);
+
+	if (!file)
+	{
+		printf("Shader path not found, aborting shader loader\n");
+		return;
+	}
+
+	int counter = 0;
+	while (file >> word_buffer)
+	{
+		if (word_buffer == "#shader")
+		{
+			counter++;
+
+			std::string shader_type;
+			file >> shader_type;
+
+			shader_source.append("#version 460 core\n");
+
+			while (peek_word(file) != "#shader" && std::getline(file, word_buffer))
+			{
+				shader_source.append(word_buffer + "\n");
+			}
+			
+			if (shader_type == "VERTEX") 	compile_shader(shader_source.c_str(), 	GQ_VERTEX_SHADER);
+			if (shader_type == "FRAGMENT")	compile_shader(shader_source.c_str(), GQ_FRAGMENT_SHADER);
+
+			shader_source.clear();
+		}
+	}
 
 	glLinkProgram(m_program);
 
@@ -98,4 +125,10 @@ void Shader::load_shader(const char* vertex_path, const char* fragment_path)
 void Shader::use_shader()
 {
 	glUseProgram(m_program);
+}
+
+template <typename T>
+void Shader::set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data)
+{
+	// TODO: write this code...
 }

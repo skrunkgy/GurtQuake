@@ -23,7 +23,7 @@ typedef double float_64;
 namespace gquake
 {
 
-class App;
+class App; // We just need this for now...
 
 // Node for a tree
 class gqObject

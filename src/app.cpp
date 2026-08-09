@@ -39,6 +39,8 @@ void App::run()
 	// Main app loop
 	SDL_Event event;
 
+	uint_64 beforeTime = SDL_GetTicksNS();
+
 	while (!m_state.exit)
 	{	
 		while(SDL_PollEvent(&event)) // Poll events
@@ -46,7 +48,8 @@ void App::run()
 			App::poll_events(event);
 		}
 
-		loop(.1666f); // TODO: Actually parse delta time
+		loop((SDL_GetTicksNS() - beforeTime) * .000000001f);
+		beforeTime = SDL_GetTicksNS();
 
 		m_tree->traverse([this](gqObject* t) { // traverse tree, pass lambda
 			t->poke(this);
