@@ -11,24 +11,24 @@
 namespace gquake
 {
 
-template<uint_32 c, uint_32 r, typename T>
+template<uint_32 r, uint_32 c, typename T>
 struct matrix
 {
-	T data[c * r];
+	T data[r * c];
 	
 	// Constructors
 	matrix()
 	{
-		AUTOFOR(i, c * r) { data[i] = 0; }
+		AUTOFOR(i, r * c) { data[i] = 0; }
 	}
-	matrix(T _data[c * r])
+	matrix(T _data[r * c])
 	{
-		memcpy(&data, _data, c * r);
+		memcpy(&data, _data, r * c);
 	}
 
 	matrix(std::initializer_list<T> _data)
 	{
-		AUTOFOR(i, c * r)
+		AUTOFOR(i, r * c)
 		{
 			this->data[i] = _data.begin()[i];
 		}
@@ -36,9 +36,9 @@ struct matrix
 
 	// Assignment
 	template<typename U>
-	matrix<c, r, T>& operator= (const matrix<c, r, U>& o)
+	matrix<r, c, T>& operator= (const matrix<r, c, U>& o)
 	{
-		AUTOFOR(i, c * r)
+		AUTOFOR(i, r * c)
 		{
 			this->data[i] = o.data[i];
 		}
@@ -48,20 +48,20 @@ struct matrix
 	// Access, returns a subarray (just the pointer to the first element of specified row)
 	const T* operator[] (uint_32 i) const
 	{
-		return this->data + (c * i);
+		return this->data + (r * i);
 	}
 
 	T* operator[] (uint_32 i)
 	{
-		return this->data + (c * i);
+		return this->data + (r * i);
 	}
 
 	// Unary arithmetic
 	template<typename U>
-	matrix<c, r, T> operator+ (matrix<c, r, U> &o)
+	matrix<r, c, T> operator+ (matrix<r, c, U> &o)
 	{
-		matrix<c, r, T> result;
-		AUTOFOR(i, c * r)
+		matrix<r, c, T> result;
+		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] + o.data[i];
 		}
@@ -69,10 +69,10 @@ struct matrix
 	}
 
 	template<typename U>
-	matrix<c, r, T> operator- (matrix<c, r, U> &o)
+	matrix<r, c, T> operator- (matrix<r, c, U> &o)
 	{
-		matrix<c, r, T> result;
-		AUTOFOR(i, c * r)
+		matrix<r, c, T> result;
+		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] - o.data[i];
 		}
@@ -80,10 +80,10 @@ struct matrix
 	}
 
 	template<typename U>
-	matrix<c, r, T> operator* (U scalar)
+	matrix<r, c, T> operator* (U scalar)
 	{
-		matrix<c, r, T> result;
-		AUTOFOR(i, c * r)
+		matrix<r, c, T> result;
+		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] * scalar;
 		}
@@ -92,10 +92,10 @@ struct matrix
 	}
 
 	template<typename U>
-	matrix<c, r, T> operator/ (U scalar)
+	matrix<r, c, T> operator/ (U scalar)
 	{
-		matrix<c, r, T> result;
-		AUTOFOR(i, c * r)
+		matrix<r, c, T> result;
+		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] / scalar;
 		}
@@ -103,26 +103,42 @@ struct matrix
 	}
 	
 	// Matrix multiplication
-	template<uint_32 n> // n is the RHS number of rows
-	matrix<c, n, T> operator* (const matrix<r, n, T>& b)
+	// TODO: Fix
+	template<uint_32 n, typename U> // n is the RHS number of rows
+	matrix<r, n, T> operator* (const matrix<n, c, U>& m)
 	{
-		matrix<c, n, T> result;
+		matrix<n, c, T> result;
 		// code should be self explanatory :p 
-		AUTOFOR(lm_col, c)
+		AUTOFOR(lm_row, r)
 		{
-			AUTOFOR(rm_row, n)
+			AUTOFOR(rm_col, n)
 			{
 				T dot = T(0);
-				AUTOFOR(i, r)
+				AUTOFOR(i, c)
 				{
-					dot += (*this)[lm_col][i] * b[i][rm_row];
+					dot += (*this)[lm_row][i] * m[i][rm_col];
 				}
-				result[lm_col][rm_row] = dot;
+				result[lm_row][rm_col] = dot;
 			}
 		}
 		return result;
 	}
 
+	template<typename U>
+	vector<r, T> operator* (const vector<c, U>& v)
+	{
+		vector<r, T> result;
+		AUTOFOR(lm_row, r)
+		{
+			T dot = 0;
+			AUTOFOR(i, c)
+			{
+				dot += (*this)[lm_row][i] * v[i];
+			}
+			result[lm_row] = dot;
+		}
+		return result;
+	}
 };
 
 }

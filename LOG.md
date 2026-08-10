@@ -629,4 +629,6 @@ Anyways, I need to create 3 functions, 2 for the camera and 1 for the mesh. Deba
 
 # 8/10 
 
-It is almost 4am and I am implementing the transform and camera stuff. I am considering doing row-major instead for my matrix implementation. The only external code I would have to change would be the `transform.cpp` and `camera.cpp` code, just anything that requires dedicated matrix access since now itll be `mat[r][c]` instead of `mat[c][r]`. Passing this data to OpenGL is also fine because the matrix uniform functions offer a parameter to transpose the matrix anyways (what we do when we initialize matrices). I am going to actually fix this.
+It is almost 4am and I am implementing the transform and camera stuff. I am considering doing row-major instead for my matrix implementation. The only external code I would have to change would be the `transform.h` and `camera.cpp` code, just anything that requires dedicated matrix access since now itll be `mat[r][c]` instead of `mat[c][r]`. Passing this data to OpenGL is also fine because the matrix uniform functions offer a parameter to transpose the matrix anyways (what we do when we initialize matrices). I am going to actually fix this.
+
+So far I just need to fix the matrix multiplication code. I am also moving the vector multiplication to the matrix class, since we usually do matrix * vector instead. This is right to left convention still, idk why I did vector * matrix.

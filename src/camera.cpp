@@ -22,15 +22,15 @@ Camera::~Camera()
 mat4x4 Camera::get_view()
 {
 	return mat4x4
-	({
+	{
 		
-	});
+	};
 }
 
 mat4x4 Camera::get_proj()
 {
 	return mat4x4
-	({
+	{
 
-	});
+	};
 }

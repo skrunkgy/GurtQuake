@@ -2,9 +2,8 @@
 
 #pragma once
 
-#include "qualifier.h"
 #include "../gtypes.h"
-#include "../gmath.h"
+#include "types.h"
 #include <cmath>
 
 #define GQ_VEC_TEMP template<uint_32 n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
@@ -57,7 +56,8 @@ T array_dot(T* a, T* b, uint_32 n)
 	return result;
 }
 
-inline vec3 rotate_point(vec3 point, vec3 axis, float_32 angle)
+template<typename T>
+inline vector<3, T> rotate_point(vector<3, T>  point, vector<3, T> axis, float_32 angle)
 {
 	float_32 s = std::sin(angle);
 	float_32 c = std::cos(angle);

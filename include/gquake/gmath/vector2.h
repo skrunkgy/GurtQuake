@@ -100,24 +100,6 @@ struct vector<2, T>
 		return *this;
 	}
 
-	// Multiplication with matrices
-	template<uint_32 m, typename U> // n is the RHS number of columns
-	vector<m, T> operator* (matrix<2, m, U> mat)
-	{
-		vector<m, T> result;
-		// code should be self explanatory :p 
-		AUTOFOR(rm_row, m)
-		{
-			T dot = T(0);
-			AUTOFOR(i, 2)
-			{
-				dot += (*this)[i] * mat[i][rm_row];
-			}
-			result[rm_row] = dot;
-		}
-		return result;
-	}
-
 	// Comparisons
 	// Will not use greater or lesser, since these are multi component
 	template <typename U>
