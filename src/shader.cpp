@@ -85,12 +85,10 @@ void Shader::load_shader(const char* shader_path)
 		return;
 	}
 
-	int counter = 0;
 	while (file >> word_buffer)
 	{
 		if (word_buffer == "#shader")
 		{
-			counter++;
 
 			std::string shader_type;
 			file >> shader_type;

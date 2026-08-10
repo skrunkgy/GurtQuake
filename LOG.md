@@ -621,4 +621,12 @@ Some QoL stuff:
 
 # 8/9
 
-Today I am gonna redo the shader. Instead of parsing individual files, every shader will be one file. Firstly, it will check for the type of shader by scanning the file for a `#SHADER_TYPE` directive, and then automatically adding the `#version 460 core` header, and then parsing that with the rest of the file until either EOF or the next shader directive.
+Today I am gonna redo the shader. Instead of parsing individual files, every shader will be one file. Firstly, it will check for the type of shader by scanning the file for a `#shader SHADER_TYPE` directive, and then automatically adding the `#version 460 core` header, and then parsing that with the rest of the file until either EOF or the next shader directive. I will also work on the camera stuff, and maybe passing matrix uniforms!
+
+Finally implemented it, I also started work on the camera math stuff. I will need to see how to build a transform matrix, as well as view and projection matrix. I also learned that templated functions are inherently inlined. I will need to explicitly state that header-defined functions are inlined.
+
+Anyways, I need to create 3 functions, 2 for the camera and 1 for the mesh. Debating how I want to store the "transform"s of these. I will probably make a new class in the gmath suite, LOL!
+
+# 8/10 
+
+It is almost 4am and I am implementing the transform and camera stuff. I am considering doing row-major instead for my matrix implementation. The only external code I would have to change would be the `transform.cpp` and `camera.cpp` code, just anything that requires dedicated matrix access since now itll be `mat[r][c]` instead of `mat[c][r]`. Passing this data to OpenGL is also fine because the matrix uniform functions offer a parameter to transpose the matrix anyways (what we do when we initialize matrices). I am going to actually fix this.

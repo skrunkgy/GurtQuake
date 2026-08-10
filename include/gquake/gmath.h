@@ -7,12 +7,12 @@
 
 #pragma once
 
+#define PI 3.141592653589f
+
 #include "gmath/qualifier.h"
 #include "gmath/vector2.h"
 #include "gmath/vector3.h"
 #include "gmath/matrix.h"
-#include "gmath/matrix_types.h"
+#include "gmath/types.h"
 #include "gmath/functions.h"
-
-typedef gquake::vector<2, float_32> vec2;
-typedef gquake::vector<3, float_32> vec3;
+#include "gmath/transform.h"

@@ -41,10 +41,11 @@ class Mesh : public RenderObject
 {
 public:
 	Mesh();
-
 	Mesh(Vertex vertices[], unsigned int count);
 	Mesh(std::initializer_list<Vertex> vertices);
 	~Mesh();
+
+	Transform transform;
 
 	// Serialization would look like this
 	// GQ_RETURN_CODE static load(const char* path) {return GQ_SUCCESS;};
@@ -52,9 +53,9 @@ public:
 	
 	// In the case we want to modify the actual array
 	void attach_shader(Shader& shader);
-
-	// For inserting into the render queue
-	// void poke(); // Inherits the RenderObject poke(), no need to implement (yet)
+	
+	mat4x4 get_model();
+	void poke(App* app); // Inherits the RenderObject poke(), no need to implement (yet)
 
 	// Call this AFTER setting the vertices of the mesh!
 	void draw();

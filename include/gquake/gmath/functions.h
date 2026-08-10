@@ -4,6 +4,7 @@
 
 #include "qualifier.h"
 #include "../gtypes.h"
+#include "../gmath.h"
 #include <cmath>
 
 #define GQ_VEC_TEMP template<uint_32 n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
@@ -46,7 +47,7 @@ vector<n, T> normalized(vector<n, T> &v)
 }
 
 template<typename T, typename U>
-T array_dot(T* a, T*b, uint_32 n)
+T array_dot(T* a, T* b, uint_32 n)
 {
 	T result = 0;
 	AUTOFOR(i, n)
@@ -54,6 +55,20 @@ T array_dot(T* a, T*b, uint_32 n)
 		result += a[i] * b[i];
 	}
 	return result;
+}
+
+inline vec3 rotate_point(vec3 point, vec3 axis, float_32 angle)
+{
+	float_32 s = std::sin(angle);
+	float_32 c = std::cos(angle);
+
+	mat3x3 rotation_matrix = 
+		{
+			std::pow(axis.x, 2.0f) * (1.0f - c) + c, axis.x * axis.y * (1.0f - c) - axis.z * s, axis.x * axis.z * (1.0f - c) + axis.y * s,
+			axis.x * axis.y * (1.0f - c) + axis.z * s, std::pow(axis.y, 2.0f) * (1.0f - c) + c, axis.y * axis.z * (1.0f - c) - axis.x * s,
+			axis.x * axis.z * (1.0f - c) - axis.y * s, axis.y * axis.z * (1.0f - c) + axis.x * s, std::pow(axis.z, 2.0f) * (1.0f - c) + c
+		};
+	return point * rotation_matrix;
 }
 
 }

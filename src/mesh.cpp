@@ -48,16 +48,19 @@ Mesh::Mesh(Vertex vertices[], unsigned int count)
 	m_vertCount = count;
 }
 
-Mesh::Mesh(std::initializer_list<Vertex> vertices) : Mesh((Vertex*)vertices.begin(), vertices.size())
-{
-
-}
+Mesh::Mesh(std::initializer_list<Vertex> vertices) : Mesh((Vertex*)vertices.begin(), vertices.size()) {}
 
 Mesh::~Mesh()
 {
 	glDeleteBuffers(1, &m_vbo);
 	glDeleteVertexArrays(1, &m_vao);
 	printf("Mesh has been destroyed\n");
+}
+
+void Mesh::poke(App* app) 
+{
+	RenderObject::poke(app);
+	// TODO: pass uniforms to the shader :)
 }
 
 void Mesh::attach_shader(Shader& shader)

@@ -8,14 +8,7 @@ using namespace gquake;
 int main()
 {
 	
-	vector<2, float_32> a(1.0, 2.0);
+	vec3 a(1.0, 0.0, 0.0);
 
-	mat2x2 b(
-		{
-			1.0, 0.0,
-			0.0, 1.0
-		}
-	);
-
-	printf("%f\n", (a * b)[1]); // Prints the first column second row
+	printf("%f\n", rotate_point(a, vec3(0.0, 1.0, 0.0), PI / 2.f)[2]); // Prints the first column second row
 }

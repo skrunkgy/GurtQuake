@@ -3,9 +3,13 @@
 #pragma once
 
 #include "matrix.h"
+#include "qualifier.h"
 
 namespace gquake
 {
+
+typedef gquake::vector<2, float_32> vec2;
+typedef gquake::vector<3, float_32> vec3;
 
 typedef matrix<2, 2, float_32> mat2x2;
 typedef matrix<2, 3, float_32> mat2x3;

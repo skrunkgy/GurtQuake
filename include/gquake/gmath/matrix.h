@@ -28,10 +28,9 @@ struct matrix
 
 	matrix(std::initializer_list<T> _data)
 	{
-		AUTOFOR(i, c) AUTOFOR(j, r)
+		AUTOFOR(i, c * r)
 		{
-			// This looks weird because were converting row-major to column-major
-			this->data[i * c + j] = _data.begin()[j * r + i];
+			this->data[i] = _data.begin()[i];
 		}
 	}
 
@@ -46,7 +45,7 @@ struct matrix
 		return *this;
 	}
 
-	// Access, returns a subarray (just the pointer to the first element of specified column)
+	// Access, returns a subarray (just the pointer to the first element of specified row)
 	const T* operator[] (uint_32 i) const
 	{
 		return this->data + (c * i);
