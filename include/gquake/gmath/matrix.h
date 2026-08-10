@@ -46,14 +46,24 @@ struct matrix
 	}
 
 	// Access, returns a subarray (just the pointer to the first element of specified row)
-	const T* operator[] (uint_32 i) const
+	const vector<c, T> operator[] (uint_32 i) const
 	{
-		return this->data + (r * i);
+		vector<c, T> result;
+		AUTOFOR(j, c)
+		{
+			result[j] = data[c * i + j];
+		}
+		return result;
 	}
 
-	T* operator[] (uint_32 i)
+	vector<c, T> operator[] (uint_32 i)
 	{
-		return this->data + (r * i);
+		vector<c, T> result;
+		AUTOFOR(j, c)
+		{
+			result[j] = data[c * i + j];
+		}
+		return result;
 	}
 
 	// Unary arithmetic

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "qualifier.h"
+#include <string.h>
 #include <cassert>
 
 namespace gquake
@@ -33,6 +34,10 @@ struct vector<2, T>
 	{ 
 		this->x =  _x; this->y =  _y; 
 	}
+	vector(T* _array)
+	{
+		memcpy(this->data, _array, 2);
+	}
 
 	// Assignment
 	template<typename U>
@@ -41,6 +46,12 @@ struct vector<2, T>
 		this->x = o.x;
 		this->y = o.y;
 		return *this;
+	}
+
+	// Null arithmetic operators
+	vector<2, T> operator- ()
+	{
+		return (*this) * -1;
 	}
 	
 	// Unary arithmetic operators

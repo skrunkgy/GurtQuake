@@ -11,10 +11,10 @@ int main()
 	vec3 a(1.0, 2.0, 3.0);
 	mat3x3 b = 
 	{
-		1.0, 0.0, 0.0,
+		1.0, 2.0, 3.0,
 		1.0, 1.0, 1.0,
 		0.0, 0.0, 1.0
 	};
 
-	printf("%f\n", (b * a)[1]); // Prints the first column second row
+	printf("%f\n", -a.x); // Prints the first column second row
 }

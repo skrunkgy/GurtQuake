@@ -46,7 +46,7 @@ vector<n, T> normalized(vector<n, T> &v)
 }
 
 template<typename T, typename U>
-T array_dot(T* a, T* b, uint_32 n)
+T array_dot(T* a, U* b, uint_32 n)
 {
 	T result = 0;
 	AUTOFOR(i, n)
