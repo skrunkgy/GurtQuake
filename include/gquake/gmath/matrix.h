@@ -12,7 +12,7 @@ namespace gquake
 {
 
 template<uint_32 r, uint_32 c, typename T>
-struct matrix
+struct alignas(T) matrix
 {
 	T data[r * c];
 	

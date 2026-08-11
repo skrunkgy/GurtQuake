@@ -10,7 +10,7 @@ namespace gquake
 {
 
 template<typename T>
-struct vector<2, T>
+struct alignas(T) vector<2, T>
 {
 	union
 	{
@@ -49,7 +49,7 @@ struct vector<2, T>
 	}
 
 	// Null arithmetic operators
-	vector<2, T> operator- ()
+	vector<2, T> operator-()
 	{
 		return (*this) * -1;
 	}

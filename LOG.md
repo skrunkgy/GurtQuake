@@ -632,3 +632,28 @@ Anyways, I need to create 3 functions, 2 for the camera and 1 for the mesh. Deba
 It is almost 4am and I am implementing the transform and camera stuff. I am considering doing row-major instead for my matrix implementation. The only external code I would have to change would be the `transform.h` and `camera.cpp` code, just anything that requires dedicated matrix access since now itll be `mat[r][c]` instead of `mat[c][r]`. Passing this data to OpenGL is also fine because the matrix uniform functions offer a parameter to transpose the matrix anyways (what we do when we initialize matrices). I am going to actually fix this.
 
 So far I just need to fix the matrix multiplication code. I am also moving the vector multiplication to the matrix class, since we usually do matrix * vector instead. This is right to left convention still, idk why I did vector * matrix.
+
+I probably won't do much today, as I am almost ready to deploy the camera and finally have something to look out to. Here are some notes.
+
+## Camera singleton
+
+For now, the camera will hold a static pointer to itself (a singleton) since we don't have VBO's. Ideally, the camera would be inserted into a UBO for every shader to axis. For the case of switching camera's, we can always just target the UBO and insert it again haha.
+
+## Matrices are just a bunch of vectors
+
+I recently made a change in the matrix struct where using the index operator `[]` would return a vector instead. However, the main struct is still just a big array. I want to change this because we have gained something in our knowledge of programming: C++ structs store it's member in continuous memory.
+
+### Padding...
+
+THERE IS AN ISSUE, HOWEVER! While structs DO store memory (given we don't change access modifier, do anything with virtual, static, etc), they will be in the same order. But that damn compiler sometimes inserts padding so that the CPU reads the structs faster. This means this becomes unreliable. So far, the only thing this affects is the `mesh.cpp` file, specifically with the `Vertex` class inside the header file. According to stack overflow, the ideal workflow is to write proper accessors.
+
+Here are some solutions:
+- #pragma packed(1) before a struct
+- alignas(1) after a struct keyword
+
+Now ideally, I don't want to have to think about padding. Padding changes depending on compiler and architecture (apparently), so I need to change this hack!
+
+# 8/11 
+
+Looking through GLM, it seems that they also have to think about padding (rather packing and alignment). THEY MAKE USE OF ASLIGNAS!!!!! YAY!!! I may use this (I did, see new commit!)
+

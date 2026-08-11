@@ -10,7 +10,7 @@ namespace gquake
 {
 
 template<typename T>
-struct vector<3, T>
+struct alignas(T) vector<3, T>
 {
 	union
 	{
