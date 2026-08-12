@@ -29,6 +29,9 @@ App::App(const char* name, uint_32 x, uint_32 y)
 
 	glViewport(0, 0, x, y);
 	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
+
+	// NOTE: May be temporary, I don't really want this
+	main_cam = nullptr;
 }
 
 void App::run()
@@ -67,6 +70,7 @@ void App::poll_events(SDL_Event event)
 			m_state.exit = true;
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
+			// NOTE: This is assuming we WANT a full viewport. Keep in mind if we want another camera, i.e. splitscreen
 			glViewport(0, 0, event.window.data1, event.window.data2);
 			break;
 	}

@@ -2,20 +2,16 @@
 
 #pragma once
 
+
 #include "../gtypes.h"
 
-#define AUTOFOR(i, n) for(uint_32 i = 0; i < n; i++)
+#include "matrix.h"
+#include "vector2.h"
+#include "vector3.h"
+#include "vector4.h"
 
 namespace gquake
 {
-
-template<uint_32 n, typename T>
-struct vector;
-
-template<uint_32 r, uint_32 c, typename T>
-struct matrix;
-
-#include "matrix.h"
 
 typedef gquake::vector<2, float_32> vec2;
 typedef gquake::vector<3, float_32> vec3;

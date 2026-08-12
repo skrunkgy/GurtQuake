@@ -5,6 +5,7 @@
 #include <SDL3/SDL.h>
 #include <queue>
 #include "gmath.h"
+#include "graphics.h"
 #include "gtypes.h"
 
 namespace gquake
@@ -37,6 +38,9 @@ private:
 	AppState m_state;
 	SDL_GLContext m_context;
 	std::queue<RenderObject*> m_renderQueue;
+
+	// TESTING
+	Camera* main_cam;
 
 	gqObject* m_tree;
 

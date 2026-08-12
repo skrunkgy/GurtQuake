@@ -4,6 +4,10 @@
 
 #include "../gtypes.h"
 #include "types.h"
+#include "matrix.h"
+#include "vector2.h"
+#include "vector3.h"
+#include "vector4.h"
 #include <cmath>
 
 #define GQ_VEC_TEMP template<uint_32 n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes

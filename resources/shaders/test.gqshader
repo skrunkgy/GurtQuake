@@ -12,7 +12,7 @@ out vec2 outPos;
 
 void main()
 {
-    gl_Position = MODEL_MAT * vec4(POSITION, 1.0);
+    gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0);
     outPos = POSITION.xy;
 }
 

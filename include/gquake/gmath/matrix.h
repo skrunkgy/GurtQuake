@@ -3,15 +3,21 @@
 
 #pragma once
 
+#define AUTOFOR(i, n) for(uint_32 i = 0; i < n; i++)
+
+#include <cassert>
 #include <stdio.h>
-#include <cstring>
+#include <string.h>
 #include <initializer_list>
 
-#include "types.h"
+#include "qualifier.h"
 #include "../gtypes.h"
 
 namespace gquake
 {
+
+template <uint_32 n, typename T>
+struct vector;
 
 template<uint_32 r, uint_32 c, typename T>
 struct alignas(T) matrix
@@ -141,5 +147,18 @@ struct alignas(T) matrix
 		return result;
 	}
 };
+
+template<uint_32 r, uint_32 c>
+void print_matf(const matrix<r, c, float_32>& m)
+{
+	AUTOFOR(i, r)
+	{
+		AUTOFOR(j, c)
+		{
+			printf("%f, ", m[i][j]);
+		}
+		printf("\n");
+	}
+}
 
 }

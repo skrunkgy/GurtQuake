@@ -3,8 +3,9 @@
 #pragma once
 
 #include <string.h>
-#include "vector.h"
 #include <cassert>
+
+#include "qualifier.h"
 
 namespace gquake
 {

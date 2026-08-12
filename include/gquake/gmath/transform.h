@@ -31,11 +31,6 @@ struct Transform
 			0.f, 0.f, 0.f, 1.f
 		};
 
-		AUTOFOR(i, 4) AUTOFOR(j, 4)
-		{
-			printf("trans debug result[%i][%i] = %f\n", i, j, result[i][j]);
-		}
-
 		return result;
 	}
 
