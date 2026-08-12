@@ -9,7 +9,6 @@
 
 #define PI 3.141592653589f
 
-#include "gmath/qualifier.h"
 #include "gmath/vector2.h"
 #include "gmath/vector3.h"
 #include "gmath/matrix.h"

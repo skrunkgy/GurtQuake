@@ -3,10 +3,12 @@
 
 #pragma once
 
-#include "qualifier.h"
 #include <stdio.h>
 #include <cstring>
 #include <initializer_list>
+
+#include "types.h"
+#include "../gtypes.h"
 
 namespace gquake
 {
@@ -14,23 +16,22 @@ namespace gquake
 template<uint_32 r, uint_32 c, typename T>
 struct alignas(T) matrix
 {
-	T data[r * c];
+	vector<c, T> data[r];
 	
 	// Constructors
-	matrix()
-	{
-		AUTOFOR(i, r * c) { data[i] = 0; }
-	}
+	matrix() {}
 	matrix(T _data[r * c])
 	{
+		// Under the assumption it is tightly packed
 		memcpy(&data, _data, r * c);
 	}
 
 	matrix(std::initializer_list<T> _data)
 	{
-		AUTOFOR(i, r * c)
+		assert (_data.size() == r * c);
+		AUTOFOR(i, r) AUTOFOR(j, c)
 		{
-			this->data[i] = _data.begin()[i];
+			this->data[i][j] = _data.begin()[i * c + j];
 		}
 	}
 
@@ -48,22 +49,12 @@ struct alignas(T) matrix
 	// Access, returns a subarray (just the pointer to the first element of specified row)
 	const vector<c, T> operator[] (uint_32 i) const
 	{
-		vector<c, T> result;
-		AUTOFOR(j, c)
-		{
-			result[j] = data[c * i + j];
-		}
-		return result;
+		return this->data[i];
 	}
 
 	vector<c, T> operator[] (uint_32 i)
 	{
-		vector<c, T> result;
-		AUTOFOR(j, c)
-		{
-			result[j] = data[c * i + j];
-		}
-		return result;
+		return this->data[i];
 	}
 
 	// Unary arithmetic

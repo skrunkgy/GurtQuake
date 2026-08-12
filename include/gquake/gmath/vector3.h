@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "qualifier.h"
 #include <string.h>
+#include "vector.h"
 #include <cassert>
 
 namespace gquake
@@ -103,7 +103,7 @@ struct alignas(T) vector<3, T>
 	{
 		this->x *= scalar;
 		this->y *= scalar;
-		this->y *= scalar;
+		this->z *= scalar;
 		return *this;
 	}
 
@@ -169,7 +169,7 @@ struct alignas(T) vector<3, T>
 template<typename T, typename U>
 vector<3, T> operator* (U scalar, const vector<3, T>& v)
 {
-	return vector<3, T>(v.x * scalar, v.y * scalar, v.y * scalar);
+	return vector<3, T>(v.x * scalar, v.y * scalar, v.z * scalar);
 }
 
 template<typename T, typename U>

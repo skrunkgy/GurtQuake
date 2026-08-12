@@ -1,8 +1,9 @@
-// For now, useless
+#pragma once 
 
-#pragma once
-
-namespace gquake
+namespace gquake 
 {
+
+template<uint_32, uint_32, typename>
+struct vector;
 
 }

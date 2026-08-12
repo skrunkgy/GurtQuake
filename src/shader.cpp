@@ -130,3 +130,8 @@ void Shader::set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data)
 {
 	// TODO: write this code...
 }
+
+uint_32 Shader::DEBUG_get_shader()
+{
+	return m_program;
+}

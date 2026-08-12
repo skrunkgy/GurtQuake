@@ -54,7 +54,6 @@ public:
 	// In the case we want to modify the actual array
 	void attach_shader(Shader& shader);
 	
-	mat4x4 get_model();
 	void poke(App* app); // Inherits the RenderObject poke(), no need to implement (yet)
 
 	// Call this AFTER setting the vertices of the mesh!

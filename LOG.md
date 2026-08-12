@@ -657,3 +657,39 @@ Now ideally, I don't want to have to think about padding. Padding changes depend
 
 Looking through GLM, it seems that they also have to think about padding (rather packing and alignment). THEY MAKE USE OF ASLIGNAS!!!!! YAY!!! I may use this (I did, see new commit!)
 
+I was disheartened to see that "aslign()" does not prevent padding insertion. However, I am pleased to show that a) the GLM library uses the address of the first item to retrieve data (in the `glm::value_ptr()` function) and b) similar data types SEEM TO BE continuous in memory. yay! However, I hope that every compiler (if not, MOST) have similar padding rules.
+
+Here is my test code for this:
+
+```cpp
+struct vec3
+{
+  char x,y,z;
+};
+
+struct Vertex
+{
+    union
+    {
+        struct
+        {
+            vec3 a;
+            vec3 b;
+            vec3 c;
+        };
+        char t[16];
+    };
+};
+
+int main()
+{
+    Vertex test;
+    test.a = {'a', 'b', 'c'};
+    test.b = {'d', 'e', 'f'};
+    test.c = {'g', 'h', 'i'};
+    
+    printf("%c", test.t[3]);
+}
+```
+
+In a hopefully-not-the-case scenario, padding would be inserted for the last byte after vector a. However, this is not the case, and we print b :). We may move forward with the engine, and also have a piece of mind that the all might GLM library does the same stupid shit like us!
