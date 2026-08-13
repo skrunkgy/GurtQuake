@@ -3,7 +3,7 @@
 
 using namespace gquake;
 
-void Camera::poke(App& app)
+void Camera::poke(App& app, GQ_POKE_TYPE poke_type)
 {
 	// TODO: make UBO and then pass to UBO
 }
@@ -14,7 +14,7 @@ Camera::Camera()
 	fov = 90.f;
 	near = .01f;
 	far  = 1000.f;
-	aspect_ratio = 800.f/600.f;
+	aspect_ratio = 1.f;
 }
 
 Camera::~Camera()

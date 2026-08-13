@@ -1,3 +1,4 @@
+#include "gquake/gtypes.h"
 #include <gquake/gquake.h>
 #include <functional>
 #include <iostream>
@@ -5,24 +6,24 @@
 using namespace gquake;
 
 // Generic traverse function that takes function object
-void gqObject::traverse(std::function<void(gqObject*)> func)
+void gqObject::traverse(std::function<void(gqObject*, GQ_POKE_TYPE)> func, GQ_POKE_TYPE poke_type)
 {
     if (!m_children.empty())
     {
         for ( gqObject* child : m_children)
         {
-            child->traverse(func);
+            child->traverse(func, poke_type);
         }
     }
-    func(this);
+    func(this, poke_type);
 }
 
 // For freeing the tree (also a demonstraiton)
 void gqObject::free()
 {
-    this->traverse([](gqObject* t){
+    this->traverse([](gqObject* t, GQ_POKE_TYPE poke_type){
         delete t;
-    });
+    }, GQ_DELETE_POKE);
 }
 
 void gqObject::add_child(gqObject* child)
@@ -38,7 +39,7 @@ void gqObject::pop_child(int index)
 // Render Object
 
 // Will override all render objects and ones inherited i hope!
-void RenderObject::poke(App& app)
+void RenderObject::poke(App& app, GQ_POKE_TYPE poke_type)
 {
 	app.add_to_render_queue(this);
 }
@@ -52,4 +53,4 @@ SceneRoot::~SceneRoot()
     std::cout << "SceneRoot desotryed\n";
 }
 
-void SceneRoot::poke(App& app) {}
+void SceneRoot::poke(App& app, GQ_POKE_TYPE poke_type) {}

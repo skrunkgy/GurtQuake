@@ -1,3 +1,4 @@
+#include "gquake/gtypes.h"
 #include <SDL3/SDL_video.h>
 #include <SDL3/SDL_events.h>
 #include <glbinding/gl/gl.h>
@@ -41,7 +42,6 @@ void App::run()
 
 	// Main app loop
 	SDL_Event event;
-
 	uint_64 beforeTime = SDL_GetTicksNS();
 
 	while (!m_state.exit)
@@ -53,10 +53,11 @@ void App::run()
 
 		loop((SDL_GetTicksNS() - beforeTime) * .000000001f);
 		beforeTime = SDL_GetTicksNS();
-
-		m_tree->traverse([this](gqObject* t) { // traverse tree, pass lambda
-			t->poke(*this);
-		});
+		
+		// For now, logic will act as both render and logic
+		m_tree->traverse([this](gqObject* t, GQ_POKE_TYPE poke_type) { // traverse tree, pass lambda
+			t->poke(*this, poke_type);
+		}, GQ_GENERIC_POKE);
 		render();
 	}
 }
@@ -70,7 +71,6 @@ void App::poll_events(SDL_Event event)
 			m_state.exit = true;
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
-			// NOTE: This is assuming we WANT a full viewport. Keep in mind if we want another camera, i.e. splitscreen
 			glViewport(0, 0, event.window.data1, event.window.data2);
 			break;
 	}

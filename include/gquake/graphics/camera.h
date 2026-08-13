@@ -22,7 +22,7 @@ public:
 	float_32 fov;
 	float_32 aspect_ratio;
 
-	void poke(App& app); // Update matrices with stuff
+	void poke(App& app, GQ_POKE_TYPE poke_type); // Update matrices with stuff
 
 	mat4x4 get_view();
 	mat4x4 get_proj();

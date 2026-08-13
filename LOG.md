@@ -745,3 +745,48 @@ Here are my goals
 I am seeing lots of things online that Singletons / static classes are advised against. Aw man :(. However, I still am not keen on passing the App pointer everywhere, and I might just have a static pointer to itself...
 
 I am now asking myself whether a singleton or passing the App as a parameter is the better option. I think I will actually just stick to the parameter for loose coupling.
+
+## Organization
+
+I have two issues with my organization.
+1. src files should also include our headers. In other repositories, I see that usually a foo.cpp is coupled with a foo.h, which probably makes development a bit quicker instead of scavenging for my files...
+2. Naming convention. In Godot, parameters are named p_name, types are named typesize_t, shit like that. They also have conventions for naming stuff in camel case and whatnot. I should probably put a convention like that...
+
+A smaller issue I have is my "gtypes.h" header is too vague. I already have a "types.h" file in the math folder, so this one is a bit vague. It isn't a bad idea to have a "gqobject.h" and a "sceneroot.h". The standard is that classes and closely related classes/structs should be bundled in separate files.
+
+## Separating the poke() method
+
+I problem I was thinking I'd face in the future is about having multiple cameras. Typically, this isn't a problem, until we want to separate what each camera can and can't see. There are multiple ways we can do something like this, and the problems with this:
+
+1. Have two render queues, or flush the queue and go again. Problem is that our implementation currently goes through the tree and the RenderObjects append themselves to the queue. Doing multiple queues would trigger the logic pokes multiple times.
+2. Stencil buffer. We would use stencil tests to mask out certain objects. Problem is that this is a bit complicated from the top of my head, and I want to save the stencil buffer for visual effects.
+
+The solution I found was a fix for 1. The fix is that the gqObjet::poke() method will pass another argument that dictates the intent of the traversal. This means that we can separate traversals for rendering and logic.
+
+An example prototype can look like this:
+```cpp
+void Mesh::poke(App& app, GQ_POKE_TYPE pt)
+{
+	switch (pt)
+	{
+		case GQ_RENDER_POKE:
+			// insert into queue, maybe check bit masks
+		case GQ_LOGIC_POKE:
+			// update model matrix, for example
+		default:;
+	}
+}
+```
+
+This solution seems functional, but doesn't really serve a purpose yet. We will have it in our engine for now.
+
+## TODO
+I would like to organize my code before I continue. I will have to lay out some rules for rewriting code...
+
+- class names will use PascalCase
+- functions will use snake_case
+- enums and definitions will use GQ_CAPITAL_SNAKE
+- private class members will use m_snake_case
+- test members will use t_snake_case
+
+I think for now, I think I will move my code around so that there is no more "include" folder. This is because ideally, the engine does not need to be imported like a system header. Instead, the engine would use an editor. 

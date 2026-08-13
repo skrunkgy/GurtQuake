@@ -58,10 +58,10 @@ Mesh::~Mesh()
 	printf("Mesh has been destroyed\n");
 }
 
-void Mesh::poke(App& app)
+void Mesh::poke(App& app, GQ_POKE_TYPE poke_type)
 {
 
-	RenderObject::poke(app);
+	RenderObject::poke(app, poke_type);
 
 	// NOTE: gl specific code, also kind of stinky. temporary!
 	mat4x4 t_Model = transform.get_matrix();
