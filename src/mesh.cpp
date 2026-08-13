@@ -58,8 +58,11 @@ Mesh::~Mesh()
 	printf("Mesh has been destroyed\n");
 }
 
-void Mesh::poke(App* app) 
+void Mesh::poke(App& app)
 {
+
+	RenderObject::poke(app);
+
 	// NOTE: gl specific code, also kind of stinky. temporary!
 	mat4x4 t_Model = transform.get_matrix();
 	
@@ -70,11 +73,11 @@ void Mesh::poke(App* app)
 	location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "MODEL_MAT");
 	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Model));
 
-	if (app->main_cam) // Guard to make sure we do have an App camera set
+	if (app.main_cam) // Guard to make sure we do have an App camera set
 	{
 
-		mat4x4 t_View  = app->main_cam->get_view();
-		mat4x4 t_Proj  = app->main_cam->get_proj();
+		mat4x4 t_View  = app.main_cam->get_view();
+		mat4x4 t_Proj  = app.main_cam->get_proj();
 
 		location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "VIEW_MAT");
 		glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_View));
@@ -86,7 +89,7 @@ void Mesh::poke(App* app)
 	// Unset for safe keeping
 	glUseProgram(0);	
 
-	RenderObject::poke(app);
+	;
 	// TODO: pass uniforms to the shader :)
 }
 

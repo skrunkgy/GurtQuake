@@ -739,3 +739,9 @@ Here are my goals
 - Make the App class a singleton. Although it is fine for now, I don't want to really pass the pointer around when we want to do stuff. I feel like App::main_cam is more neater, but this will stay on the shelf for now.
 - Restructure the render pipeline. Right now, we are oblivious to other render targets and queues. I must figure out a better way so that multiple cameras can render to different targets, and also we can switch which objects can be seen by which camera (i.e. player cannot see themselves, but CCTV cam can). The App can have its own render target, which can be the default framebuffer (or a designated one, but it must render to the main window)
 - Review the math library. I feel like it's been hacked on a lot, so I would like to review it bit by bit. Especially with the qualifier.h and all.
+
+# 8/13 
+
+I am seeing lots of things online that Singletons / static classes are advised against. Aw man :(. However, I still am not keen on passing the App pointer everywhere, and I might just have a static pointer to itself...
+
+I am now asking myself whether a singleton or passing the App as a parameter is the better option. I think I will actually just stick to the parameter for loose coupling.

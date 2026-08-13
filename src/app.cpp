@@ -11,7 +11,7 @@ using namespace gl;
 App::App(const char* name, uint_32 x, uint_32 y)
 {	
 	
-	SDL_SetHint("SDL_HINT_APP_ID", "com.gurtgames.gquake"); // Set app ID before INIT
+	SDL_SetHint("SDL_HINT_APP_ID", "com.gurtgames.gquake"); // Set app ID before SDL.init()
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
@@ -55,7 +55,7 @@ void App::run()
 		beforeTime = SDL_GetTicksNS();
 
 		m_tree->traverse([this](gqObject* t) { // traverse tree, pass lambda
-			t->poke(this);
+			t->poke(*this);
 		});
 		render();
 	}

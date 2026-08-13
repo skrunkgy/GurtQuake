@@ -3,7 +3,7 @@
 
 using namespace gquake;
 
-void Camera::poke(App* app)
+void Camera::poke(App& app)
 {
 	// TODO: make UBO and then pass to UBO
 }

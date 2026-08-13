@@ -13,6 +13,12 @@ enum GQ_RETURN_CODE
 	GQ_ERR
 };
 
+enum GQ_POKE_TYPE
+{
+	GQ_LOGIC_POKE,
+	GQ_RENDER_POKE
+};
+
 typedef unsigned char uint_8;
 typedef unsigned short uint_16;
 typedef unsigned int uint_32;
@@ -36,7 +42,7 @@ public:
 	std::string name; // Unused.. for now..
 	
 	virtual ~gqObject() = default;
-	virtual void poke(App* app) = 0;
+	virtual void poke(App& app) = 0;
 
 	void add_child(gqObject* child);
 	void pop_child(int index);
@@ -49,7 +55,7 @@ class SceneRoot : public gqObject
 public:
 	SceneRoot();
 	~SceneRoot();
-	void poke(App* app);
+	void poke(App& app);
 };
 
 // An object that can be attached to a render queue and rendered. Can be meshes or GUI (also MOSTLY purely virtual)
@@ -58,7 +64,7 @@ class RenderObject : public gqObject
 public:
 	virtual ~RenderObject() = default;
 	virtual void draw() = 0;
-	void poke(App* app);
+	void poke(App& app);
 };
 
 }
