@@ -693,3 +693,49 @@ int main()
 ```
 
 In a hopefully-not-the-case scenario, padding would be inserted for the last byte after vector a. However, this is not the case, and we print b :). We may move forward with the engine, and also have a piece of mind that the all might GLM library does the same stupid shit like us!
+
+# 8/12
+
+I am tired. This math library was giving me headaches. I need to learn loosely coupled programming, or use headers that don't rely on each other or something. Anyways, the math code is functional for now, I will add as I please. The matrix part is all templated, while vectors rely heavily on template specialization.
+
+At the moment, the App class holds a main Camera that needs to be manually assigned. This isn't ideal, but is better than the Camera class having a singleton (something I want to avoid. If anything, the App class should be the only singleton.) Here is how I am thinking of rearranging this...
+
+## App Class restructure
+Maybe the app class should be a singleton again. This is because the engine should NOT need another App running (no point in having two windows or something. If there is, it should still be maintained by the App class.) I will work on it being a singleton in the future. This also makes the gqObject::poke() prototype easier since we can just reference the App singeleton instead.
+
+## Rendering
+At the moment, the App holds a render queue. This is fine if we only have one camera, but won't be useful if we decide to implement it. Also, our Camera is rendering to the default framebuffer target. In my ideal engine, we can change which camera renders to which render target, and also be able to change which render target we see, or which one for a texture etc. I bring this up because now the App can't have a main camera anymore (or maybe it can? idk). I also want to be able to toggle which thing a camera can see.
+
+Think of it like the portal game. The portals have their own cameras that have their own matrices and shit. They are also able to see Chell's model. They also render to their own framebuffer, which is then displayed on the portal.
+
+I am not sure how I want to proceed with this. For now, I do want to make the App class a singleton. Perhaps render objects can have flag bits that determine which camera can see it? Each camera can have their own render queue maybe? I don't know man, I will do more research later. For now, default App cam, but add render targets maybe? Per camera? UGH!
+
+## Todo
+
+- Make App class a singleton.
+
+## Godot's implementation
+Godot's Camera has a boolean called "current", which tells the parent viewport which camera to use to render. This is cool, I guess. This give me an idea too!!! 
+
+We can set up a RenderTarget which will hold our framebuffer, and then allow a camera to render to it? We can bundle this and call it a Viewport, which is what I assume Godot does.
+
+## Final thoughts for today
+Here are my goals
+
+### VISUAL GOAL
+1. Be able to move around a spinning object. This would require
+- Real time updating camera matrix
+- Input
+- Real time updating model matrix
+- Some more math functions to rotate a transform
+2. Lighting. This would require
+- A unified material
+- Lights, doesn't need to have shadows though
+3. Object loading. This would require
+- Just writing a .obj or .fbx loader. That could be fun.
+
+### IN-HOUSE GOALS
+- Incorporate parenting transforms. This means if a parent object is rotated, the child is also rotated. This also means we keep going until there is no parent, or the type is SceneRoot (teehee)
+- Make the App class a singleton. Although it is fine for now, I don't want to really pass the pointer around when we want to do stuff. I feel like App::main_cam is more neater, but this will stay on the shelf for now.
+- Restructure the render pipeline. Right now, we are oblivious to other render targets and queues. I must figure out a better way so that multiple cameras can render to different targets, and also we can switch which objects can be seen by which camera (i.e. player cannot see themselves, but CCTV cam can). The App can have its own render target, which can be the default framebuffer (or a designated one, but it must render to the main window)
+- Review the math library. I feel like it's been hacked on a lot, so I would like to review it bit by bit. Especially with the qualifier.h and all.

@@ -18,11 +18,15 @@ struct AppState
 	vec3 fillColor; //
 };
 
+// App singleton
 class App
 {
 public:
 	App(const char* name, unsigned int x, unsigned int y);
 	~App();
+
+	// Ideally want a main camera
+	Camera* main_cam;
 	
 	// These will be user specified, for now
 	void init();
@@ -38,9 +42,6 @@ private:
 	AppState m_state;
 	SDL_GLContext m_context;
 	std::queue<RenderObject*> m_renderQueue;
-
-	// TESTING
-	Camera* main_cam;
 
 	gqObject* m_tree;
 

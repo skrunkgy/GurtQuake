@@ -10,7 +10,11 @@ void Camera::poke(App* app)
 
 Camera::Camera()
 {
-	
+	transform.position = {0.0, 0.0, 0.0};
+	fov = 90.f;
+	near = .01f;
+	far  = 1000.f;
+	aspect_ratio = 800.f/600.f;
 }
 
 Camera::~Camera()

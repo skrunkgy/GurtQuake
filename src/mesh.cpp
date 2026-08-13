@@ -1,4 +1,5 @@
 #include "gquake/graphics/mesh.h"
+#include <glbinding/gl/functions.h>
 #include <initializer_list>
 #include <glbinding/gl/gl.h>
 #include <SDL3/SDL.h>
@@ -59,6 +60,32 @@ Mesh::~Mesh()
 
 void Mesh::poke(App* app) 
 {
+	// NOTE: gl specific code, also kind of stinky. temporary!
+	mat4x4 t_Model = transform.get_matrix();
+	
+	glUseProgram(m_shader.DEBUG_get_shader());
+
+	uint_32 location;
+
+	location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "MODEL_MAT");
+	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Model));
+
+	if (app->main_cam) // Guard to make sure we do have an App camera set
+	{
+
+		mat4x4 t_View  = app->main_cam->get_view();
+		mat4x4 t_Proj  = app->main_cam->get_proj();
+
+		location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "VIEW_MAT");
+		glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_View));
+
+		location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "PROJ_MAT");
+		glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Proj));
+	}
+
+	// Unset for safe keeping
+	glUseProgram(0);	
+
 	RenderObject::poke(app);
 	// TODO: pass uniforms to the shader :)
 }
