@@ -786,7 +786,9 @@ I would like to organize my code before I continue. I will have to lay out some 
 - class names will use PascalCase
 - functions will use snake_case
 - enums and definitions will use GQ_CAPITAL_SNAKE
-- private class members will use m_snake_case
-- test members will use t_snake_case
+- member properties names will use x_camelCase
+- - public members properties shouldnt be a thing really, we would use getters and setters...
+- private class members will use m_
+- test members will use t_
 
 I think for now, I think I will move my code around so that there is no more "include" folder. This is because ideally, the engine does not need to be imported like a system header. Instead, the engine would use an editor. 
