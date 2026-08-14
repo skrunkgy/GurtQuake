@@ -4,9 +4,10 @@
 
 #include <SDL3/SDL.h>
 #include <queue>
-#include "gmath.h"
-#include "graphics.h"
-#include "gtypes.h"
+#include "../math/math.h"
+#include "../graphics/camera.h"
+#include "../graphics/renderobject.h"
+#include "gqtypes.h"
 
 namespace gquake
 {

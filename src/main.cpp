@@ -1,6 +1,9 @@
 #include <glbinding/gl/functions.h>
 #include <glbinding/gl/types.h>
-#include <gquake/gquake.h>
+
+#include "core/app.h"
+#include "core/sceneroot.h"
+#include "graphics/mesh.h"
 
 using namespace gquake;
 using namespace gl;

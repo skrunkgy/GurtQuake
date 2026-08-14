@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include "../gmath.h"
-#include "../gtypes.h"
+#include "../math/math.h"
+#include "../core/gqtypes.h"
+#include "../core/gqobject.h"
 
 namespace gquake
 {

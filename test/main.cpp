@@ -1,6 +1,6 @@
 // Suite for testing parts of my code, like classes and functions/methods
 
-#include "../include/gquake/gmath.h"
+#include "../src/math/math.h"
 #include <stdio.h>
 
 using namespace gquake;

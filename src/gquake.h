@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "gmath.h"
-#include "graphics.h"
-#include "gtypes.h"
-#include "app.h"
+#include "math/math.h"
+#include "core/gqtypes.h"
+#include "core/app.h"

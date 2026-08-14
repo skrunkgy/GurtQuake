@@ -3,7 +3,7 @@
 #pragma once
 
 
-#include "../gtypes.h"
+#include "../core/gqtypes.h"
 
 #include "matrix.h"
 #include "vector2.h"

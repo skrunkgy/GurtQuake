@@ -1,7 +1,8 @@
-#include "gquake/gtypes.h"
-#include <gquake/gquake.h>
 #include <functional>
 #include <iostream>
+
+#include "gqtypes.h"
+#include "gqobject.h"
 
 using namespace gquake;
 
@@ -38,19 +39,8 @@ void gqObject::pop_child(int index)
 
 // Render Object
 
-// Will override all render objects and ones inherited i hope!
-void RenderObject::poke(App& app, GQ_POKE_TYPE poke_type)
-{
-	app.add_to_render_queue(this);
-}
+
 
 // Scene Root extended type
 
-SceneRoot::SceneRoot() {}
 
-SceneRoot::~SceneRoot()
-{
-    std::cout << "SceneRoot desotryed\n";
-}
-
-void SceneRoot::poke(App& app, GQ_POKE_TYPE poke_type) {}

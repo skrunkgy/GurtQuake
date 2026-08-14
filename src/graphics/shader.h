@@ -3,7 +3,7 @@
 #pragma once
 
 #include <string>
-#include "../gtypes.h"
+#include "../core/gqtypes.h"
 
 namespace gquake
 {

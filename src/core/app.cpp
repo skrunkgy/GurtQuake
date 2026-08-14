@@ -1,10 +1,11 @@
-#include "gquake/gtypes.h"
 #include <SDL3/SDL_video.h>
 #include <SDL3/SDL_events.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/glbinding.h>
-#include <gquake/gquake.h>
 #include <iostream>
+
+#include "gqtypes.h"
+#include "app.h"
 
 using namespace gquake;
 using namespace gl;

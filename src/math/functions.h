@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "../gtypes.h"
-#include "types.h"
+#include "../core/gqtypes.h"
+#include "math_types.h"
 #include "matrix.h"
 #include "vector2.h"
 #include "vector3.h"

@@ -1,10 +1,12 @@
-$RESOURCE_PATH = "/home/andrew/Projects/GurtQuake/resources/"
+RESOURCE_PATH = "/home/andrew/Projects/GurtQuake/resources/"
+SRCS := $(shell find src -wholename "src/*.cpp")
+OBJS := $(SRCS:.cpp=.o)
 
 gquake:
-	g++ -I include -lglbinding -lGL -lSDL3 src/* -o gquake
+	g++ -lglbinding -lGL -lSDL3 ${SRCS} -o gquake
 
-gqtest: test/main.cpp
-	g++ -I include -lglbinding -lGL -lSDL3 test/main.cpp -o gqtest
+gqtest: 
+	g++ -lglbinding -lGL -lSDL3 test/main.cpp -o gqtest
 
 clean:
 	rm builds/*

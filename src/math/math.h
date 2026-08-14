@@ -9,9 +9,9 @@
 
 #define PI 3.141592653589f
 
-#include "gmath/vector2.h"
-#include "gmath/vector3.h"
-#include "gmath/matrix.h"
-#include "gmath/types.h"
-#include "gmath/functions.h"
-#include "gmath/transform.h"
+#include "vector2.h"
+#include "vector3.h"
+#include "matrix.h"
+#include "functions.h"
+#include "transform.h"
+#include "math_types.h"

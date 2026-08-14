@@ -1,10 +1,10 @@
-#include "gquake/graphics/shader.h"
 #include <glbinding/gl/functions.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/gl/types.h>
 #include <string>
 #include <fstream>
-#include <gquake/gquake.h>
+
+#include "shader.h"
 
 using namespace gquake;
 using namespace gl;

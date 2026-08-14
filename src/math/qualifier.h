@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../gtypes.h"
+#include "../core/gqtypes.h"
 
 namespace gquake 
 {

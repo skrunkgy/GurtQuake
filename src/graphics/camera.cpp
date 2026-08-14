@@ -1,5 +1,6 @@
-#include <gquake/gquake.h>
 #include <cmath>
+
+#include "camera.h"
 
 using namespace gquake;
 

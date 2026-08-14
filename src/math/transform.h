@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../gmath.h"
+#include "math.h"
 
 namespace gquake 
 {

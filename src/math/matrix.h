@@ -11,7 +11,7 @@
 #include <initializer_list>
 
 #include "qualifier.h"
-#include "../gtypes.h"
+#include "../core/gqtypes.h"
 
 namespace gquake
 {

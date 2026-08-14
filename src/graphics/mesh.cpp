@@ -1,10 +1,11 @@
-#include "gquake/graphics/mesh.h"
 #include <glbinding/gl/functions.h>
 #include <initializer_list>
 #include <glbinding/gl/gl.h>
 #include <SDL3/SDL.h>
-#include <gquake/gquake.h>
 #include <stdio.h>
+
+#include "mesh.h"
+#include "../core/app.h"
 
 using namespace gquake;
 using namespace gl;

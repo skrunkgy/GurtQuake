@@ -3,8 +3,9 @@
 #pragma once
 
 #include <initializer_list>
-#include "../gmath.h"
-#include "../gtypes.h"
+#include "../math/math.h"
+#include "../graphics/renderobject.h"
+#include "../core/gqtypes.h"
 #include "shader.h"
 
 #define ATTRIB_COUNT 3
