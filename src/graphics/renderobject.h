@@ -1,3 +1,5 @@
+// renderobject.h || Almost abstract class meant for other classes that will be rendered
+
 #pragma once 
 
 #include "../core/gqobject.h"

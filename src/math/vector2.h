@@ -1,4 +1,4 @@
-// Vector of size 2 specialization!
+// vector2.h || Vector of size 2 implementation
 
 #pragma once
 

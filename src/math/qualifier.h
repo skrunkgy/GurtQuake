@@ -1,3 +1,5 @@
+// qualifier.h || Provides forward declaration for math types, may rearrange in future
+
 #pragma once 
 
 #include "../core/gqtypes.h"

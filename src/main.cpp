@@ -27,7 +27,7 @@ void App::init()
 
 	// Create camera then push to tree
 	Camera *t_Camera = new Camera();
-	t_Camera->transform.position = {0.f, 0.f, 5.f};
+	t_Camera->transform.position = {0.f, 0.f, 3.f};
 	t_Camera->aspect_ratio = 1.3333f; // 800/600, or 4/3
 
 	m_tree->add_child(t_Camera);

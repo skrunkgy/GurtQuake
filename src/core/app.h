@@ -1,10 +1,9 @@
-// Header for stuff related to the App class. This class manages the application and routines for it.
+// app.h || Outlines the app class used to spawn the application instance
 
 #pragma once
 
 #include <SDL3/SDL.h>
 #include <queue>
-#include "../math/math.h"
 #include "../graphics/camera.h"
 #include "../graphics/renderobject.h"
 #include "gqtypes.h"

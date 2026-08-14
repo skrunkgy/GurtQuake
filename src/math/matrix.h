@@ -1,5 +1,4 @@
-// Where all Matrix operations are defined
-// OpenGL uses column-major order, which means the first 4 elements represent a column
+// matrix.h || Generic struct for matrices, uses row-major order 
 
 #pragma once
 

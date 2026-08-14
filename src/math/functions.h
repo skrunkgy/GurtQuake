@@ -1,4 +1,4 @@
-// Provides some math functions
+// functions.h || None-member math functions 
 
 #pragma once
 

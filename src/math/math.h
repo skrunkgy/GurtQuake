@@ -1,9 +1,4 @@
-// Contains the files for all of the math library, as well as defines some base types from them.
-// Most code style and formatting inspired by glm !!
-
-// NOTE: Here are the conventions of operation overloading:
-// Unary without self assignment (+, -) -> type  (const type& o)
-// Unary with self assignment (+=, =)	-> type& (const type& o)
+// math.h | collection of all math header files + constants
 
 #pragma once
 

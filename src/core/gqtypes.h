@@ -1,11 +1,8 @@
-// 	Provides the typedefs and some base classes for the engine. 
-// 	NOTE: Some of this will be rearranged, or the file will be broken up as well. God help.
+// gtypes.h || Provides some enums and typedefs
 
 #pragma once
 
-#include <string>
-#include <vector>
-#include <functional>
+namespace gquake {
 
 enum GQ_RETURN_CODE
 {
@@ -20,6 +17,8 @@ enum GQ_POKE_TYPE
 	GQ_GENERIC_POKE,
 	GQ_DELETE_POKE
 };
+
+}
 
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;

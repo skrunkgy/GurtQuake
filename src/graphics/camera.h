@@ -1,10 +1,10 @@
-// Mathematical representation of the camera
+// camera.h || GQObject that represents a 3D camera
 
 #pragma once
 
-#include "../math/math.h"
 #include "../core/gqtypes.h"
 #include "../core/gqobject.h"
+#include "../math/transform.h"
 
 namespace gquake
 {

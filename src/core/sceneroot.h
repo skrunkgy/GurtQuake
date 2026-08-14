@@ -1,3 +1,5 @@
+// sceneroot.h || Extends the GQObject, used as the root of any scene
+
 #pragma once 
 
 #include "gqobject.h"

@@ -1,6 +1,10 @@
+// gqobject.h || Outlines the GQObject class, which is our base class for all of the actors
+
 #pragma once 
 
 #include <vector>
+#include <string>
+
 #include "gqtypes.h"
 
 namespace gquake {
@@ -22,8 +26,7 @@ public:
 
 	void add_child(GQObject* child);
 	void pop_child(int index);
-	void traverse(std::function<void(GQObject*, GQ_POKE_TYPE)> func, GQ_POKE_TYPE poke_type); // Method to perform on each node
-	void free(); // An inline method that makes use of traverse
+	void traverse(App& app, GQ_POKE_TYPE poke_type); // Method to perform on each node
 };
 
 }

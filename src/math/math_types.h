@@ -1,4 +1,4 @@
-// Instead of specialization, we use inheretence for a custom constructor
+// math_types.h || Typedefs of types in our math headers
 
 #pragma once
 

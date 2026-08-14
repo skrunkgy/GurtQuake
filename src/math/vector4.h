@@ -1,4 +1,5 @@
-// Vectortor of size 4 specialization!
+// vector4.h || Vector of size 4 implementation
+
 
 #pragma once
 

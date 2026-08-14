@@ -792,3 +792,13 @@ I would like to organize my code before I continue. I will have to lay out some 
 - test members will use t_
 
 I think for now, I think I will move my code around so that there is no more "include" folder. This is because ideally, the engine does not need to be imported like a system header. Instead, the engine would use an editor. 
+
+# 8/14
+
+I cleaned up the names (barely much to be done besides rename some classes). I added comments on top of all header files too! I also reworked the way we did the traversals.
+
+## GQObject::traverse()
+
+Initially, it used a lambda function. But the lambda function was not very helpful, and looked sloppy in my opinion. I am glad I know what a lambda does, but it didn't really serve good purpose since I only used it to called the `GQObject::poke()` or `delete(GQObject*)`.
+
+The rework was simply just utilizing the `GQ_POKE_TYPE` enum. In the traversal, it would call the delete operator if our traversal type was `GQ_DELETE_POKE`, otherwise it would call the poke() function. Very simple, build works as of current commit.

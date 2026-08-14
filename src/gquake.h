@@ -1,4 +1,4 @@
-// Includes every header file for the GurtQuake suite of files. Would be used in the future if gquake becomes something like a library.
+// gquake.h || Header file of all headers, would be used in include directory on build
 
 #pragma once
 

@@ -1,4 +1,4 @@
-// Shader class for creating and using shaders for Mesh
+// shader.h || Shader class for creating and using shaders for Mesh
 
 #pragma once
 

@@ -1,6 +1,8 @@
+// transform.h || Class to represent object transformations
+
 #pragma once 
 
-#include "math.h"
+#include "math_types.h"
 
 namespace gquake 
 {

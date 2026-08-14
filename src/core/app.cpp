@@ -56,9 +56,7 @@ void App::run()
 		beforeTime = SDL_GetTicksNS();
 		
 		// For now, logic will act as both render and logic
-		m_tree->traverse([this](GQObject* t, GQ_POKE_TYPE poke_type) { // traverse tree, pass lambda
-			t->poke(*this, poke_type);
-		}, GQ_GENERIC_POKE);
+		m_tree->traverse(*this, GQ_GENERIC_POKE);
 		render();
 	}
 }
@@ -108,7 +106,7 @@ App::~App()
 	}
 
 	// Free the tree
-	m_tree->free();
+	m_tree->traverse(*this, GQ_DELETE_POKE);
 
 	std::cout << "Goodbye!\n";
 }
