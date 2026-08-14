@@ -36,7 +36,7 @@ void App::init()
 	main_cam = t_Camera;
 }
 
-void App::loop(float_32 delta)
+void App::loop(float32_t delta)
 {
 }
 

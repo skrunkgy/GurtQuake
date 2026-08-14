@@ -30,7 +30,7 @@ Shader::~Shader()
 void Shader::compile_shader(const char* source, GQ_SHADER_TYPE type)
 {
 
-	uint_32 shader;
+	uint32_t shader;
 	
 	switch (type)
 	{
@@ -65,7 +65,7 @@ void Shader::compile_shader(const char* source, GQ_SHADER_TYPE type)
 std::string peek_word(std::fstream &file)
 {
 	std::string word;
-	uint_32 position = file.tellg();
+	uint32_t position = file.tellg();
 	file >> word;
 	file.seekg(position);
 	return word;
@@ -131,7 +131,7 @@ void Shader::set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data)
 	// TODO: write this code...
 }
 
-uint_32 Shader::DEBUG_get_shader()
+uint32_t Shader::t_get_shader()
 {
 	return m_program;
 }

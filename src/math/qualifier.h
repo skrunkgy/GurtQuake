@@ -5,10 +5,10 @@
 namespace gquake 
 {
 
-template <uint_32 n, typename T>
-struct vector;
+template <uint32_t n, typename T>
+struct Vector;
 
-template <uint_32 r, uint_32 c, typename T>
-struct matrix;
+template <uint32_t r, uint32_t c, typename T>
+struct Matrix;
 
 }

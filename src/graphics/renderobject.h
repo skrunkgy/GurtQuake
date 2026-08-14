@@ -5,7 +5,7 @@
 namespace gquake{
 
 // An object that can be attached to a render queue and rendered. Can be meshes or GUI (also MOSTLY purely virtual)
-class RenderObject : public gqObject
+class RenderObject : public GQObject
 {
 public:
 	virtual ~RenderObject() = default;

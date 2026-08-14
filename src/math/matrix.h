@@ -1,9 +1,9 @@
-// Where all matrix operations are defined
+// Where all Matrix operations are defined
 // OpenGL uses column-major order, which means the first 4 elements represent a column
 
 #pragma once
 
-#define AUTOFOR(i, n) for(uint_32 i = 0; i < n; i++)
+#define AUTOFOR(i, n) for(uint32_t i = 0; i < n; i++)
 
 #include <cassert>
 #include <stdio.h>
@@ -16,23 +16,23 @@
 namespace gquake
 {
 
-template <uint_32 n, typename T>
-struct vector;
+template <uint32_t n, typename T>
+struct Vector;
 
-template<uint_32 r, uint_32 c, typename T>
-struct alignas(T) matrix
+template<uint32_t r, uint32_t c, typename T>
+struct alignas(T) Matrix
 {
-	vector<c, T> data[r];
+	Vector<c, T> data[r];
 	
 	// Constructors
-	matrix() {}
-	matrix(T _data[r * c])
+	Matrix() {}
+	Matrix(T _data[r * c])
 	{
 		// Under the assumption it is tightly packed
 		memcpy(&data, _data, r * c);
 	}
 
-	matrix(std::initializer_list<T> _data)
+	Matrix(std::initializer_list<T> _data)
 	{
 		assert (_data.size() == r * c);
 		AUTOFOR(i, r) AUTOFOR(j, c)
@@ -43,7 +43,7 @@ struct alignas(T) matrix
 
 	// Assignment
 	template<typename U>
-	matrix<r, c, T>& operator= (const matrix<r, c, U>& o)
+	Matrix<r, c, T>& operator= (const Matrix<r, c, U>& o)
 	{
 		AUTOFOR(i, r * c)
 		{
@@ -53,21 +53,21 @@ struct alignas(T) matrix
 	}
 
 	// Access, returns a subarray (just the pointer to the first element of specified row)
-	const vector<c, T> operator[] (uint_32 i) const
+	const Vector<c, T> operator[] (uint32_t i) const
 	{
 		return this->data[i];
 	}
 
-	vector<c, T> operator[] (uint_32 i)
+	Vector<c, T> operator[] (uint32_t i)
 	{
 		return this->data[i];
 	}
 
 	// Unary arithmetic
 	template<typename U>
-	matrix<r, c, T> operator+ (matrix<r, c, U> &o)
+	Matrix<r, c, T> operator+ (Matrix<r, c, U> &o)
 	{
-		matrix<r, c, T> result;
+		Matrix<r, c, T> result;
 		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] + o.data[i];
@@ -76,9 +76,9 @@ struct alignas(T) matrix
 	}
 
 	template<typename U>
-	matrix<r, c, T> operator- (matrix<r, c, U> &o)
+	Matrix<r, c, T> operator- (Matrix<r, c, U> &o)
 	{
-		matrix<r, c, T> result;
+		Matrix<r, c, T> result;
 		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] - o.data[i];
@@ -87,9 +87,9 @@ struct alignas(T) matrix
 	}
 
 	template<typename U>
-	matrix<r, c, T> operator* (U scalar)
+	Matrix<r, c, T> operator* (U scalar)
 	{
-		matrix<r, c, T> result;
+		Matrix<r, c, T> result;
 		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] * scalar;
@@ -99,9 +99,9 @@ struct alignas(T) matrix
 	}
 
 	template<typename U>
-	matrix<r, c, T> operator/ (U scalar)
+	Matrix<r, c, T> operator/ (U scalar)
 	{
-		matrix<r, c, T> result;
+		Matrix<r, c, T> result;
 		AUTOFOR(i, r * c)
 		{
 			result.data[i] = this->data[i] / scalar;
@@ -111,10 +111,10 @@ struct alignas(T) matrix
 	
 	// Matrix multiplication
 	// TODO: Fix
-	template<uint_32 n, typename U> // n is the RHS number of rows
-	matrix<r, n, T> operator* (const matrix<n, c, U>& m)
+	template<uint32_t n, typename U> // n is the RHS number of rows
+	Matrix<r, n, T> operator* (const Matrix<n, c, U>& m)
 	{
-		matrix<n, c, T> result;
+		Matrix<n, c, T> result;
 		// code should be self explanatory :p 
 		AUTOFOR(lm_row, r)
 		{
@@ -132,9 +132,9 @@ struct alignas(T) matrix
 	}
 
 	template<typename U>
-	vector<r, T> operator* (const vector<c, U>& v)
+	Vector<r, T> operator* (const Vector<c, U>& v)
 	{
-		vector<r, T> result;
+		Vector<r, T> result;
 		AUTOFOR(lm_row, r)
 		{
 			T dot = 0;
@@ -148,8 +148,8 @@ struct alignas(T) matrix
 	}
 };
 
-template<uint_32 r, uint_32 c>
-void print_matf(const matrix<r, c, float_32>& m)
+template<uint32_t r, uint32_t c>
+void print_matf(const Matrix<r, c, float32_t>& m)
 {
 	AUTOFOR(i, r)
 	{

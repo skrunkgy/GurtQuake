@@ -10,7 +10,7 @@
 using namespace gquake;
 using namespace gl;
 
-App::App(const char* name, uint_32 x, uint_32 y)
+App::App(const char* name, uint32_t x, uint32_t y)
 {	
 	
 	SDL_SetHint("SDL_HINT_APP_ID", "com.gurtgames.gquake"); // Set app ID before SDL.init()
@@ -43,7 +43,7 @@ void App::run()
 
 	// Main app loop
 	SDL_Event event;
-	uint_64 beforeTime = SDL_GetTicksNS();
+	uint64_t beforeTime = SDL_GetTicksNS();
 
 	while (!m_state.exit)
 	{	
@@ -56,7 +56,7 @@ void App::run()
 		beforeTime = SDL_GetTicksNS();
 		
 		// For now, logic will act as both render and logic
-		m_tree->traverse([this](gqObject* t, GQ_POKE_TYPE poke_type) { // traverse tree, pass lambda
+		m_tree->traverse([this](GQObject* t, GQ_POKE_TYPE poke_type) { // traverse tree, pass lambda
 			t->poke(*this, poke_type);
 		}, GQ_GENERIC_POKE);
 		render();

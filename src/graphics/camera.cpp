@@ -37,7 +37,7 @@ mat4x4 Camera::get_view()
 mat4x4 Camera::get_proj()
 {
 	
-	float_32 S = 1.f / std::tan( fov * PI / 360.f);
+	float32_t S = 1.f / std::tan( fov * PI / 360.f);
 
 	return mat4x4
 	{

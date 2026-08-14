@@ -7,11 +7,11 @@
 using namespace gquake;
 
 // Generic traverse function that takes function object
-void gqObject::traverse(std::function<void(gqObject*, GQ_POKE_TYPE)> func, GQ_POKE_TYPE poke_type)
+void GQObject::traverse(std::function<void(GQObject*, GQ_POKE_TYPE)> func, GQ_POKE_TYPE poke_type)
 {
     if (!m_children.empty())
     {
-        for ( gqObject* child : m_children)
+        for ( GQObject* child : m_children)
         {
             child->traverse(func, poke_type);
         }
@@ -20,19 +20,19 @@ void gqObject::traverse(std::function<void(gqObject*, GQ_POKE_TYPE)> func, GQ_PO
 }
 
 // For freeing the tree (also a demonstraiton)
-void gqObject::free()
+void GQObject::free()
 {
-    this->traverse([](gqObject* t, GQ_POKE_TYPE poke_type){
+    this->traverse([](GQObject* t, GQ_POKE_TYPE poke_type){
         delete t;
     }, GQ_DELETE_POKE);
 }
 
-void gqObject::add_child(gqObject* child)
+void GQObject::add_child(GQObject* child)
 {
 	m_children.push_back(child);
 }
 
-void gqObject::pop_child(int index)
+void GQObject::pop_child(int index)
 {
 	m_children.erase(m_children.cbegin() + index);
 }

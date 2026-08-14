@@ -22,13 +22,13 @@ Mesh::Mesh(Vertex vertices[], unsigned int count)
 	
 	// Insert vertex data into Mesh
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, count * ATTRIB_COUNT * sizeof(float_32), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, count * ATTRIB_COUNT * sizeof(float32_t), vertices, GL_STATIC_DRAW);
 	
 	// Set up attrib layout 
 	glBindVertexArray(m_vao);
 	
 	// POSITION: 3, TODO: make directives? 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(float_32), reinterpret_cast<void*>(0));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(float32_t), reinterpret_cast<void*>(0));
 	glEnableVertexAttribArray(0);
 	
 	// UV: 2
@@ -67,11 +67,11 @@ void Mesh::poke(App& app, GQ_POKE_TYPE poke_type)
 	// NOTE: gl specific code, also kind of stinky. temporary!
 	mat4x4 t_Model = transform.get_matrix();
 	
-	glUseProgram(m_shader.DEBUG_get_shader());
+	glUseProgram(m_shader.t_get_shader());
 
-	uint_32 location;
+	uint32_t location;
 
-	location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "MODEL_MAT");
+	location = glGetUniformLocation(m_shader.t_get_shader(), "MODEL_MAT");
 	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Model));
 
 	if (app.main_cam) // Guard to make sure we do have an App camera set
@@ -80,10 +80,10 @@ void Mesh::poke(App& app, GQ_POKE_TYPE poke_type)
 		mat4x4 t_View  = app.main_cam->get_view();
 		mat4x4 t_Proj  = app.main_cam->get_proj();
 
-		location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "VIEW_MAT");
+		location = glGetUniformLocation(m_shader.t_get_shader(), "VIEW_MAT");
 		glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_View));
 
-		location = glGetUniformLocation(m_shader.DEBUG_get_shader(), "PROJ_MAT");
+		location = glGetUniformLocation(m_shader.t_get_shader(), "PROJ_MAT");
 		glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Proj));
 	}
 

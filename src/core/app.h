@@ -31,7 +31,7 @@ public:
 	
 	// These will be user specified, for now
 	void init();
-	void loop(float_32 delta);
+	void loop(float32_t delta);
 
 	void run();
 	void add_to_render_queue(RenderObject*);
@@ -44,7 +44,7 @@ private:
 	SDL_GLContext m_context;
 	std::queue<RenderObject*> m_renderQueue;
 
-	gqObject* m_tree;
+	GQObject* m_tree;
 
 	void poll_events(SDL_Event event);
 	void render();

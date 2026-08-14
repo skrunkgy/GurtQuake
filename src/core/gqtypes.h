@@ -21,9 +21,9 @@ enum GQ_POKE_TYPE
 	GQ_DELETE_POKE
 };
 
-typedef unsigned char uint_8;
-typedef unsigned short uint_16;
-typedef unsigned int uint_32;
-typedef unsigned long uint_64;
-typedef float float_32;
-typedef double float_64;
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned int uint32_t;
+typedef unsigned long uint64_t;
+typedef float float32_t;
+typedef double float64_t;

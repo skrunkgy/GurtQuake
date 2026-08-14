@@ -1,4 +1,4 @@
-// vector of size 2 specialization!
+// Vector of size 2 specialization!
 
 #pragma once
 
@@ -11,7 +11,7 @@ namespace gquake
 {
 
 template<typename T>
-struct alignas(T) vector<2, T>
+struct alignas(T) Vector<2, T>
 {
 	union
 	{
@@ -22,27 +22,27 @@ struct alignas(T) vector<2, T>
 	};
 	
 	// Constructors
-	vector()
+	Vector()
 	{ 
 		this->x = T(0); this->y = T(0);
 	}
 	template<typename U>
-	vector(const vector<2, U> &o)
+	Vector(const Vector<2, U> &o)
 	{ 
 		this->x = o.x; this->y = o.y; 
 	}
-	vector(T _x, T _y) 
+	Vector(T _x, T _y) 
 	{ 
 		this->x =  _x; this->y =  _y; 
 	}
-	vector(T* _array)
+	Vector(T* _array)
 	{
 		memcpy(this->data, _array, 2);
 	}
 
 	// Assignment
 	template<typename U>
-	vector<2, T>& operator= (const vector<2, U> &o)
+	Vector<2, T>& operator= (const Vector<2, U> &o)
 	{
 		this->x = o.x;
 		this->y = o.y;
@@ -50,38 +50,38 @@ struct alignas(T) vector<2, T>
 	}
 
 	// Null arithmetic operators
-	vector<2, T> operator-()
+	Vector<2, T> operator-()
 	{
 		return (*this) * -1;
 	}
 	
 	// Unary arithmetic operators
 	template <typename U>
-	vector<2, T> operator+ (const vector<2, U> &o)
+	Vector<2, T> operator+ (const Vector<2, U> &o)
 	{
-		return vector<2, T>(x + o.x, y + o.y);
+		return Vector<2, T>(x + o.x, y + o.y);
 	}
 
 	template <typename U>
-	vector<2, T> operator- (const vector<2, U> &o)
+	Vector<2, T> operator- (const Vector<2, U> &o)
 	{
-		return vector<2, T>(this->x - o.x, this->y - o.y);
+		return Vector<2, T>(this->x - o.x, this->y - o.y);
 	}
 
 	template <typename U>
-	vector<2, T> operator* (U scalar)
+	Vector<2, T> operator* (U scalar)
 	{
-		return vector<2, T>(this->x * scalar, this->y * scalar);
+		return Vector<2, T>(this->x * scalar, this->y * scalar);
 	}
 
 	template <typename U>
-	vector<2, T> operator/ (U scalar)
+	Vector<2, T> operator/ (U scalar)
 	{
-		return vector<2, T>(this->x / scalar, this->y / scalar);
+		return Vector<2, T>(this->x / scalar, this->y / scalar);
 	}
 
 	template <typename U>
-	vector<2, T>& operator+= (const vector<2, U> &o)
+	Vector<2, T>& operator+= (const Vector<2, U> &o)
 	{
 		this->x += o.x;
 		this->y += o.y;
@@ -89,7 +89,7 @@ struct alignas(T) vector<2, T>
 	}
 
 	template <typename U>
-	vector<2, T>& operator-= (const vector<2, U> &o)
+	Vector<2, T>& operator-= (const Vector<2, U> &o)
 	{
 		this->x -= o.x;
 		this->y -= o.y;
@@ -97,7 +97,7 @@ struct alignas(T) vector<2, T>
 	}
 
 	template <typename U>
-	vector<2, T>& operator*= (U scalar)
+	Vector<2, T>& operator*= (U scalar)
 	{
 		this->x *= scalar;
 		this->y *= scalar;
@@ -105,7 +105,7 @@ struct alignas(T) vector<2, T>
 	}
 
 	template <typename U>
-	vector<2, T>& operator/= (U scalar)
+	Vector<2, T>& operator/= (U scalar)
 	{
 		this->x /= scalar;
 		this->y /= scalar;
@@ -115,13 +115,13 @@ struct alignas(T) vector<2, T>
 	// Comparisons
 	// Will not use greater or lesser, since these are multi component
 	template <typename U>
-	bool operator== (const vector<2, U> &o)
+	bool operator== (const Vector<2, U> &o)
 	{
 		return this->x == o.x && this->y == o.y;
 	}
 
 	template <typename U>
-	bool operator!= (const vector<2, U> &o)
+	bool operator!= (const Vector<2, U> &o)
 	{
 		return this->x != o.x || this->y != o.y;
 	}
@@ -159,15 +159,15 @@ struct alignas(T) vector<2, T>
 // Binary operators
 
 template<typename T, typename U>
-vector<2, T> operator* (U scalar, const vector<2, T>& v)
+Vector<2, T> operator* (U scalar, const Vector<2, T>& v)
 {
-	return vector<2, T>(v.x * scalar, v.y * scalar);
+	return Vector<2, T>(v.x * scalar, v.y * scalar);
 }
 
 template<typename T, typename U>
-vector<2, T> operator/ (U scalar, const vector<2, T>& v)
+Vector<2, T> operator/ (U scalar, const Vector<2, T>& v)
 {
-	return vector<2, T>(v.x / scalar, v.y / scalar);
+	return Vector<2, T>(v.x / scalar, v.y / scalar);
 }
 
 }

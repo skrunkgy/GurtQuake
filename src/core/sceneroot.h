@@ -4,7 +4,7 @@
 
 namespace gquake {
 
-class SceneRoot : public gqObject
+class SceneRoot : public GQObject
 {
 public:
 	SceneRoot();

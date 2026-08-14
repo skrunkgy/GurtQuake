@@ -9,7 +9,7 @@
 namespace gquake
 {
 
-class Camera : public gqObject
+class Camera : public GQObject
 {
 
 public:
@@ -18,10 +18,10 @@ public:
 
 	Transform transform;
 
-	float_32 near;
-	float_32 far;
-	float_32 fov;
-	float_32 aspect_ratio;
+	float32_t near;
+	float32_t far;
+	float32_t fov;
+	float32_t aspect_ratio;
 
 	void poke(App& app, GQ_POKE_TYPE poke_type); // Update matrices with stuff
 

@@ -8,21 +8,21 @@ namespace gquake {
 class App; // We just need this for now...
 
 // Node for a tree
-class gqObject
+class GQObject
 {
 private:
-	std::vector<gqObject*> m_children;
+	std::vector<GQObject*> m_children;
 
 public:
 
 	std::string name; // Make gqID in the future, struct
 	
-	virtual ~gqObject() = default;
+	virtual ~GQObject() = default;
 	virtual void poke(App& app, GQ_POKE_TYPE poke_type) = 0;
 
-	void add_child(gqObject* child);
+	void add_child(GQObject* child);
 	void pop_child(int index);
-	void traverse(std::function<void(gqObject*, GQ_POKE_TYPE)> func, GQ_POKE_TYPE poke_type); // Method to perform on each node
+	void traverse(std::function<void(GQObject*, GQ_POKE_TYPE)> func, GQ_POKE_TYPE poke_type); // Method to perform on each node
 	void free(); // An inline method that makes use of traverse
 };
 

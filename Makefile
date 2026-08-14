@@ -7,6 +7,3 @@ gquake:
 
 gqtest: 
 	g++ -lglbinding -lGL -lSDL3 test/main.cpp -o gqtest
-
-clean:
-	rm builds/*

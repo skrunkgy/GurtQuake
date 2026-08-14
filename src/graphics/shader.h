@@ -30,7 +30,7 @@ public:
 	~Shader();
 	
 	void use_shader();
-	uint_32 DEBUG_get_shader(); // For setting uniforms manually, TODO: REMOVE
+	uint32_t t_get_shader(); // For setting uniforms manually, TODO: REMOVE
 	
 	template <typename T>
 	void set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data);

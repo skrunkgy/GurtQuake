@@ -10,13 +10,13 @@
 #include "vector4.h"
 #include <cmath>
 
-#define GQ_VEC_TEMP template<uint_32 n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
+#define GQ_VEC_TEMP template<uint32_t n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
 
 namespace gquake
 {
 
-template<uint_32 n, typename T, typename U>
-T dot(vector<n, T> a, vector<n, U> b)
+template<uint32_t n, typename T, typename U>
+T dot(Vector<n, T> a, Vector<n, U> b)
 {
 	T sum = 0;
 	for (int i = 0; i < n; i++)
@@ -27,13 +27,13 @@ T dot(vector<n, T> a, vector<n, U> b)
 }
 
 template<typename T, typename U>
-vector<3, T> cross(vector<3, T> a, vector<3, U> b)
+Vector<3, T> cross(Vector<3, T> a, Vector<3, U> b)
 {
-	return vector<3, T>( a.y * b.z - a.z * b.y , a.z * b.x - a.x * b.z , a.x * b.y - a.y * b.x );
+	return Vector<3, T>( a.y * b.z - a.z * b.y , a.z * b.x - a.x * b.z , a.x * b.y - a.y * b.x );
 }
 
-template<uint_32 n, typename T>
-T length(const vector<n, T> &v)
+template<uint32_t n, typename T>
+T length(const Vector<n, T> &v)
 {
 	T sum = 0.0f;
 	for (int i = 0; i < n; i++)
@@ -43,14 +43,14 @@ T length(const vector<n, T> &v)
 	return std::sqrt(sum);
 }
 
-template<uint_32 n, typename T>
-vector<n, T> normalized(vector<n, T> &v)
+template<uint32_t n, typename T>
+Vector<n, T> normalized(Vector<n, T> &v)
 {
 	return v / length(v);
 }
 
 template<typename T, typename U>
-T array_dot(T* a, U* b, uint_32 n)
+T array_dot(T* a, U* b, uint32_t n)
 {
 	T result = 0;
 	AUTOFOR(i, n)
@@ -61,10 +61,10 @@ T array_dot(T* a, U* b, uint_32 n)
 }
 
 template<typename T>
-inline vector<3, T> rotate_point(vector<3, T>  point, vector<3, T> axis, float_32 angle)
+inline Vector<3, T> rotate_point(Vector<3, T>  point, Vector<3, T> axis, float32_t angle)
 {
-	float_32 s = std::sin(angle);
-	float_32 c = std::cos(angle);
+	float32_t s = std::sin(angle);
+	float32_t c = std::cos(angle);
 
 	mat3x3 rotation_matrix = 
 		{
