@@ -27,18 +27,20 @@ void App::init()
 
 	// Create camera then push to tree
 	Camera *t_Camera = new Camera();
-	t_Camera->transform.position = {0.f, 0.f, 3.f};
+	t_Camera->transform.position = {0.f, 0.f, 5.f};
+	t_Camera->transform.rotate_axis(PI / 180.f * 30.f, vec3(1.f, 0.f, 0.f));
+	
 	t_Camera->aspect_ratio = 1.3333f; // 800/600, or 4/3
 
 	m_tree->add_child(t_Camera);
 
 	// Set app's main Cam
-	main_cam = t_Camera;
+	m_mainCamera = t_Camera;
 }
 
-void App::loop(float32_t delta)
-{
-}
+void App::loop(float32_t delta) {}
+
+void App::input(SDL_Event& event) {}
 
 int main(int argc, char** kwarg)
 {

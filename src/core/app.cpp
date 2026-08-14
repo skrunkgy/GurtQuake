@@ -26,26 +26,22 @@ App::App(const char* name, uint32_t x, uint32_t y)
 
 	glbinding::initialize(SDL_GL_GetProcAddress);
 
-	m_state = {false, false};
-	m_state.fillColor = {.6, .5, .9};
+	m_state = {true, {.6, .5, .9}};
 
 	glViewport(0, 0, x, y);
 	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
 
-	// NOTE: May be temporary, I don't really want this
-	main_cam = nullptr;
 }
 
 void App::run()
 {
-	
 	init();
 
 	// Main app loop
 	SDL_Event event;
 	uint64_t beforeTime = SDL_GetTicksNS();
 
-	while (!m_state.exit)
+	while (m_state.running)
 	{	
 		while(SDL_PollEvent(&event)) // Poll events
 		{
@@ -61,17 +57,20 @@ void App::run()
 	}
 }
 
-void App::poll_events(SDL_Event event)
+void App::poll_events(SDL_Event& event)
 {
 	switch (event.type)
 	{
 		case SDL_EVENT_QUIT:
 			SDL_QuitEvent();
-			m_state.exit = true;
+			m_state.running = false;
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
 			glViewport(0, 0, event.window.data1, event.window.data2);
+			m_mainCamera->aspect_ratio = float(event.window.data1) / float(event.window.data2);
 			break;
+		default:
+			input(event);
 	}
 }
 
@@ -109,4 +108,10 @@ App::~App()
 	m_tree->traverse(*this, GQ_DELETE_POKE);
 
 	std::cout << "Goodbye!\n";
+}
+
+Camera& App::get_main_cam()
+{
+	assert(m_mainCamera);
+	return *m_mainCamera;
 }

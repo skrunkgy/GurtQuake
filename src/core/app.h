@@ -11,41 +11,39 @@
 namespace gquake
 {
 
-struct AppState
+struct AppState 
 {
-	bool fullscreen;
-	bool exit;
-	vec3 fillColor; //
+	bool running;
+	vec3 fillColor;
 };
 
-// App singleton
 class App
 {
 public:
 	App(const char* name, unsigned int x, unsigned int y);
 	~App();
 
-	// Ideally want a main camera
-	Camera* main_cam;
-	
-	// These will be user specified, for now
-	void init();
-	void loop(float32_t delta);
-
-	void run();
+	Camera& get_main_cam();
 	void add_to_render_queue(RenderObject*);
 
+	void run();
+	
 private:
 	SDL_Window* m_window;
 
-	// Perhaps extract stuff to a renderer class?
+	// Eventually add Viewport class
 	AppState m_state;
 	SDL_GLContext m_context;
 	std::queue<RenderObject*> m_renderQueue;
-
-	GQObject* m_tree;
-
-	void poll_events(SDL_Event event);
+	Camera* m_mainCamera = nullptr;
+	GQObject* m_tree = nullptr;
+	
+	// Functions to be overwritten
+	void init();
+	void loop(float32_t delta);
+	void input(SDL_Event& event); // Custom input events for main.cpp
+	
+	void poll_events(SDL_Event& event);
 	void render();
 };
 

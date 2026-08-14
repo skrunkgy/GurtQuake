@@ -52,12 +52,12 @@ struct alignas(T) Matrix
 	}
 
 	// Access, returns a subarray (just the pointer to the first element of specified row)
-	const Vector<c, T> operator[] (uint32_t i) const
+	const Vector<c, T>& operator[] (uint32_t i) const
 	{
 		return this->data[i];
 	}
 
-	Vector<c, T> operator[] (uint32_t i)
+	Vector<c, T>& operator[] (uint32_t i)
 	{
 		return this->data[i];
 	}

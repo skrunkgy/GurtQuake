@@ -5,6 +5,7 @@
 
 #include <string.h>
 #include <cassert>
+#include <stdio.h>
 
 #include "qualifier.h"
 
@@ -44,6 +45,15 @@ struct alignas(T) Vector<3, T>
 	// Assignment
 	template<typename U>
 	Vector<3, T>& operator= (const Vector<3, U> &o)
+	{
+		this->x = o.x;
+		this->y = o.y;
+		this->z = o.z;
+		return *this;
+	}
+
+	template<typename U>
+	Vector<3, T> operator= (Vector<3, U> o)
 	{
 		this->x = o.x;
 		this->y = o.y;

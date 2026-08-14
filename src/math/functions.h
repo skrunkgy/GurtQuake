@@ -4,10 +4,6 @@
 
 #include "../core/gqtypes.h"
 #include "math_types.h"
-#include "matrix.h"
-#include "vector2.h"
-#include "vector3.h"
-#include "vector4.h"
 #include <cmath>
 
 #define GQ_VEC_TEMP template<uint32_t n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
@@ -19,11 +15,8 @@ template<uint32_t n, typename T, typename U>
 T dot(Vector<n, T> a, Vector<n, U> b)
 {
 	T sum = 0;
-	for (int i = 0; i < n; i++)
-	{
-		sum += a[i] * b[i];
-	}
-	return std::sqrt(sum); // pesky std math library... rumble fumble...
+	AUTOFOR(i, n) sum += a[i] * b[i];
+	return sum; // pesky std math library... rumble fumble...
 }
 
 template<typename T, typename U>
@@ -61,7 +54,7 @@ T array_dot(T* a, U* b, uint32_t n)
 }
 
 template<typename T>
-inline Vector<3, T> rotate_point(Vector<3, T>  point, Vector<3, T> axis, float32_t angle)
+Vector<3, T> rotate_point(Vector<3, T>  point, Vector<3, T> axis, float32_t angle)
 {
 	float32_t s = std::sin(angle);
 	float32_t c = std::cos(angle);
@@ -72,7 +65,7 @@ inline Vector<3, T> rotate_point(Vector<3, T>  point, Vector<3, T> axis, float32
 			axis.x * axis.y * (1.0f - c) + axis.z * s, std::pow(axis.y, 2.0f) * (1.0f - c) + c, axis.y * axis.z * (1.0f - c) - axis.x * s,
 			axis.x * axis.z * (1.0f - c) - axis.y * s, axis.y * axis.z * (1.0f - c) + axis.x * s, std::pow(axis.z, 2.0f) * (1.0f - c) + c
 		};
-	return point * rotation_matrix;
+	return rotation_matrix * point;
 }
 
 }

@@ -3,6 +3,7 @@
 #pragma once 
 
 #include "math_types.h"
+#include "functions.h"
 
 namespace gquake 
 {
@@ -19,8 +20,7 @@ struct Transform
 			1.f, 0.f, 0.f,
 			0.f, 1.f, 0.f,
 			0.f, 0.f, 1.f
-		}
-	{}
+		} {}
 	
 	// turns all these into a 4x4 transform matrix, left to right scale * rotation * position
 	mat4x4 get_matrix()
@@ -36,7 +36,13 @@ struct Transform
 		return result;
 	}
 
+	void rotate_axis(float32_t angle, vec3 axis)
+	{
+		AUTOFOR(i, 3)
+		{
+			basis[i] = rotate_point(basis[i], axis, angle);
+		}
+	}
 };
-
 
 }
