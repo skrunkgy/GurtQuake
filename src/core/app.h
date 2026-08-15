@@ -41,7 +41,6 @@ private:
 	// Functions to be overwritten
 	void init();
 	void loop(float32_t delta);
-	void input(SDL_Event& event); // Custom input events for main.cpp
 	
 	void poll_events(SDL_Event& event);
 	void render();

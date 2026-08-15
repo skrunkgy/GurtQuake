@@ -1,3 +1,4 @@
+#include <SDL3/SDL_events.h>
 #include <glbinding/gl/functions.h>
 #include <glbinding/gl/types.h>
 
@@ -7,6 +8,29 @@
 
 using namespace gquake;
 using namespace gl;
+
+// This is our test class, which is basically our first example of behavior programming!
+class FlyCam : public Camera 
+{
+	void _enter()
+	{
+		transform.position = {0.f, 0.f, 3.f};
+		transform.rotate_axis(PI / 180.f * 30.f, vec3(1.f, 0.f, 0.f));
+		aspect_ratio = 1.3333f; // 800/600, or 4/3
+		
+		printf("FlyCam has entered scene tree!\n");
+	}
+
+	void _input(SDL_Event& event)
+	{
+		if (event.type == SDL_EVENT_KEY_DOWN)
+		{
+			char buf[256];
+			SDL_GetEventDescription(&event, buf, 256);
+			printf("Event is %s\n", buf);
+		}
+	}
+};
 
 void App::init()
 {
@@ -26,11 +50,7 @@ void App::init()
 	m_tree->add_child(t_Mesh);
 
 	// Create camera then push to tree
-	Camera *t_Camera = new Camera();
-	t_Camera->transform.position = {0.f, 0.f, 5.f};
-	t_Camera->transform.rotate_axis(PI / 180.f * 30.f, vec3(1.f, 0.f, 0.f));
-	
-	t_Camera->aspect_ratio = 1.3333f; // 800/600, or 4/3
+	Camera *t_Camera = new FlyCam();
 
 	m_tree->add_child(t_Camera);
 
@@ -39,8 +59,6 @@ void App::init()
 }
 
 void App::loop(float32_t delta) {}
-
-void App::input(SDL_Event& event) {}
 
 int main(int argc, char** kwarg)
 {

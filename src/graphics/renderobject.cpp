@@ -4,7 +4,7 @@
 using namespace gquake;
 
 // Will override all render objects and ones inherited i hope!
-void RenderObject::poke(App& app, GQ_POKE_TYPE poke_type)
+void RenderObject::_render(App* app)
 {
-	app.add_to_render_queue(this);
+	app->add_to_render_queue(this);
 }

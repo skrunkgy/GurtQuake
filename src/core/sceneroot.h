@@ -1,4 +1,4 @@
-// sceneroot.h || Extends the GQObject, used as the root of any scene
+// sceneroot.h || Extends the GQObject, kind of like a basic node
 
 #pragma once 
 
@@ -11,7 +11,6 @@ class SceneRoot : public GQObject
 public:
 	SceneRoot();
 	~SceneRoot();
-	void poke(App& app, GQ_POKE_TYPE poke_type);
 };
 
 }

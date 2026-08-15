@@ -52,7 +52,9 @@ void App::run()
 		beforeTime = SDL_GetTicksNS();
 		
 		// For now, logic will act as both render and logic
-		m_tree->traverse(*this, GQ_GENERIC_POKE);
+		m_tree->traverse({
+			GQ_RENDER_POKE, this
+		});
 		render();
 	}
 }
@@ -69,8 +71,13 @@ void App::poll_events(SDL_Event& event)
 			glViewport(0, 0, event.window.data1, event.window.data2);
 			m_mainCamera->aspect_ratio = float(event.window.data1) / float(event.window.data2);
 			break;
+		// If we have keyboard or mouse inputs, we do input traversal :) For now, we redirect all other events to _input(SDL_Event&)
 		default:
-			input(event);
+			m_tree->traverse({
+				.type = GQ_INPUT_POKE,
+				.event = &event
+			});
+			break;
 	}
 }
 
@@ -105,7 +112,9 @@ App::~App()
 	}
 
 	// Free the tree
-	m_tree->traverse(*this, GQ_DELETE_POKE);
+	m_tree->traverse({
+		GQ_DELETE_POKE
+	});
 
 	std::cout << "Goodbye!\n";
 }

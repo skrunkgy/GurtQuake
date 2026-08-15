@@ -12,7 +12,8 @@ class RenderObject : public GQObject
 public:
 	virtual ~RenderObject() = default;
 	virtual void draw() = 0;
-	void poke(App& app, GQ_POKE_TYPE poke_type);
+	
+	virtual void _render(App* app);
 };
 
 }

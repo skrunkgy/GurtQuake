@@ -802,3 +802,28 @@ I cleaned up the names (barely much to be done besides rename some classes). I a
 Initially, it used a lambda function. But the lambda function was not very helpful, and looked sloppy in my opinion. I am glad I know what a lambda does, but it didn't really serve good purpose since I only used it to called the `GQObject::poke()` or `delete(GQObject*)`.
 
 The rework was simply just utilizing the `GQ_POKE_TYPE` enum. In the traversal, it would call the delete operator if our traversal type was `GQ_DELETE_POKE`, otherwise it would call the poke() function. Very simple, build works as of current commit.
+
+# 8/15
+
+Yesterday, I fixed some bugs I haven't caught with the math library. The `Matrix::operator[]()` function didn't return a reference but instead a copy, thus doing `mat3x3[i] = vec3` did nothing, and I was confused why. Lesson learned... I also fixed the `Camera::get_view()` function since I reversed the order of transformations (I did rotation then position, when it should be position then rotation). I also found an error with the `dot(vec3, vec3)` free function because I sqrt'd the result. I remember doing this because I thought I forgot to sqrt the result of the `length(vec3)` function. I am such a silly billy aren't I. Anywho, plans:
+
+## Implementing Behavior
+
+I have two ways to go about this: Inheritance or ECS (or something like ECS). My engine doesn't really have an ECS system atm, as everything has just been inheritance. I have not designed this engine with ECS in mind, so I will most likely be using inheritance. This is very simple, as I just have to add a few virtual void functions. For now, I am thinking of only 3:
+- _enter(), which will be called when it enters the SceneTree
+- _loop(float32_t), which will be called in the Logic poke
+- _input(SDL_Event&), which will be called for input
+
+This is obviously derived from Godot, haha. Godot and GLM have been my main inspirations for this implementation.
+
+I think the "add_child()" function will call the _enter() function.
+
+Also something I just learned, is about using virtual and pure virtual functions. The difference is that pure virtual functions mean there is no implementation, thus any inhereting class must define it, as well as
+
+## Getting rid of GQObject::poke()
+
+As our needs expand, it is also apparent that the poke() is too generic. What if instead of handling all the switch logic in the poke function, we define several functions for each kind of traversal? This makes things less ambiguous, and I seem happy with this decision.
+
+## Some more naming conventions...
+
+Until I figure out a better naming scheme (soon, hopefully), all traversal sub-functions will just use the `name(...) scheme`. I wanted to do `p_name(...)`, but this looks like the Hungarian naming scheme (or whatever its called), which I think is using an extension to declare a type. p_name would be a pointer type, but I wanted to use it for poke functions, so we will see...

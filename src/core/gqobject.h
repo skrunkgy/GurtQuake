@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <SDL3/SDL_events.h>
 
 #include "gqtypes.h"
 
@@ -22,11 +23,16 @@ public:
 	std::string name; // Make gqID in the future, struct
 	
 	virtual ~GQObject() = default;
-	virtual void poke(App& app, GQ_POKE_TYPE poke_type) = 0;
 
 	void add_child(GQObject* child);
 	void pop_child(int index);
-	void traverse(App& app, GQ_POKE_TYPE poke_type); // Method to perform on each node
+	void traverse(PokeData poke); // Method to perform on each node
+	
+	// Functions for different traversal passes
+	virtual void _enter() {};
+	virtual void _loop(float32_t dt) {};
+	virtual void _input(SDL_Event& event) {};
+	virtual void _render(App* app) {};
 };
 
 }

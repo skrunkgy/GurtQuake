@@ -5,7 +5,7 @@
 
 using namespace gquake;
 
-void Camera::poke(App& app, GQ_POKE_TYPE poke_type)
+void Camera::_render(App* app)
 {
 	// TODO: make UBO and then pass to UBO
 }
