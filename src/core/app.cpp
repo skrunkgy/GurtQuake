@@ -49,12 +49,18 @@ void App::run()
 		}
 
 		loop((SDL_GetTicksNS() - beforeTime) * .000000001f);
+		m_tree->traverse({
+			.type = GQ_LOGIC_POKE,
+			.dt = (SDL_GetTicksNS() - beforeTime) * .000000001f
+		});
 		beforeTime = SDL_GetTicksNS();
 		
 		// For now, logic will act as both render and logic
 		m_tree->traverse({
-			GQ_RENDER_POKE, this
+			.type = GQ_RENDER_POKE,
+			.app = this
 		});
+		
 		render();
 	}
 }

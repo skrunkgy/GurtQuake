@@ -1,4 +1,5 @@
 #include <SDL3/SDL_events.h>
+#include <SDL3/SDL_keycode.h>
 #include <glbinding/gl/functions.h>
 #include <glbinding/gl/types.h>
 
@@ -10,12 +11,17 @@ using namespace gquake;
 using namespace gl;
 
 // This is our test class, which is basically our first example of behavior programming!
-class FlyCam : public Camera 
+class FlyCam : public Camera
 {
+
+	vec2 movement;
+	float speed = 3.f;
+	bool look_lock = true;
+
 	void _enter()
 	{
 		transform.position = {0.f, 0.f, 3.f};
-		transform.rotate_axis(PI / 180.f * 30.f, vec3(1.f, 0.f, 0.f));
+		// transform.rotate_axis(PI / 180.f * 30.f, vec3(1.f, 0.f, 0.f));
 		aspect_ratio = 1.3333f; // 800/600, or 4/3
 		
 		printf("FlyCam has entered scene tree!\n");
@@ -23,12 +29,50 @@ class FlyCam : public Camera
 
 	void _input(SDL_Event& event)
 	{
-		if (event.type == SDL_EVENT_KEY_DOWN)
+		switch (event.type)
 		{
-			char buf[256];
-			SDL_GetEventDescription(&event, buf, 256);
-			printf("Event is %s\n", buf);
+			case SDL_EVENT_KEY_DOWN: switch(event.key.key) // Set movement components
+			{
+				case SDLK_W:
+					movement.y = -1.f; break;
+				case SDLK_S:
+					movement.y =  1.f; break;
+				case SDLK_A:
+					movement.x = -1.f; break;
+				case SDLK_D:
+					movement.x =  1.f; break;
+			} break;
+
+			case SDL_EVENT_KEY_UP: switch(event.key.key) // Unset movement components
+			{
+				case SDLK_W:
+					movement.y = 0.f; break;
+				case SDLK_S:
+					movement.y = 0.f; break;
+				case SDLK_A:
+					movement.x = 0.f; break;
+				case SDLK_D:
+					movement.x = 0.f; break;
+			} break;
+			
+			// Set our look lock (hold right mouse)
+			case SDL_EVENT_MOUSE_BUTTON_DOWN: if (event.button.button == 3) look_lock = false; break;
+			case SDL_EVENT_MOUSE_BUTTON_UP  : if (event.button.button == 3) look_lock = true; break;
+			
+			// Rotate our basis based on if we aren't locked and our mouse movement
+			case SDL_EVENT_MOUSE_MOTION: if (!look_lock)
+			{
+				transform.rotate_axis(event.motion.xrel * -.01f, {0.f, 1.f, 0.f});
+				transform.rotate_axis(event.motion.yrel * -.01f, transform.basis[0]);
+			}
+
 		}
+		movement = normalized(movement);
+	}
+
+	void _loop(float32_t delta)
+	{
+		transform.position += (transform.basis[0] * movement.x + transform.basis[2] * movement.y) * delta * speed;
 	}
 };
 

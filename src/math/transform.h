@@ -40,7 +40,7 @@ struct Transform
 	{
 		AUTOFOR(i, 3)
 		{
-			basis[i] = rotate_point(basis[i], axis, angle);
+			basis[i] = normalized(rotate_point(basis[i], axis, angle)); // Normalize because basis should always be normalized
 		}
 	}
 };
