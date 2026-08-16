@@ -17,15 +17,14 @@ class FlyCam : public Camera
 {
 
 	vec2 movement;
-	float speed = 3.f;
+	float32_t speed = 3.f;
 	bool look_lock = true;
-
+	float32_t sensitivity = .003f;
+	
 	void _enter()
 	{
 		transform.position = {0.f, 0.f, 3.f};
-		// transform.rotate_axis(PI / 180.f * 30.f, vec3(1.f, 0.f, 0.f));
-		aspect_ratio = 1.3333f; // 800/600, or 4/3
-		
+		aspect_ratio = 1.3333f;
 		printf("FlyCam has entered scene tree!\n");
 	}
 
@@ -73,8 +72,8 @@ class FlyCam : public Camera
 			// Rotate our basis based on if we aren't locked and our mouse movement
 			case SDL_EVENT_MOUSE_MOTION: if (!look_lock)
 			{
-				transform.rotate_axis(event.motion.xrel * -.01f, {0.f, 1.f, 0.f});
-				transform.rotate_axis(event.motion.yrel * -.01f, transform.basis[0]);
+				transform.rotate_axis(event.motion.xrel * -sensitivity, {0.f, 1.f, 0.f});
+				transform.rotate_axis(event.motion.yrel * -sensitivity, transform.basis[0]);
 			}
 
 		}
@@ -107,7 +106,7 @@ void App::init()
 	m_tree->add_child(t_Mesh);
 
 	// Create camera then push to tree
-	Camera *t_Camera = new FlyCam();
+	FlyCam *t_Camera = new FlyCam();
 
 	m_tree->add_child(t_Camera);
 

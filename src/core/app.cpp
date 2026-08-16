@@ -4,7 +4,7 @@
 #include <glbinding/gl/enum.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/glbinding.h>
-#include <iostream>
+#include <stdio.h>
 
 #include "gqtypes.h"
 #include "app.h"
@@ -78,7 +78,7 @@ void App::poll_events(SDL_Event& event)
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
 			glViewport(0, 0, event.window.data1, event.window.data2);
-			m_mainCamera->aspect_ratio = float(event.window.data1) / float(event.window.data2);
+			m_mainCamera->aspect_ratio = (float32_t)event.window.data1 / event.window.data2;
 			break;
 		// If we have keyboard or mouse inputs, we do input traversal :) For now, we redirect all other events to _input(SDL_Event&)
 		default:
@@ -125,7 +125,7 @@ App::~App()
 		GQ_DELETE_POKE
 	});
 
-	std::cout << "Goodbye!\n";
+	printf("Goodbye!\n");
 }
 
 Camera& App::get_main_cam()

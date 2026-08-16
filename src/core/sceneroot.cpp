@@ -1,4 +1,4 @@
-#include <iostream>
+#include <stdio.h>
 
 #include "sceneroot.h"
 
@@ -8,5 +8,5 @@ SceneRoot::SceneRoot() {}
 
 SceneRoot::~SceneRoot()
 {
-    std::cout << "SceneRoot desotryed\n";
+    printf("SceneRoot desotryed\n");
 }

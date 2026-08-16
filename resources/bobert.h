@@ -1,4 +1,4 @@
-// david.h || A header file that contains the mesh data for our triangle guy, who will be called david for now
+// david.h || A header file that contains the mesh data for our triangle guy, who will be called bobert for now
 
 #include "../src/graphics/mesh.h"
 

@@ -858,3 +858,15 @@ So far, my priority will probably be textures, skyboxes, lighting, model loading
 # 8/16 
 
 We have made bobert. I was gonna name him david, but that came from this instagram reel of someone making an ai profile picture for a "david" as a birthday gift. although its funny, i do not wish for our mascot to be associated with such filthy technology. Anyways, we have our first true 3D mesh (not just a plane), without any lighting or anything. I think it is kind of cute. I am developing maternal instincts towards him. Bobert.
+
+## Note on Shaders
+
+The Mesh currently uses a literal value for gquake::Shader, but many objects should be able to share shaders. This is a simple fix, we will just make Mesh and any other object that wishes to use a Shader, a pointer to one. This also means we should start thinking about Resources of our App.
+
+## Input Wrapper
+
+We can still take advantage of the SDL input poll of events, but should make a wrapper for these so we can consider states. The engine will simply provide states for these (InputKey struct maybe) to simplify this.
+
+## TODO
+
+First, I will work on textures. Then, skybox. Then, lighting. :)
