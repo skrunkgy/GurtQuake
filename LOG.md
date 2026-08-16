@@ -869,4 +869,4 @@ We can still take advantage of the SDL input poll of events, but should make a w
 
 ## TODO
 
-First, I will work on textures. Then, skybox. Then, lighting. :)
+First, I will work on textures. Then, skybox. Then, lighting. :) Also a note, in this commit, we are directly manipulating a basis. This is tricky haha.

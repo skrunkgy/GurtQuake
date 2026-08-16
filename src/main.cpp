@@ -74,6 +74,19 @@ class FlyCam : public Camera
 			{
 				transform.rotate_axis(event.motion.xrel * -sensitivity, {0.f, 1.f, 0.f});
 				transform.rotate_axis(event.motion.yrel * -sensitivity, transform.basis[0]);
+				if (dot(vec3(0.f, 1.f, 0.f), transform.basis[1]) < 0) // detects if we are upside down, whether from top or bottom
+				{
+					if (transform.basis[2].y < 0)
+					{
+						transform.basis[2] = vec3(0.f, -1.f, 0.f);
+						transform.basis[1] = cross(vec3(0.f, -1.f, 0.f), transform.basis[0]);
+					}
+					else
+					{
+						transform.basis[2] = vec3(0.f, 1.f, 0.f);
+						transform.basis[1] = cross(vec3(0.f, 1.f, 0.f), transform.basis[0]);
+					}
+				}
 			}
 
 		}
