@@ -827,3 +827,30 @@ As our needs expand, it is also apparent that the poke() is too generic. What if
 ## Some more naming conventions...
 
 Until I figure out a better naming scheme (soon, hopefully), all traversal sub-functions will just use the `name(...) scheme`. I wanted to do `p_name(...)`, but this looks like the Hungarian naming scheme (or whatever its called), which I think is using an extension to declare a type. p_name would be a pointer type, but I wanted to use it for poke functions, so we will see...
+
+## THE FLY CAM!!
+
+FINALLY, AFTER MORE THAN A YEAR IN DEVELOPMENT, WE HAVE THE FLY CAM!!!! A fly cam is just a camera we control that lets us explore, but I FINALLY GOT TO THIS POINT!! Obviously, this isn't much, but OHHH MY GOD WE FINALLY HAVE A TOY TO PLAY WITH! Here are the other things I want to implement:
+
+### Lighting
+I want some way to set up lights so that fragment shaders can calculate lighting. I do not plan to use shadow mapping just yet, just some basic lights. I would like shadows at some point.
+
+### Model loading
+Either creating a wrapper to create meshes from .obj or .fbx files, or create my own mesh type (.gqm or something). Perhaps I would also like to redo my mesh class so that there is an option to create an empty mesh, then load the data later.
+
+### Textures
+Provide some wrapper for textures, which shaders can use. I am not sure how I want to go about this yet, so I will probably do some architecture planning.
+
+### SKYBOXES!!!
+Something I REALLY want to implement is a skybox. The way I plan to do this is the LearnOpenGL's way of making a cube, disabling the Z buffer test, and passing a custom shader. This will be done once I get textures going.
+
+### Better input system
+If you haven't seen my disgusting code for the FlyCam, please do not. I would rather instead implement an input system to simplify that code, but that also requires some kind of "project settings". I don't know, maybe I'll make a simple hash map that belongs to the app.
+
+### Debugging Class
+Eventually, we will have some kind of console. Maybe I should write code that handles this instead of using the stdout. Perhaps I can run commands too, but that's WAY in the future haha.
+
+### Resource management
+Once we start doing more with asset files, we need a better way to manage how we look for files, how we read them, and perhaps eventually how we can package them (like Valve's .vpk).
+
+So far, my priority will probably be textures, skyboxes, lighting, model loading, and the last 3 in any order. I can't wait to get to work.

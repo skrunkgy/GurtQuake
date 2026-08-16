@@ -56,8 +56,17 @@ class FlyCam : public Camera
 			} break;
 			
 			// Set our look lock (hold right mouse)
-			case SDL_EVENT_MOUSE_BUTTON_DOWN: if (event.button.button == 3) look_lock = false; break;
-			case SDL_EVENT_MOUSE_BUTTON_UP  : if (event.button.button == 3) look_lock = true; break;
+			case SDL_EVENT_MOUSE_BUTTON_DOWN: if (event.button.button == 3)
+			{
+				look_lock = false;
+				SDL_SetWindowRelativeMouseMode(SDL_GetWindowFromEvent(&event), true);
+			} break;
+			
+			case SDL_EVENT_MOUSE_BUTTON_UP  : if (event.button.button == 3)
+			{
+				look_lock = true;
+				SDL_SetWindowRelativeMouseMode(SDL_GetWindowFromEvent(&event), false);
+			} break;
 			
 			// Rotate our basis based on if we aren't locked and our mouse movement
 			case SDL_EVENT_MOUSE_MOTION: if (!look_lock)
