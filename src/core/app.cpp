@@ -1,5 +1,7 @@
 #include <SDL3/SDL_video.h>
 #include <SDL3/SDL_events.h>
+#include <glbinding/gl/bitfield.h>
+#include <glbinding/gl/enum.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/glbinding.h>
 #include <iostream>
@@ -29,6 +31,7 @@ App::App(const char* name, uint32_t x, uint32_t y)
 	m_state = {true, {.6, .5, .9}};
 
 	glViewport(0, 0, x, y);
+	glEnable(GL_DEPTH_TEST);
 	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
 
 }
@@ -94,7 +97,7 @@ void App::add_to_render_queue(RenderObject* object)
 
 void App::render()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	while (!m_renderQueue.empty())
 	{

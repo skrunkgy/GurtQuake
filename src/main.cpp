@@ -7,6 +7,8 @@
 #include "core/sceneroot.h"
 #include "graphics/mesh.h"
 
+#include "../resources/bobert.h"
+
 using namespace gquake;
 using namespace gl;
 
@@ -83,6 +85,12 @@ class FlyCam : public Camera
 	{
 		transform.position += (transform.basis[0] * movement.x + transform.basis[2] * movement.y) * delta * speed;
 	}
+	
+	// Perhaps make a _exit call before destroying object?
+	~FlyCam()
+	{
+		printf("FlyCam has been destroyed\n");
+	}
 };
 
 void App::init()
@@ -90,11 +98,7 @@ void App::init()
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
-	Mesh *t_Mesh = new Mesh({
-		vec3( .0,  .5, 0.0),
-		vec3(-.5, -.5, 0.0),
-		vec3( .5, -.5, 0.0)
-	});
+	Mesh *t_Mesh = new Mesh(gqtest::bobert, sizeof(gqtest::bobert) / (4 * ATTRIB_COUNT));
 
 	Shader *t_Shader = new Shader("resources/shaders/test.gqshader");
 	t_Mesh->attach_shader(*t_Shader);

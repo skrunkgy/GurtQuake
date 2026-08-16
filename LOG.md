@@ -854,3 +854,7 @@ Eventually, we will have some kind of console. Maybe I should write code that ha
 Once we start doing more with asset files, we need a better way to manage how we look for files, how we read them, and perhaps eventually how we can package them (like Valve's .vpk).
 
 So far, my priority will probably be textures, skyboxes, lighting, model loading, and the last 3 in any order. I can't wait to get to work.
+
+# 8/16 
+
+We have made bobert. I was gonna name him david, but that came from this instagram reel of someone making an ai profile picture for a "david" as a birthday gift. although its funny, i do not wish for our mascot to be associated with such filthy technology. Anyways, we have our first true 3D mesh (not just a plane), without any lighting or anything. I think it is kind of cute. I am developing maternal instincts towards him. Bobert.

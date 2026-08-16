@@ -3,12 +3,13 @@
 #pragma once
 
 #include <initializer_list>
+#include <cassert>
 #include "../math/math.h"
 #include "../graphics/renderobject.h"
 #include "../core/gqtypes.h"
 #include "shader.h"
 
-#define ATTRIB_COUNT 3
+#define ATTRIB_COUNT 3 // basically how many floats in a vertice
 
 namespace gquake
 {
@@ -19,13 +20,10 @@ namespace gquake
 
 struct Vertex
 {
-
-	
 	vec3 position; 
 	// vec2 uv;
 	// vec3 normal;
 	// float_32[8] other; // do not use
-	
 	
 	// these constructors are only for position data
 	Vertex() {
@@ -35,6 +33,15 @@ struct Vertex
 	{
 		this->position = _pos;
 	}
+	Vertex(std::initializer_list<float32_t> _data)
+	{
+		// This looks nasty, but I wonder how common code like this is
+		assert(_data.size() == ATTRIB_COUNT);
+		AUTOFOR(i, _data.size())
+		{
+			reinterpret_cast<float*>(this)[i] = *(_data.begin() + i);
+		}
+	}
 };
 
 
@@ -42,15 +49,11 @@ class Mesh : public RenderObject
 {
 public:
 	Mesh();
-	Mesh(Vertex vertices[], unsigned int count);
+	Mesh(Vertex vertices[], uint32_t count);
 	Mesh(std::initializer_list<Vertex> vertices);
 	~Mesh();
 
 	Transform transform;
-
-	// Serialization would look like this
-	// GQ_RETURN_CODE static load(const char* path) {return GQ_SUCCESS;};
-	// GQ_RETURN_CODE store(const char* path) {return GQ_SUCCESS;};
 	
 	// In the case we want to modify the actual array
 	void attach_shader(Shader& shader);

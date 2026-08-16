@@ -15,7 +15,7 @@ Mesh::Mesh()
 	printf("WARNING: No vertices supplied, please reinitialize with vertices...\n");
 }
 
-Mesh::Mesh(Vertex vertices[], unsigned int count)
+Mesh::Mesh(Vertex vertices[], uint32_t count)
 {
 	glGenBuffers(1, &m_vbo);
 	glGenVertexArrays(1, &m_vao);
