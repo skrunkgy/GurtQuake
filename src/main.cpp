@@ -32,30 +32,6 @@ class FlyCam : public Camera
 	{
 		switch (event.type)
 		{
-			case SDL_EVENT_KEY_DOWN: switch(event.key.key) // Set movement components
-			{
-				case SDLK_W:
-					movement.y = -1.f; break;
-				case SDLK_S:
-					movement.y =  1.f; break;
-				case SDLK_A:
-					movement.x = -1.f; break;
-				case SDLK_D:
-					movement.x =  1.f; break;
-			} break;
-
-			case SDL_EVENT_KEY_UP: switch(event.key.key) // Unset movement components
-			{
-				case SDLK_W:
-					movement.y = 0.f; break;
-				case SDLK_S:
-					movement.y = 0.f; break;
-				case SDLK_A:
-					movement.x = 0.f; break;
-				case SDLK_D:
-					movement.x = 0.f; break;
-			} break;
-			
 			// Set our look lock (hold right mouse)
 			case SDL_EVENT_MOUSE_BUTTON_DOWN: if (event.button.button == 3)
 			{
@@ -88,14 +64,21 @@ class FlyCam : public Camera
 					}
 				}
 			}
-
 		}
-		movement = normalized(movement);
 	}
 
 	void _loop(float32_t delta)
 	{
+		int num;
+		const bool* keys = SDL_GetKeyboardState(&num);
+
+		if (keys[SDL_SCANCODE_W]) movement.y += -1.f;
+		if (keys[SDL_SCANCODE_S]) movement.y +=  1.f;
+		if (keys[SDL_SCANCODE_A]) movement.x += -1.f;
+		if (keys[SDL_SCANCODE_D]) movement.x +=  1.f;
+
 		transform.position += (transform.basis[0] * movement.x + transform.basis[2] * movement.y) * delta * speed;
+		movement = vec2();
 	}
 	
 	// Perhaps make a _exit call before destroying object?

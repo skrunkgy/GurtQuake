@@ -867,6 +867,17 @@ The Mesh currently uses a literal value for gquake::Shader, but many objects sho
 
 We can still take advantage of the SDL input poll of events, but should make a wrapper for these so we can consider states. The engine will simply provide states for these (InputKey struct maybe) to simplify this.
 
+## Input Issues
+
+The keyboard input for some reason was being weird. I think I do know why.
+
+Initially, the idea was that we can just process keyboard inputs simply because we get a KEY_DOWN and KEY_UP event, and we can just set up the states. However, the OS usually has a feature where if you hold down a key, it presses once and then keeps repeating after. This is splendid for typing, but not really for game input lol. It also only does this with one key, so if I press the keys "A" and "D", only one of these will keep repeating as a KEY_DOWN. And that is where the issue is, the OS keeps sending a KEY_DOWN to only one of these keys.
+
+The solution is to use SDL_GetKeyboardState(). This sends which keys are actively pressed. This also makes the code a LOT more simpler. This is also how they do it in Godot (or at least how I do it), as action states are handled in the main loop while the input is handled in its own handle function.
+
+Sour note, the official SDL documentation suggests that we use the event system and simply set velocities with these inputs, while everyone else online suggested to use GetKeyboardState. I was against the latter because it meant more memory, but SDL already keeps a copy of this array anyways, so it doesn't add more damage anyways...
+
 ## TODO
 
 First, I will work on textures. Then, skybox. Then, lighting. :) Also a note, in this commit, we are directly manipulating a basis. This is tricky haha.
+
