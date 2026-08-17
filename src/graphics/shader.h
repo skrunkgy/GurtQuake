@@ -3,6 +3,8 @@
 #pragma once
 
 #include <string>
+
+#include "../core/resource.h"
 #include "../core/gqtypes.h"
 
 namespace gquake
@@ -22,7 +24,7 @@ enum GQ_UNIFORM_TYPE
 	GQ_BOOL
 };
 
-class Shader
+class Shader : protected Resource
 {
 public:
 	Shader();
@@ -37,8 +39,7 @@ public:
 
 private:
 	unsigned int m_program;
-	std::string m_filepath;
-	void load_path(const char* shader_path);
+	void load() override;
 	void compile_shader(const char* source_file, GQ_SHADER_TYPE type);
 
 };

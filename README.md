@@ -23,5 +23,5 @@ Wayland doesn't support changing the icon from the program. A .desktop file is p
 
 ## Building
 
-Use makefile. I run this command to generate the compile_commands.json for the clangd lsp:
+Make sure to have SDL3, SDL3_image, and glbinding. Use makefile. I run this command to generate the compile_commands.json for the clangd lsp:
 `bear -- make gquake`

@@ -6,6 +6,7 @@
 #include "core/app.h"
 #include "core/sceneroot.h"
 #include "graphics/mesh.h"
+#include "core/resource.h"
 
 #include "../resources/bobert.h"
 

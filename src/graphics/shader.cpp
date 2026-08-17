@@ -9,17 +9,8 @@
 using namespace gquake;
 using namespace gl;
 
-Shader::Shader()
-{
-	// Debug.warn...
-}
-
-Shader::Shader(const char* shader_path)
-{
-	m_program = glCreateProgram();
-	m_filepath = shader_path;
-	load_path(shader_path);
-}
+Shader::Shader() {}
+Shader::Shader(const char* path) : Resource::Resource(path) {}
 
 Shader::~Shader()
 {
@@ -29,7 +20,6 @@ Shader::~Shader()
 
 void Shader::compile_shader(const char* source, GQ_SHADER_TYPE type)
 {
-
 	uint32_t shader;
 	
 	switch (type)
@@ -71,13 +61,16 @@ std::string peek_word(std::fstream &file)
 	return word;
 }
 
-void Shader::load_path(const char* shader_path)
+void Shader::load()
 {
+	printf("Hello I am Mr Shader loading haha\n");
+	// create the shader
+	m_program = glCreateProgram();
 	
 	// Creates multiple shaders based on a file
 	std::string word_buffer;
 	std::string shader_source;
-	std::fstream file(shader_path);
+	std::fstream file(m_filepath);
 
 	if (!file)
 	{

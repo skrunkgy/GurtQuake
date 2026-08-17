@@ -884,3 +884,7 @@ First, I will work on textures. Then, skybox. Then, lighting. :)
 # 8/17
 
 The texture object will behave more similarly to the shader object, so I want them to behave similarly. My only regret is that instead of `load_shader()` I call it `load_path()`. This is a nod that eventually we will have some Resource wrapper to handle all of this. Now, for the texture...
+
+I will be using SDL's image extension, which is a separate library. However, I think I can develop my own texture loading library. I don't need it to do much, and I think it could be fun! I would only write something for .png and .bmp files. SDL will suffice for now, but I like to keep my dependencies low.
+
+I am considering also a Resource class. This class will have a static `root` member that declares the root of the project, which can only be set by the friend App class. It doesn't do much, but it does help manage files (and eventually serialize them). This stems from the issue that if you do not properly set the working directory, the program will fail to find the resources folder.
