@@ -879,5 +879,8 @@ Sour note, the official SDL documentation suggests that we use the event system 
 
 ## TODO
 
-First, I will work on textures. Then, skybox. Then, lighting. :) Also a note, in this commit, we are directly manipulating a basis. This is tricky haha.
+First, I will work on textures. Then, skybox. Then, lighting. :)
 
+# 8/17
+
+The texture object will behave more similarly to the shader object, so I want them to behave similarly. My only regret is that instead of `load_shader()` I call it `load_path()`. This is a nod that eventually we will have some Resource wrapper to handle all of this. Now, for the texture...

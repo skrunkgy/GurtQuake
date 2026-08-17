@@ -2,14 +2,21 @@
 
 #pragma once 
 
+#include "../core/gqtypes.h"
+
 namespace gquake
 {
 
-class Texture
+// Perhaps make this virtual?
+class Texture2D
 {
+public:
+	Texture2D();
+	~Texture2D();
 
-
-
+	void load_path();
+private:
+	uint32_t m_texture;
 };
 
 } // namespace gquake

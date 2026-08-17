@@ -11,14 +11,14 @@ using namespace gl;
 
 Shader::Shader()
 {
-	
+	// Debug.warn...
 }
 
 Shader::Shader(const char* shader_path)
 {
 	m_program = glCreateProgram();
 	m_filepath = shader_path;
-	load_shader(shader_path);
+	load_path(shader_path);
 }
 
 Shader::~Shader()
@@ -71,7 +71,7 @@ std::string peek_word(std::fstream &file)
 	return word;
 }
 
-void Shader::load_shader(const char* shader_path)
+void Shader::load_path(const char* shader_path)
 {
 	
 	// Creates multiple shaders based on a file

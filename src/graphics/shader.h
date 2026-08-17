@@ -38,7 +38,7 @@ public:
 private:
 	unsigned int m_program;
 	std::string m_filepath;
-	void load_shader(const char* shader_path);
+	void load_path(const char* shader_path);
 	void compile_shader(const char* source_file, GQ_SHADER_TYPE type);
 
 };
