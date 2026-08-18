@@ -10,7 +10,7 @@
 #include "core/resource.h"
 #include "graphics/texture.h"
 
-#include "../resources/plane.h"
+#include "../resources/bobert.h"
 
 using namespace gquake;
 using namespace gl;
@@ -99,13 +99,13 @@ void App::init()
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
-	Mesh *t_Mesh = new Mesh(gqtest::plane, sizeof(gqtest::plane) / (4 * ATTRIB_COUNT));
+	Mesh *t_Mesh = new Mesh(gqtest::bobert, sizeof(gqtest::bobert) / (4 * ATTRIB_COUNT));
 	
 	Shader *t_Shader = new Shader("resources/shaders/test2.gqshader");
 	t_Mesh->attach_shader(t_Shader); // Memory leak here too lol
 	
 	// BAD: This causes a memory leak...
-	Texture2D* t_Texture = new Texture2D("resources/icon2.png");
+	Texture2D* t_Texture = new Texture2D("resources/bobert.png");
 
 	t_Shader->use_shader();
 	glUniform1i(glGetUniformLocation(t_Shader->get_shader(), "TEXTURE"), 0);
