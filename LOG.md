@@ -888,3 +888,50 @@ The texture object will behave more similarly to the shader object, so I want th
 I will be using SDL's image extension, which is a separate library. However, I think I can develop my own texture loading library. I don't need it to do much, and I think it could be fun! I would only write something for .png and .bmp files. SDL will suffice for now, but I like to keep my dependencies low.
 
 I am considering also a Resource class. This class will have a static `root` member that declares the root of the project, which can only be set by the friend App class. It doesn't do much, but it does help manage files (and eventually serialize them). This stems from the issue that if you do not properly set the working directory, the program will fail to find the resources folder.
+
+## SOMETHING NEW I LEARNED!
+
+So, constructors are not inherited by default when deriving classes. The old way of getting around this would be
+```cpp
+class Base
+{
+public:
+	Base() {
+		// ...
+	}
+};
+
+class Derived : public Base
+{
+	Derived() : Base()
+	{
+		// ...
+	}
+}
+```
+
+The issue is that doing this for all methods can be kind of annoying, and it looks a bit ugly. However, there is a feature since C++11 where we can simply do:
+```cpp
+class Base
+{
+public:
+	Base() {
+		// ...
+	}
+};
+
+class Derived : public Base
+{
+	using Base::Base;
+	Derived()
+	{
+		// ...
+	}
+}
+```
+
+This is pretty cool. Also, errors with the "vtable" probably mean that a virtual function wasn't defined somewhere. I think the vtable is the virtual function table that is created when a virtual function is defined. If there isn't a virtual function defined, it throws that kind of error. Or something.
+
+The reason why I am doing the Resource class this way is so that we can potentially set up the class first and then initialize it. However, I may revert on this, but, whatever. Resource class is still going to be useful in the long run, and I learned some things today. If I change my mind, I will change it. This means for now, I should change the mesh.cpp to add a load() function, but Mesh won't be a resource.
+
+UPDATE: Decided to scrap load(). Instead, we just inheret the Resource constructor for loading a path. Whatever man, I don't care anymore.

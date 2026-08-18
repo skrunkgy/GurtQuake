@@ -24,22 +24,22 @@ enum GQ_UNIFORM_TYPE
 	GQ_BOOL
 };
 
-class Shader : protected Resource
+class Shader : public Resource
 {
 public:
-	Shader();
-	Shader(const char* shader_path);
-	~Shader();
 	
+	Shader();
+	Shader(const char* path);
+	~Shader();
+
 	void use_shader();
-	uint32_t t_get_shader(); // For setting uniforms manually, TODO: REMOVE
+	uint32_t get_shader(); // For setting uniforms manually, TODO: REMOVE
 	
 	template <typename T>
 	void set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data);
 
 private:
 	unsigned int m_program;
-	void load() override;
 	void compile_shader(const char* source_file, GQ_SHADER_TYPE type);
 
 };

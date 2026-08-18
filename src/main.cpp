@@ -7,6 +7,7 @@
 #include "core/sceneroot.h"
 #include "graphics/mesh.h"
 #include "core/resource.h"
+#include "graphics/texture.h"
 
 #include "../resources/bobert.h"
 
@@ -91,13 +92,18 @@ class FlyCam : public Camera
 
 void App::init()
 {
+
+	Resource::m_root = "/home/andrew/Projects/GurtQuake/";
+
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
 	Mesh *t_Mesh = new Mesh(gqtest::bobert, sizeof(gqtest::bobert) / (4 * ATTRIB_COUNT));
 
 	Shader *t_Shader = new Shader("resources/shaders/test.gqshader");
-	t_Mesh->attach_shader(*t_Shader);
+	t_Mesh->attach_shader(t_Shader);
+
+	Texture2D t_Texture("resources/icon2.png");
 
 	// Insert it into our tree
 	m_tree->add_child(t_Mesh);

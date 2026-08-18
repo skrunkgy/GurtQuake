@@ -56,7 +56,7 @@ public:
 	Transform transform;
 	
 	// In the case we want to modify the actual array
-	void attach_shader(Shader& shader);
+	void attach_shader(Shader* shader);
 	
 	void _render(App* app); // Inherits the RenderObject poke(), no need to implement (yet)
 
@@ -64,7 +64,7 @@ public:
 	void draw();
 
 private:
-	Shader m_shader;
+	Shader* m_shader;
 	unsigned int m_vbo;
 	unsigned int m_vao;
 	unsigned int m_vertCount;

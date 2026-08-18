@@ -67,20 +67,20 @@ void Mesh::_render(App* app)
 	// NOTE: gl specific code, also kind of stinky. temporary!
 	mat4x4 t_Model = transform.get_matrix();
 	
-	glUseProgram(m_shader.t_get_shader());
+	glUseProgram(m_shader->get_shader());
 
 	uint32_t location;
 
-	location = glGetUniformLocation(m_shader.t_get_shader(), "MODEL_MAT");
+	location = glGetUniformLocation(m_shader->get_shader(), "MODEL_MAT");
 	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Model));
 
 	mat4x4 t_View  = app->get_main_cam().get_view();
 	mat4x4 t_Proj  = app->get_main_cam().get_proj();
 
-	location = glGetUniformLocation(m_shader.t_get_shader(), "VIEW_MAT");
+	location = glGetUniformLocation(m_shader->get_shader(), "VIEW_MAT");
 	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_View));
 
-	location = glGetUniformLocation(m_shader.t_get_shader(), "PROJ_MAT");
+	location = glGetUniformLocation(m_shader->get_shader(), "PROJ_MAT");
 	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Proj));
 
 	// Unset for safe keeping
@@ -90,7 +90,7 @@ void Mesh::_render(App* app)
 	// TODO: pass uniforms to the shader :)
 }
 
-void Mesh::attach_shader(Shader& shader)
+void Mesh::attach_shader(Shader* shader)
 {
 	m_shader = shader;
 }
@@ -98,6 +98,6 @@ void Mesh::attach_shader(Shader& shader)
 void Mesh::draw()
 {
 	glBindVertexArray(m_vao);
-	m_shader.use_shader();
+	m_shader->use_shader();
 	glDrawArrays(GL_TRIANGLES, 0, m_vertCount);
 }

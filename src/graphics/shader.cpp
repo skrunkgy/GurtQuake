@@ -9,8 +9,10 @@
 using namespace gquake;
 using namespace gl;
 
-Shader::Shader() {}
-Shader::Shader(const char* path) : Resource::Resource(path) {}
+Shader::Shader()
+{
+
+}
 
 Shader::~Shader()
 {
@@ -61,9 +63,8 @@ std::string peek_word(std::fstream &file)
 	return word;
 }
 
-void Shader::load()
+Shader::Shader(const char* path) : Resource::Resource(path)
 {
-	printf("Hello I am Mr Shader loading haha\n");
 	// create the shader
 	m_program = glCreateProgram();
 	
@@ -124,7 +125,7 @@ void Shader::set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data)
 	// TODO: write this code...
 }
 
-uint32_t Shader::t_get_shader()
+uint32_t Shader::get_shader()
 {
 	return m_program;
 }
