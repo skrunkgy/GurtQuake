@@ -939,3 +939,16 @@ UPDATE: Decided to scrap load(). Instead, we just inheret the Resource construct
 # 8/18 
 
 Fixed a bug because I forgot to read docs. glVertexAttribPointer needs the offset in bytes. Which reminds me, I need to see if 4.6 has a better way of doing this stuff. Not that I hate it or anything, but do I need the VBO bounded when I call this function for the correct pointer? Why can't I just switch them? This would make it easier, since less VAOs and I can just instance 1, unless the mesh provides otherwise. Which also reminds me, I should be able to make the mesh switch attribs, etc.
+
+## Resource manager
+
+HOLY SHIT. I JUST FOUND OUT WHY MY TEXTURE KEPT NOT WORKING. Because the Texture2D I created was destroyed after the App::init function returned, the Texture2D::~Texture2D method was called, which deleted the internal texture in the GPU. However, I learned about a few things from this:
+1. Renderdoc is awesome :)
+2. We need a Resource manager.
+
+The fix atm is to just allocate the test texture into heap, which is terrible because we have a small memory leak now lol. We also notice that our Shader is not being destroyed properly either, because we changed it so that the Mesh only references the shader as a pointer. We can change this so that our Mesh instead has a "copy", but is actually passed a reference instead. However, a resource manager could be cool because
+1. we can access resources by file name
+2. our resources will live in memory
+3. we can properly dispose of them
+4. we dont need to worry about copying and crap
+I will invest in later...

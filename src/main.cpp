@@ -100,14 +100,18 @@ void App::init()
 	m_tree = new SceneRoot();
 
 	Mesh *t_Mesh = new Mesh(gqtest::plane, sizeof(gqtest::plane) / (4 * ATTRIB_COUNT));
-
-	printf("%f, %f, %f, %f, %f\n", gqtest::plane[1].position.x, gqtest::plane[1].position.y, gqtest::plane[1].position.z, gqtest::plane[1].uv.u, gqtest::plane[1].uv.v );
-
-	Shader *t_Shader = new Shader("resources/shaders/test2.gqshader");
-	t_Mesh->attach_shader(t_Shader);
 	
-	Texture2D t_Texture("resources/icon2.png");
-	glBindTexture(GL_TEXTURE_2D, t_Texture.get_texture());
+	Shader *t_Shader = new Shader("resources/shaders/test2.gqshader");
+	t_Mesh->attach_shader(t_Shader); // Memory leak here too lol
+	
+	// BAD: This causes a memory leak...
+	Texture2D* t_Texture = new Texture2D("resources/icon2.png");
+
+	t_Shader->use_shader();
+	glUniform1i(glGetUniformLocation(t_Shader->get_shader(), "TEXTURE"), 0);
+	t_Texture->use_texture(0);
+	
+	glUseProgram(0);
 
 	// Insert it into our tree
 	m_tree->add_child(t_Mesh);

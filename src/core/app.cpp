@@ -1,5 +1,6 @@
 #include <SDL3/SDL_video.h>
 #include <SDL3/SDL_events.h>
+#include <SDL3_image/SDL_image.h>
 #include <glbinding/gl/bitfield.h>
 #include <glbinding/gl/enum.h>
 #include <glbinding/gl/gl.h>

@@ -26,4 +26,5 @@ out vec4 COLOR;
 void main()
 {
     COLOR = texture(TEXTURE, outUV);
+	if (COLOR.a < 1.f) discard;
 }

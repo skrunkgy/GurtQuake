@@ -16,6 +16,7 @@ public:
 	~Texture2D();
 
 	uint32_t get_texture();
+	void use_texture(uint32_t unit);
 
 private:
 	uint32_t m_texture;
