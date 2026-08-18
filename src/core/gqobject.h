@@ -28,6 +28,13 @@ public:
 	void pop_child(int index);
 	void traverse(PokeData poke); // Method to perform on each node
 	
+	template <typename T>
+	T* get_child(int index)
+	{
+		if (m_children.size() <= index) return nullptr;
+		return reinterpret_cast<T*>(m_children[index]);
+	}
+	
 	// Functions for different traversal passes
 	virtual void _enter() {};
 	virtual void _loop(float32_t dt) {};

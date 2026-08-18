@@ -951,4 +951,46 @@ The fix atm is to just allocate the test texture into heap, which is terrible be
 2. our resources will live in memory
 3. we can properly dispose of them
 4. we dont need to worry about copying and crap
-I will invest in later...
+
+### Implementation
+
+The idea is that we simply use a hash map. The hash map would use the filepath (local, which means we need to store that local filepath in the resource now) for indexing. I am not a big fan of hash maps because we never know what will happen, but implementation can always be changed. Hash maps will work for now, and resources will be accessed via the ResourceManager. The app will own an instance of the ResourceManager.
+
+Another thing is that ResourceManager SHOULD be static, since we only need one of them. However, we still would need an instance of it. Another way is to use a namespace and statics, but I want to use the friend feature. Can I do something like `friend namespace ResourceManager;`? Answer is: no. :( Anyways, back to thinking...
+
+## GQObject::get_child<>() shenanigans
+
+After I have successfully added Bobert's UVs and texture, I made him do backflips lol. I had to add this function, and it initially returned a void* pointer and I would have to manually reinterpret case it. I didn't like that, and thought why not do it like `get_child<>()`? Turns out, the compiler does not like it when template function implementations are separated from the declaration, or something. I am not keen on adding a gqobject.inl, so it stays in the header file I guess. Things are working for now.
+
+## Element Buffers and Varied Attributes
+
+To be honest, I have no plan for varied attributes. I went in the order of most needed to never needed, where you will always need a 3D position, or you never need one. This is also just for the Mesh, as different implementations will use different things anyways (i.e. GUI plane, particles).
+
+Element buffers, however, I should definitely implement. Many modern formats use indices to refer to vertices, and for a very good reason! Let's take a look at the plane, it would require 4 vertices ideally to construct one. But without an EBO, we are looking at 6 in the GPU's memory. Now imagine a 2x2 plane, we would only need 9 vertices with an EVO, but 24 without one. The only time it would make a difference would be when most or all triangles need their own vertex data (like flat-shaded normals) in which our only chokehold is an array of integers that match it. Even then, this seems less likely. It is also a straightforward implementation!
+
+## Lights...
+
+I want to do lights next. For now, we will use an array of point lights, and perhaps a directional light. Eventually, I plan to do the SDL method of universal struct union combo, something like...
+
+```c
+struct Light
+{
+	union
+	{
+		ENUM type;
+		struct
+		{
+			// ...
+		};
+		// ...
+	};
+};
+```
+
+In the shader, and have separate Light objects that individually load parameters to the shader. This is EVENTUALLY.
+
+We will also need a way to load these lights to each shader, which would be such a pain in the ass. I need to begin investing into UBOs.
+
+## Cubemap
+
+Cubemap seems simple in my mind. We pair a cube primitive with some default shader, and provide its own way of rendering. It will inheret the RenderObject, and use a Shader. The only problem is that I want the default shader to be part of the src, so I will need to figure out something with that.

@@ -125,7 +125,11 @@ void App::init()
 	m_mainCamera = t_Camera;
 }
 
-void App::loop(float32_t delta) {}
+void App::loop(float32_t delta)
+{
+	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
+	t_Mesh->transform.rotate_axis(PI * 2 * .8 * delta, vec3(1.f, 0.f, 0.f));
+}
 
 int main(int argc, char** kwarg)
 {
