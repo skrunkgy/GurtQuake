@@ -32,15 +32,15 @@ Mesh::Mesh(Vertex vertices[], uint32_t count)
 	glEnableVertexAttribArray(0);
 	
 	// UV: 2
-	// glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 16 * sizeof(GLfloat), reinterpret_cast<void*>(3));
-	// glEnableVertexAttribArray(1);
-	
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(GLfloat), reinterpret_cast<void*>(3 * sizeof(GLfloat)));
+	glEnableVertexAttribArray(1);
+
 	// NORMAL: 3
-	// glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 16 * sizeof(GLfloat), reinterpret_cast<void*>(5));
+	// glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(GLfloat), reinterpret_cast<void*>(5));
 	// glEnableVertexAttribArray(2);
 	
 	// OTHER: 8
-	// glVertexAttribPointer(3, 8, GL_FLOAT, GL_FALSE, 16 * sizeof(GLfloat), reinterpret_cast<void*>(8));
+	// glVertexAttribPointer(3, 8, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(GLfloat), reinterpret_cast<void*>(8));
 	// glEnableVertexAttribArray(3);
 	
 	// Unbind

@@ -9,7 +9,7 @@
 #include "../core/gqtypes.h"
 #include "shader.h"
 
-#define ATTRIB_COUNT 3 // basically how many floats in a vertice
+#define ATTRIB_COUNT 5 // basically how many floats in a vertice
 
 namespace gquake
 {
@@ -21,25 +21,28 @@ namespace gquake
 struct Vertex
 {
 	vec3 position; 
-	// vec2 uv;
+	vec2 uv;
 	// vec3 normal;
 	// float_32[8] other; // do not use
 	
 	// these constructors are only for position data
 	Vertex() {
 		this->position = vec3();
+		this->uv = vec2();
 	}
-	Vertex(vec3 _pos)
+	Vertex(vec3 _pos, vec2 _uv)
 	{
 		this->position = _pos;
+		this->uv = _uv;
 	}
 	Vertex(std::initializer_list<float32_t> _data)
 	{
 		// This looks nasty, but I wonder how common code like this is
-		assert(_data.size() == ATTRIB_COUNT);
-		AUTOFOR(i, _data.size())
+		assert(_data.size() <= ATTRIB_COUNT);
+		AUTOFOR(i, ATTRIB_COUNT)
 		{
-			reinterpret_cast<float*>(this)[i] = *(_data.begin() + i);
+			reinterpret_cast<float*>(this)[i] = i >= _data.size() ? 0 : *(_data.begin() + i);
+			// ternary assignment here, in case we didnt give enough data
 		}
 	}
 };
@@ -57,7 +60,7 @@ public:
 	
 	// In the case we want to modify the actual array
 	void attach_shader(Shader* shader);
-	
+
 	void _render(App* app); // Inherits the RenderObject poke(), no need to implement (yet)
 
 	// Call this AFTER setting the vertices of the mesh!

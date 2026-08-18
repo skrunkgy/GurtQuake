@@ -2,6 +2,7 @@
 #include <SDL3/SDL_keycode.h>
 #include <glbinding/gl/functions.h>
 #include <glbinding/gl/types.h>
+#include <glbinding/gl/enum.h>
 
 #include "core/app.h"
 #include "core/sceneroot.h"
@@ -9,7 +10,7 @@
 #include "core/resource.h"
 #include "graphics/texture.h"
 
-#include "../resources/bobert.h"
+#include "../resources/plane.h"
 
 using namespace gquake;
 using namespace gl;
@@ -98,12 +99,15 @@ void App::init()
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
-	Mesh *t_Mesh = new Mesh(gqtest::bobert, sizeof(gqtest::bobert) / (4 * ATTRIB_COUNT));
+	Mesh *t_Mesh = new Mesh(gqtest::plane, sizeof(gqtest::plane) / (4 * ATTRIB_COUNT));
 
-	Shader *t_Shader = new Shader("resources/shaders/test.gqshader");
+	printf("%f, %f, %f, %f, %f\n", gqtest::plane[1].position.x, gqtest::plane[1].position.y, gqtest::plane[1].position.z, gqtest::plane[1].uv.u, gqtest::plane[1].uv.v );
+
+	Shader *t_Shader = new Shader("resources/shaders/test2.gqshader");
 	t_Mesh->attach_shader(t_Shader);
-
+	
 	Texture2D t_Texture("resources/icon2.png");
+	glBindTexture(GL_TEXTURE_2D, t_Texture.get_texture());
 
 	// Insert it into our tree
 	m_tree->add_child(t_Mesh);

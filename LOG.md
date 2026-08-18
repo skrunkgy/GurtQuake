@@ -935,3 +935,7 @@ This is pretty cool. Also, errors with the "vtable" probably mean that a virtual
 The reason why I am doing the Resource class this way is so that we can potentially set up the class first and then initialize it. However, I may revert on this, but, whatever. Resource class is still going to be useful in the long run, and I learned some things today. If I change my mind, I will change it. This means for now, I should change the mesh.cpp to add a load() function, but Mesh won't be a resource.
 
 UPDATE: Decided to scrap load(). Instead, we just inheret the Resource constructor for loading a path. Whatever man, I don't care anymore.
+
+# 8/18 
+
+Fixed a bug because I forgot to read docs. glVertexAttribPointer needs the offset in bytes. Which reminds me, I need to see if 4.6 has a better way of doing this stuff. Not that I hate it or anything, but do I need the VBO bounded when I call this function for the correct pointer? Why can't I just switch them? This would make it easier, since less VAOs and I can just instance 1, unless the mesh provides otherwise. Which also reminds me, I should be able to make the mesh switch attribs, etc.
