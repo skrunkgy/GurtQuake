@@ -1004,3 +1004,13 @@ The VAO takes a pointer to the EBO, so we need to bind a VAO before we bind an E
 I am going to add 2 new classes for our Mesh: a simple struct that holds Mesh data, and a Resource that holds import data when I eventually write a model loader that produces a Mesh data struct.
 
 MeshData will hold an array of vertices, an array of indices, and a number to hold both.
+
+## Resource tweak
+
+I added two delimiters. '$' will denote the project's root, and '%' will denote the "defaults" directory. This directory will hold default resources that will be used in project building (i.e. our Skybox). The latter delimiter uses the `__FILE__` macro, and then swizzles around to get to the defaults folder. I don't know if this is fine, but I don't really care either.
+
+I don't really like this solution, I'd rather have some kind of way to do both files AND internal stuff. Perhaps, our Resource() file will take in an istream. The file loading will be managed by our ResourceManager. This will come in later, however, as I cannot be bothered atm.
+
+## .gqshader tweak
+
+There is no longer a need to declare the basic uniforms and input layouts, as the shader class handles it all. I do want to make more things automatic (like UV being handed to the fragment shader), but that requires more file parsing crap that I also can't be bothered to do.

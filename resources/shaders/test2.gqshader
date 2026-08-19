@@ -1,13 +1,5 @@
 #shader VERTEX
 
-layout (location = 0) in vec3 POSITION;
-layout (location = 1) in vec2 UV;
-// layout (location = 2) in vec3 NORMAL;
-
-uniform mat4 MODEL_MAT;
-uniform mat4 VIEW_MAT;
-uniform mat4 PROJ_MAT;
-
 out vec2 outUV;
 
 void main()
@@ -21,7 +13,6 @@ void main()
 uniform sampler2D TEXTURE;
 
 in vec2 outUV;
-out vec4 COLOR;
 
 void main()
 {

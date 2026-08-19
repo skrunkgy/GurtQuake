@@ -94,19 +94,19 @@ class FlyCam : public Camera
 void App::init()
 {
 
-	Resource::m_root = "/home/andrew/Projects/GurtQuake/";
+	Resource::m_root = "/home/andrew/Projects/GurtQuake/resources/";
 
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
 	Mesh *t_Mesh = new Mesh(gqtest::bobert_data);
 	
-	Shader *t_Shader = new Shader("resources/shaders/test2.gqshader");
+	Shader *t_Shader = new Shader("$shaders/test2.gqshader");
 	t_Mesh->attach_shader(t_Shader); // Memory leak here too lol
 	
 	// BAD: This causes a memory leak...
-	Texture2D* t_Texture = new Texture2D("resources/bobert.png");
-	
+	Texture2D* t_Texture = new Texture2D("$bobert.png");
+
 	// set our uniform to use our texture
 	t_Shader->use_shader();
 	glUniform1i(glGetUniformLocation(t_Shader->get_shader(), "TEXTURE"), 0);
