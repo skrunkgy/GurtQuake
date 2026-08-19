@@ -8,7 +8,6 @@ gquake:
 
 debug:
 	g++ -g ${LIBS} ${SRCS} -o debug
-	gdb ./debug
 
 gqtest:
 	g++ ${LIBS} test/main.cpp -o gqtest

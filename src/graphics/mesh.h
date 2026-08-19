@@ -9,7 +9,7 @@
 #include "../core/gqtypes.h"
 #include "shader.h"
 
-#define ATTRIB_COUNT 5 // basically how many floats in a vertice
+#define ATTRIB_COUNT 8 // basically how many floats in a vertice
 
 namespace gquake
 {
@@ -22,18 +22,19 @@ struct Vertex
 {
 	vec3 position; 
 	vec2 uv;
-	// vec3 normal;
-	// float_32[8] other; // do not use
+	vec3 normal;
 	
 	// these constructors are only for position data
 	Vertex() {
 		this->position = vec3();
 		this->uv = vec2();
+		this->normal = vec3();
 	}
-	Vertex(vec3 _pos, vec2 _uv)
+	Vertex(vec3 _pos, vec2 _uv, vec3 _norm)
 	{
 		this->position = _pos;
 		this->uv = _uv;
+		this->normal = _norm;
 	}
 	Vertex(std::initializer_list<float32_t> _data)
 	{

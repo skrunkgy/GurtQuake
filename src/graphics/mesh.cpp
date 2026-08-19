@@ -37,16 +37,12 @@ Mesh::Mesh(MeshData data)
 	glEnableVertexAttribArray(0);
 	
 	// UV: 2
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(float32_t), reinterpret_cast<void*>(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(float32_t), reinterpret_cast<void*>(3 * sizeof(float32_t)));
 	glEnableVertexAttribArray(1);
 
 	// NORMAL: 3
-	// glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(GLfloat), reinterpret_cast<void*>(5));
-	// glEnableVertexAttribArray(2);
-	
-	// OTHER: 8
-	// glVertexAttribPointer(3, 8, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(GLfloat), reinterpret_cast<void*>(8));
-	// glEnableVertexAttribArray(3);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(float32_t), reinterpret_cast<void*>(5 * sizeof(float32_t)));
+	glEnableVertexAttribArray(2);
 	
 	// Unbind stuff
 	glBindVertexArray(0);
@@ -59,6 +55,7 @@ Mesh::Mesh(MeshData data)
 Mesh::~Mesh()
 {
 	glDeleteBuffers(1, &m_vbo);
+	glDeleteBuffers(1, &m_ebo);
 	glDeleteVertexArrays(1, &m_vao);
 	printf("Mesh has been destroyed\n");
 }
@@ -90,7 +87,6 @@ void Mesh::_render(App* app)
 	// Unset for safe keeping
 	glUseProgram(0);	
 
-	;
 	// TODO: pass uniforms to the shader :)
 }
 
@@ -106,4 +102,10 @@ void Mesh::draw()
 	glBindVertexArray(m_vao);
 	m_shader->use_shader();
 	glDrawElements(GL_TRIANGLES, m_triCount * 3, GL_UNSIGNED_INT, 0);
+
+	// Cleanup
+	// Note, UNBIND VAO BEFORE EBO, IGNORING THIS WILL CAUSE SEGFAULT LOL
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glUseProgram(0);
 }

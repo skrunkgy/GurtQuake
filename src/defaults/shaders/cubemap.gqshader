@@ -4,8 +4,9 @@ out vec3 outPos;
 
 void main()
 {
-	VIEW_MAT[3] = vec4(0, 0, 0, 1);
-	gl_Position = PROJ_MAT * VIEW_MAT * vec4(POSITION, 1.f);
+	mat4 view = mat4(mat3(VIEW_MAT));
+	vec4 temp = PROJ_MAT * view * vec4(POSITION, 1.f);
+	gl_Position = temp.xyww; // depth test will only pass if nothing is in front of it
 	outPos = POSITION;
 }
 
@@ -17,5 +18,5 @@ uniform samplerCube CUBEMAP;
 
 void main()
 {
-	COLOR = vec4(texture(CUBEMAP, outPos));
+	COLOR = vec4((outPos + 1) / 2, 1.0);
 }

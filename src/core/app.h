@@ -7,6 +7,7 @@
 #include "../graphics/camera.h"
 #include "../graphics/renderobject.h"
 #include "gqtypes.h"
+#include "resourcemanager.h"
 
 namespace gquake
 {
@@ -34,7 +35,9 @@ private:
 	// Eventually add Viewport class
 	AppState m_state;
 	SDL_GLContext m_context;
+
 	std::queue<RenderObject*> m_renderQueue;
+
 	Camera* m_mainCamera = nullptr;
 	GQObject* m_tree = nullptr;
 	

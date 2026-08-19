@@ -9,6 +9,7 @@
 #include "graphics/mesh.h"
 #include "core/resource.h"
 #include "graphics/texture.h"
+#include "graphics/skybox.h"
 
 #include "../resources/bobert.h"
 
@@ -115,6 +116,9 @@ void App::init()
 
 	// Insert it into our tree
 	m_tree->add_child(t_Mesh);
+
+	// Create and insert a Skybox
+	m_tree->add_child(new Skybox);
 
 	// Create camera then push to tree
 	FlyCam *t_Camera = new FlyCam();

@@ -1014,3 +1014,7 @@ I don't really like this solution, I'd rather have some kind of way to do both f
 ## .gqshader tweak
 
 There is no longer a need to declare the basic uniforms and input layouts, as the shader class handles it all. I do want to make more things automatic (like UV being handed to the fragment shader), but that requires more file parsing crap that I also can't be bothered to do.
+
+## Skybox
+
+This was super easy to implement. I just inheret the Mesh class, but only provide a default constuctor. The Skybox class holds a static MeshData that is just a cube, with no UVs or normals (I added the normals attribute!)
