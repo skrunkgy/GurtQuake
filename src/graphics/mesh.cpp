@@ -1,3 +1,4 @@
+#include <glbinding/gl/enum.h>
 #include <glbinding/gl/functions.h>
 #include <initializer_list>
 #include <glbinding/gl/gl.h>
@@ -17,16 +18,23 @@ Mesh::Mesh()
 
 Mesh::Mesh(Vertex vertices[], uint32_t count)
 {
+	glGenVertexArrays(1, &m_vao);	
 	glGenBuffers(1, &m_vbo);
-	glGenVertexArrays(1, &m_vao);
+	glGenBuffers(1, &m_ebo);
+
+	// Bind buffers and arrays 
+	glBindVertexArray(m_vao);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 	
-	// Insert vertex data into Mesh
+	// Insert data into vertex buffers
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBufferData(GL_ARRAY_BUFFER, count * ATTRIB_COUNT * sizeof(float32_t), vertices, GL_STATIC_DRAW);
+
+	// TODO: EBO
 	
-	// Set up attrib layout 
-	glBindVertexArray(m_vao);
-	
+
+	// Set up attributes
 	// POSITION: 3, TODO: make directives? 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(float32_t), reinterpret_cast<void*>(0));
 	glEnableVertexAttribArray(0);
@@ -47,7 +55,7 @@ Mesh::Mesh(Vertex vertices[], uint32_t count)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	
-	m_vertCount = count;
+	// TODO: Set tri count somewhere
 }
 
 Mesh::Mesh(std::initializer_list<Vertex> vertices) : Mesh((Vertex*)vertices.begin(), vertices.size()) {}
@@ -99,5 +107,5 @@ void Mesh::draw()
 {
 	glBindVertexArray(m_vao);
 	m_shader->use_shader();
-	glDrawArrays(GL_TRIANGLES, 0, m_vertCount);
+	glDrawElements(GL_TRIANGLES, m_triCount, GL_UNSIGNED_INT, 0);
 }

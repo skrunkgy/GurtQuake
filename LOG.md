@@ -994,3 +994,7 @@ We will also need a way to load these lights to each shader, which would be such
 ## Cubemap
 
 Cubemap seems simple in my mind. We pair a cube primitive with some default shader, and provide its own way of rendering. It will inheret the RenderObject, and use a Shader. The only problem is that I want the default shader to be part of the src, so I will need to figure out something with that.
+
+# 8/19 
+
+The VAO takes a pointer to the EBO, so we need to bind a VAO before we bind an EBO. According to LearnOpenGL, we should bind a VAO first before our other buffers.

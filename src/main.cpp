@@ -106,11 +106,11 @@ void App::init()
 	
 	// BAD: This causes a memory leak...
 	Texture2D* t_Texture = new Texture2D("resources/bobert.png");
-
+	
+	// set our uniform to use our texture
 	t_Shader->use_shader();
 	glUniform1i(glGetUniformLocation(t_Shader->get_shader(), "TEXTURE"), 0);
 	t_Texture->use_texture(0);
-	
 	glUseProgram(0);
 
 	// Insert it into our tree
@@ -118,7 +118,6 @@ void App::init()
 
 	// Create camera then push to tree
 	FlyCam *t_Camera = new FlyCam();
-
 	m_tree->add_child(t_Camera);
 
 	// Set app's main Cam
