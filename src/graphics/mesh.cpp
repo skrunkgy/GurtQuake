@@ -16,7 +16,7 @@ Mesh::Mesh()
 	printf("WARNING: No vertices supplied, please reinitialize with vertices...\n");
 }
 
-Mesh::Mesh(Vertex vertices[], uint32_t count)
+Mesh::Mesh(MeshData data)
 {
 	glGenVertexArrays(1, &m_vao);	
 	glGenBuffers(1, &m_vbo);
@@ -28,11 +28,8 @@ Mesh::Mesh(Vertex vertices[], uint32_t count)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 	
 	// Insert data into vertex buffers
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, count * ATTRIB_COUNT * sizeof(float32_t), vertices, GL_STATIC_DRAW);
-
-	// TODO: EBO
-	
+	glBufferData(GL_ARRAY_BUFFER, data.nVerts * ATTRIB_COUNT * sizeof(float32_t), data.vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.nTris * 3 * sizeof(uint32_t), data.indices, GL_STATIC_DRAW);
 
 	// Set up attributes
 	// POSITION: 3, TODO: make directives? 
@@ -40,7 +37,7 @@ Mesh::Mesh(Vertex vertices[], uint32_t count)
 	glEnableVertexAttribArray(0);
 	
 	// UV: 2
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(GLfloat), reinterpret_cast<void*>(3 * sizeof(GLfloat)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(float32_t), reinterpret_cast<void*>(3 * sizeof(GLfloat)));
 	glEnableVertexAttribArray(1);
 
 	// NORMAL: 3
@@ -51,14 +48,13 @@ Mesh::Mesh(Vertex vertices[], uint32_t count)
 	// glVertexAttribPointer(3, 8, GL_FLOAT, GL_FALSE, ATTRIB_COUNT * sizeof(GLfloat), reinterpret_cast<void*>(8));
 	// glEnableVertexAttribArray(3);
 	
-	// Unbind
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// Unbind stuff
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-	// TODO: Set tri count somewhere
+	m_triCount = data.nTris;
 }
-
-Mesh::Mesh(std::initializer_list<Vertex> vertices) : Mesh((Vertex*)vertices.begin(), vertices.size()) {}
 
 Mesh::~Mesh()
 {
@@ -105,7 +101,9 @@ void Mesh::attach_shader(Shader* shader)
 
 void Mesh::draw()
 {
+	// IMPORTANT: VBOs dont need to be binded, but EBOs do!
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 	glBindVertexArray(m_vao);
 	m_shader->use_shader();
-	glDrawElements(GL_TRIANGLES, m_triCount, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, m_triCount * 3, GL_UNSIGNED_INT, 0);
 }

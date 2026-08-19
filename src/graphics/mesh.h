@@ -47,13 +47,20 @@ struct Vertex
 	}
 };
 
+struct MeshData
+{
+	Vertex* vertices;
+	uint32_t* indices;
+
+	uint32_t nVerts;
+	uint32_t nTris;
+};
 
 class Mesh : public RenderObject
 {
 public:
 	Mesh();
-	Mesh(Vertex vertices[], uint32_t count);
-	Mesh(std::initializer_list<Vertex> vertices);
+	Mesh(MeshData data);
 	~Mesh();
 
 	Transform transform;

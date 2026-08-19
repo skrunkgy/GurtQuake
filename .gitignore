@@ -4,6 +4,7 @@ compile_commands.json
 # gquake move
 /gquake
 /gqtest
+/debug
 
 # shit produced by clang
 .cache

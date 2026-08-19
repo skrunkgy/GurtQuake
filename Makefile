@@ -6,5 +6,9 @@ LIBS := -lglbinding -lGL -lSDL3 -lSDL3_image
 gquake:
 	g++ ${LIBS} ${SRCS} -o gquake
 
-gqtest: 
+debug:
+	g++ -g ${LIBS} ${SRCS} -o debug
+	gdb ./debug
+
+gqtest:
 	g++ ${LIBS} test/main.cpp -o gqtest

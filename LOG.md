@@ -998,3 +998,9 @@ Cubemap seems simple in my mind. We pair a cube primitive with some default shad
 # 8/19 
 
 The VAO takes a pointer to the EBO, so we need to bind a VAO before we bind an EBO. According to LearnOpenGL, we should bind a VAO first before our other buffers.
+
+## More Mesh Data
+
+I am going to add 2 new classes for our Mesh: a simple struct that holds Mesh data, and a Resource that holds import data when I eventually write a model loader that produces a Mesh data struct.
+
+MeshData will hold an array of vertices, an array of indices, and a number to hold both.

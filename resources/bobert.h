@@ -7,7 +7,7 @@ using namespace gquake;
 namespace gqtest
 {
 
-Vertex bobert[] = {
+static Vertex bobert[] = {
 
 	{  .0,  .5,  .0,	0.5, 1.0},
 	{ -.5, -.5,  .5,	0.0, 0.0},
@@ -16,7 +16,7 @@ Vertex bobert[] = {
 	{  .5, -.5, -.5,	1.0, 0.0},
 };
 
-uint32_t bobert_indices[] = {
+static uint32_t bobert_indices[] = {
 
 	0, 1, 2, // front face
 	0, 1, 3, // left face 
@@ -26,6 +26,14 @@ uint32_t bobert_indices[] = {
 	1, 2, 3, // plate
 	2, 3, 4
 
+};
+
+static MeshData bobert_data =
+{
+	.vertices = bobert,
+	.indices = bobert_indices,
+	.nVerts = 5,
+	.nTris = 6
 };
 
 } // namespace gqtest

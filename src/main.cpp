@@ -99,7 +99,7 @@ void App::init()
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
-	Mesh *t_Mesh = new Mesh(gqtest::bobert, sizeof(gqtest::bobert) / (4 * ATTRIB_COUNT));
+	Mesh *t_Mesh = new Mesh(gqtest::bobert_data);
 	
 	Shader *t_Shader = new Shader("resources/shaders/test2.gqshader");
 	t_Mesh->attach_shader(t_Shader); // Memory leak here too lol
@@ -126,6 +126,7 @@ void App::init()
 
 void App::loop(float32_t delta)
 {
+	
 	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
 	t_Mesh->transform.rotate_axis(PI * 2 * .8 * delta, vec3(1.f, 0.f, 0.f));
 }

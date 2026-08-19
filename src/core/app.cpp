@@ -99,13 +99,11 @@ void App::add_to_render_queue(RenderObject* object)
 void App::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	while (!m_renderQueue.empty())
 	{
 		m_renderQueue.front()->draw();
 		m_renderQueue.pop();
 	}
-
 	SDL_GL_SwapWindow(m_window);
 }
 
