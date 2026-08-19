@@ -3,6 +3,7 @@
 #include <SDL3_image/SDL_image.h>
 #include <glbinding/gl/bitfield.h>
 #include <glbinding/gl/enum.h>
+#include <glbinding/gl/functions.h>
 #include <glbinding/gl/gl.h>
 #include <glbinding/glbinding.h>
 #include <stdio.h>
@@ -33,6 +34,8 @@ App::App(const char* name, uint32_t x, uint32_t y)
 
 	glViewport(0, 0, x, y);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
 	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
 
 }

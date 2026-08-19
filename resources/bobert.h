@@ -18,13 +18,13 @@ static Vertex bobert[] = {
 
 static uint32_t bobert_indices[] = {
 
-	0, 1, 2, // front face
+	0, 2, 1, // front face
 	0, 1, 3, // left face 
 	0, 3, 4, // back face
 	0, 4, 2, // right face
 	
 	1, 2, 3, // plate
-	2, 3, 4
+	3, 2, 4
 
 };
 
