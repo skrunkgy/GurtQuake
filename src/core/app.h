@@ -49,4 +49,4 @@ private:
 	void render();
 };
 
-}
+} // namespace gquake

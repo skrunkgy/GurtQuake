@@ -1026,3 +1026,30 @@ This was super easy to implement. I just inheret the Mesh class, but only provid
 ## Weird bug
 
 Apparently, I can't tell what's row-major or column-major online, or why anything matters at all. I think it might just be my math, however, because of how OpenGL multiplies vertices. Anyways, I fixed it all up. Only final words for today.
+
+# 8/20 
+
+I need to be more careful with my math. Because I am doing row-major (as I find it more convenient), vectors would be multiplied left to right with matrices. Let's take an example 2d coordinate and say we want to translate it, using our previous assumption.
+`
+	          | 1  0  x |
+| 4  3  1 | * | 0  1  y |
+              | 0  0  1 |
+`
+This coordinate has an extra z component, since translations of n dimension need a vector and matrix with a size of + 1. Our resulting vector would be 
+`| 4  3  4x+3y+1 |`
+which is COMPLETELY wrong. However, if we transposed the transform matrix:
+`
+	          | 1  0  0 |
+| 4  3  1 | * | 0  1  0 |
+              | x  y  1 |`
+
+we get
+`| 4+x  3+y  1 |`
+which is correct! That was why our transformation matrix was not working, and we got scott-free with our Camera matrix. And somehow the projection matrix. This is peachy and all, but this means we need to change our point rotation (provide both overload for m * v and v * m). I believe the latter matrix should work if we transpose our vector and move it to the right. So...
+`
+| 1  0  0 |   | 4 |
+| 0  1  0 | * | 3 |
+| x  y  1 |   | 1 |`
+
+results in
+`| 4  3  4x+3y+1 |^T`, which is... wrong...

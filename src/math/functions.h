@@ -69,4 +69,21 @@ Vector<3, T> rotate_point(Vector<3, T>  point, Vector<3, T> axis, float32_t angl
 	return rotation_matrix * point;
 }
 
+template <uint32_t n>
+void print_vec(const Vector<n, float32_t>& v)
+{
+	AUTOFOR(i, n) printf("%f, ", v[i]);
+	printf("\n");
 }
+
+template<uint32_t r, uint32_t c>
+void print_mat(const Matrix<r, c, float32_t>& m)
+{
+	AUTOFOR(i, r)
+	{
+		AUTOFOR(j, c) printf("%f, ", m[i][j]);
+		printf("\n");
+	}
+}
+
+} // namespace gquake

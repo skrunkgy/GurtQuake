@@ -12,11 +12,7 @@
 #define ATTRIB_COUNT 8 // basically how many floats in a vertice
 
 namespace gquake
-{
-
-// Quick note on the Vertex...
-// I was planning on doing separate buffers for the positions, normals etc, but I might just do this instead. I MAY still do an indexed buffer, but those aren't very hard to configure.
-
+{ 
 
 struct Vertex
 {
@@ -79,4 +75,5 @@ private:
 	uint32_t m_vao, m_vbo, m_ebo;
 	uint32_t m_triCount;
 };
-}
+
+} // namespace gquake

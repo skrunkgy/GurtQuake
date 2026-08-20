@@ -27,4 +27,4 @@ private:
 	std::string m_root;
 };
 
-}; // namespace gquake
+} // namespace gquake

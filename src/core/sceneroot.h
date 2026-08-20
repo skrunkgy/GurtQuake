@@ -13,4 +13,4 @@ public:
 	~SceneRoot();
 };
 
-}
+} // namespace gquake

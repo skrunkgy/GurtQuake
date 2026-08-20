@@ -77,6 +77,22 @@ struct alignas(T) Vector<4, T>
 		return Vector<4, T>(this->x * scalar, this->y * scalar, this->z * scalar, this->w * scalar);
 	}
 
+	template<uint32_t c, typename U>
+	Vector<c, T> operator* (const Matrix<4, c, U>& m)
+	{
+		Vector<c, T> result;
+		AUTOFOR(rm_col, c)
+		{
+			T dot = 0;
+			AUTOFOR(i, 4)
+			{
+				dot += m[i][rm_col] * (*this)[i];
+			}
+			result[rm_col] = dot;
+		}
+		return result;
+	}
+
 	template <typename U>
 	Vector<4, T> operator/ (U scalar)
 	{
@@ -189,4 +205,4 @@ Vector<4, T> operator/ (U scalar, const Vector<4, T>& v)
 	return Vector<4, T>(v.x / scalar, v.y / scalar, v.z / scalar, v.w / scalar);
 }
 
-}
+} // namespace gquake

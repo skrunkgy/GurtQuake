@@ -45,4 +45,4 @@ struct Transform
 	}
 };
 
-}
+} // namespace gquake

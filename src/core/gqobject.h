@@ -42,5 +42,4 @@ public:
 	virtual void _render(App* app) {};
 };
 
-}
-
+} // namespace gquake

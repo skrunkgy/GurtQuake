@@ -2,8 +2,6 @@
 
 #pragma once
 
-#define AUTOFOR(i, n) for(uint32_t i = 0; i < n; i++)
-
 #include <cassert>
 #include <stdio.h>
 #include <string.h>
@@ -14,9 +12,6 @@
 
 namespace gquake
 {
-
-template <uint32_t n, typename T>
-struct Vector;
 
 template<uint32_t r, uint32_t c, typename T>
 struct alignas(T) Matrix
@@ -109,7 +104,6 @@ struct alignas(T) Matrix
 	}
 	
 	// Matrix multiplication
-	// TODO: Fix
 	template<uint32_t n, typename U> // n is the RHS number of rows
 	Matrix<r, n, T> operator* (const Matrix<n, c, U>& m)
 	{
@@ -129,7 +123,8 @@ struct alignas(T) Matrix
 		}
 		return result;
 	}
-
+	
+	// We are assuming our vector is a column
 	template<typename U>
 	Vector<r, T> operator* (const Vector<c, U>& v)
 	{
@@ -147,17 +142,4 @@ struct alignas(T) Matrix
 	}
 };
 
-template<uint32_t r, uint32_t c>
-void print_matf(const Matrix<r, c, float32_t>& m)
-{
-	AUTOFOR(i, r)
-	{
-		AUTOFOR(j, c)
-		{
-			printf("%f, ", m[i][j]);
-		}
-		printf("\n");
-	}
-}
-
-}
+} // namespace gquake

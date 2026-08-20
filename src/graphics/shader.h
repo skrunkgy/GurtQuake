@@ -43,4 +43,5 @@ private:
 	void compile_shader(const char* source_file, GQ_SHADER_TYPE type);
 
 };
-}
+
+} // namespace gquake

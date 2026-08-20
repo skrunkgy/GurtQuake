@@ -4,9 +4,9 @@
 
 #include "../core/gqobject.h"
 
-namespace gquake{
+namespace gquake
+{
 
-// An object that can be attached to a render queue and rendered. Can be meshes or GUI (also MOSTLY purely virtual)
 class RenderObject : public GQObject
 {
 public:
@@ -16,4 +16,4 @@ public:
 	virtual void _render(App* app);
 };
 
-}
+} // namespace gquake
