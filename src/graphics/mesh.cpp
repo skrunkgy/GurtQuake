@@ -65,7 +65,6 @@ void Mesh::_render(App* app)
 
 	RenderObject::_render(app);
 
-	// NOTE: gl specific code, also kind of stinky. temporary!
 	mat4x4 t_Model = transform.get_matrix();
 	
 	glUseProgram(m_shader->get_shader());

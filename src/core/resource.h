@@ -31,6 +31,7 @@ public:
 			printf("No root specififer, assuming file is absolute.\n");
 			m_filepath = path;
 		}
+		uid = path;
 	}
 	~Resource() {}
 
@@ -45,6 +46,7 @@ protected:
 
 private:
 	inline static std::string m_root = ""; // Will be root of the resources...
+	std::string uid;
 };
 
 } // namespace gquake

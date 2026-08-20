@@ -6,7 +6,7 @@ using namespace gl;
 
 Skybox::Skybox() : Mesh(m_data)
 {
-	Mesh::attach_shader(new Shader("%shaders/cubemap.gqshader"));
+	
 };
 
 void Skybox::draw()

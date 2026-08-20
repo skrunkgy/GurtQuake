@@ -37,7 +37,7 @@ T length(const Vector<n, T> &v)
 }
 
 template<uint32_t n, typename T>
-Vector<n, T> normalized(Vector<n, T> v)
+Vector<n, T> normalize(Vector<n, T> v)
 {
 	if (length(v) == 0) return Vector<n, T>();
 	return v / length(v);

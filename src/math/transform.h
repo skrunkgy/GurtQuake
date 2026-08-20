@@ -27,10 +27,10 @@ struct Transform
 	{
 		mat4x4 result
 		{
-			basis[0].x * scale.x, basis[0].y * scale.y, basis[0].z * scale.z, position.x,
-			basis[1].x * scale.x, basis[1].y * scale.y, basis[1].z * scale.z, position.y,
-			basis[2].x * scale.x, basis[2].y * scale.y, basis[2].z * scale.z, position.z,
-			0.f, 0.f, 0.f, 1.f
+			basis[0].x * scale.x, basis[1].x * scale.x, basis[2].x * scale.x, 0.f,
+			basis[0].y * scale.y, basis[1].y * scale.y, basis[2].y * scale.y, 0.f,
+			basis[0].z * scale.z, basis[1].z * scale.z, basis[2].z * scale.z, 0.f,
+			position.x, position.y, position.z, 1.f
 		};
 
 		return result;
@@ -40,7 +40,7 @@ struct Transform
 	{
 		AUTOFOR(i, 3)
 		{
-			basis[i] = normalized(rotate_point(basis[i], axis, angle)); // Normalize because basis should always be normalized
+			basis[i] = normalize(rotate_point(basis[i], axis, angle)); // Normalize because basis should always be normalized
 		}
 	}
 };

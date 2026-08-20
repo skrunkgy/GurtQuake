@@ -100,9 +100,9 @@ void App::init()
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
 
-	Mesh *t_Mesh = new Mesh(gqtest::bobert_data);
+	Mesh* t_Mesh = new Mesh(gqtest::bobert_data);
 	
-	Shader *t_Shader = new Shader("$shaders/test2.gqshader");
+	Shader* t_Shader = new Shader("$shaders/test2.gqshader");
 	t_Mesh->attach_shader(t_Shader); // Memory leak here too lol
 	
 	// BAD: This causes a memory leak...
@@ -118,7 +118,10 @@ void App::init()
 	m_tree->add_child(t_Mesh);
 
 	// Create and insert a Skybox
-	m_tree->add_child(new Skybox);
+	Shader* t_SkyShader = new Shader("$shaders/rainbow_sky.gqshader");
+	Skybox* t_Skybox = new Skybox;
+	t_Skybox->attach_shader(t_SkyShader);
+	m_tree->add_child(t_Skybox);
 
 	// Create camera then push to tree
 	FlyCam *t_Camera = new FlyCam();
@@ -132,7 +135,12 @@ void App::loop(float32_t delta)
 {
 	
 	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
-	t_Mesh->transform.rotate_axis(PI * 2 * .8 * delta, vec3(0.f, 1.f, 0.f));
+	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 1.f, 0.0));
+	
+	// Code that makes the triangle watch you :)
+	// t_Mesh->transform.basis[2] = normalize(m_mainCamera->transform.position - t_Mesh->transform.position);
+	// t_Mesh->transform.basis[0] = normalize(cross(vec3(0.f, 1.f, 0.f), t_Mesh->transform.basis[2]));
+	// t_Mesh->transform.basis[1] = normalize(cross(t_Mesh->transform.basis[2], t_Mesh->transform.basis[0]));
 }
 
 int main(int argc, char** kwarg)

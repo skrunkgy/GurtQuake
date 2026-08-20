@@ -3,7 +3,7 @@
 This is going to be a game using my own engine written in C. I don't know much about writing good C code, but this will be a good experience!
 
 ## Layout
-The engine has an App class that controls the program. Actors are derived from the "gqObject", which is a virtual class part of a tree-like system. Each level would be comprised of a SceneRoot, which would just be the root of a "Scene". These objects would be "poked" every frame by traversal.
+The engine has an App class that controls the program. Actors are derived from the "GQObject", which is a virtual class part of a tree-like system. The App holds a GQObject as its root (or any derivative, such as a SceneRoot). The App loop performs multiple traversals, including input, logic, and rendering.
 
 ## Graphics
 OPENGL 4.6!!! Overview of how I abstract things:

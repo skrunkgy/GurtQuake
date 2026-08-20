@@ -1,0 +1,22 @@
+#shader VERTEX
+
+out vec3 outPos;
+
+void main()
+{
+	mat4 view = mat4(mat3(VIEW_MAT));
+	vec4 temp = PROJ_MAT * view * vec4(POSITION, 1.f);
+	gl_Position = temp.xyww; // depth test will only pass if nothing is in front of it
+	outPos = POSITION;
+}
+
+#shader FRAGMENT
+
+in vec3 outPos;
+
+uniform samplerCube CUBEMAP;
+
+void main()
+{
+	COLOR = vec4(outPos / 2 + .5, 1.0);
+}

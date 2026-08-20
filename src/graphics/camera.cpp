@@ -33,6 +33,7 @@ mat4x4 Camera::get_view()
 		transform.basis[2].x, transform.basis[2].y, transform.basis[2].z, dot(transform.basis[2], -transform.position),
 		0.f, 0.f, 0.f, 1.f
 	};
+
 }
 
 mat4x4 Camera::get_proj()

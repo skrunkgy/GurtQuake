@@ -1009,7 +1009,11 @@ MeshData will hold an array of vertices, an array of indices, and a number to ho
 
 I added two delimiters. '$' will denote the project's root, and '%' will denote the "defaults" directory. This directory will hold default resources that will be used in project building (i.e. our Skybox). The latter delimiter uses the `__FILE__` macro, and then swizzles around to get to the defaults folder. I don't know if this is fine, but I don't really care either.
 
-I don't really like this solution, I'd rather have some kind of way to do both files AND internal stuff. Perhaps, our Resource() file will take in an istream. The file loading will be managed by our ResourceManager. This will come in later, however, as I cannot be bothered atm.
+For now, this will suffice. I want it so that default resources are embedded (like Godot), so that we don't need to do the delimiter crap. In theory, each of our Resource objects should provide ways to load the resource with raw data, as well as have functions to load these from file.
+
+For example, our Shader can run `load()` once it has all of it's data. However, an project resource needs to be loaded from a file. The Shader class should be able to load the data needed from an external file, and then it can call `load()`.
+
+Apparently, Godot actually uses external files and just turns them into header files (???). I don't even care anymore, I guess I won't change anything lol.
 
 ## .gqshader tweak
 
@@ -1018,3 +1022,7 @@ There is no longer a need to declare the basic uniforms and input layouts, as th
 ## Skybox
 
 This was super easy to implement. I just inheret the Mesh class, but only provide a default constuctor. The Skybox class holds a static MeshData that is just a cube, with no UVs or normals (I added the normals attribute!)
+
+## Weird bug
+
+Apparently, I can't tell what's row-major or column-major online, or why anything matters at all. I think it might just be my math, however, because of how OpenGL multiplies vertices. Anyways, I fixed it all up. Only final words for today.
