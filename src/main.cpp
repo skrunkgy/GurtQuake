@@ -118,7 +118,7 @@ void App::init()
 	m_tree->add_child(t_Mesh);
 
 	// Create and insert a Skybox
-	Shader* t_SkyShader = new Shader("$shaders/rainbow_sky.gqshader");
+	Shader* t_SkyShader = new Shader("%shaders/skybox.gqshader");
 	Skybox* t_Skybox = new Skybox;
 	t_Skybox->attach_shader(t_SkyShader);
 	m_tree->add_child(t_Skybox);
@@ -133,7 +133,6 @@ void App::init()
 
 void App::loop(float32_t delta)
 {
-	
 	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
 	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 1.f, 0.0));
 	
