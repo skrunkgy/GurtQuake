@@ -5,7 +5,6 @@
 
 #include <string.h>
 #include <cassert>
-#include <stdio.h>
 
 #include "qualifier.h"
 
@@ -20,7 +19,7 @@ struct alignas(T) Vector<3, T>
 		T data[3];
 		struct {T x, y, z; };
 		struct {T r, g, b; };
-		struct {T u, v, s; };
+		struct {T s, t, u; };
 	};
 	
 	// Constructors

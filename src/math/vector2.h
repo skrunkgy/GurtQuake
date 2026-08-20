@@ -18,7 +18,7 @@ struct alignas(T) Vector<2, T>
 		T data[2];
 		struct {T x, y; };
 		struct {T r, g; };
-		struct {T u, v; };
+		struct {T s, t; };
 	};
 	
 	// Constructors
