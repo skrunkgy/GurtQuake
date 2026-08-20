@@ -18,5 +18,16 @@ uniform samplerCube CUBEMAP;
 
 void main()
 {
-	COLOR = vec4((outPos + 1) / 2, 1.0);
+	vec3 direction = normalize(outPos);
+
+	vec3 base = vec3(.7, .9, 1);
+
+	vec3 sun = vec3(1.0);
+	vec3 sun_direction = vec3(.707, .707, 0.0);
+	vec3 ground = vec3(0.149, 0.129, 0.11);
+
+	vec3 outColor = mix(ground, mix(base, sun, clamp(pow(300, dot(direction, sun_direction) - .98), -1, 1)), clamp(pow(500, dot(direction, vec3(0.0, 1.0, 0.0))), 0, 1));
+	
+
+	COLOR = vec4(outColor, 1.0);
 }

@@ -50,15 +50,12 @@ void App::run()
 
 	while (m_state.running)
 	{	
-		while(SDL_PollEvent(&event)) // Poll events
-		{
-			App::poll_events(event);
-		}
-
-		loop((SDL_GetTicksNS() - beforeTime) * .000000001f);
+		
+		float32_t delta = SDL_GetTicksNS() - beforeTime;
+		loop(delta * .000000001f);
 		m_tree->traverse({
 			.type = GQ_LOGIC_POKE,
-			.dt = (SDL_GetTicksNS() - beforeTime) * .000000001f
+			.dt = (delta) * .000000001f
 		});
 		beforeTime = SDL_GetTicksNS();
 		
@@ -68,6 +65,12 @@ void App::run()
 			.app = this
 		});
 		
+		// process events
+		while(SDL_PollEvent(&event)) // Poll events
+		{
+			App::poll_events(event);
+		}
+
 		render();
 	}
 }
