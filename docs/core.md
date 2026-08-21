@@ -140,6 +140,12 @@ To be exact, here are the actual traversals we have and the data they need:
 
 That should wrap up the GQObject class. The awesome thing is that we can create derived classes, overwrite these functions, and they will be automatically called appropriately if we instantiate them into our scene!
 
+### Transforms
+
+GQObjects hold two kinds of Transforms (we will explain what these are later, but for now just know that they hold information about deformation). They have **local** transforms and **global** transforms. Local transforms represent how they deform relative to their parent, while their global transform represent how they deform in the world.
+
+Global transforms are read only, with the exception of the App class in order to set the global transform of the root GQObject with its own local transform. In a special traversal, the parent object sets their children's global transform by multiplying their own global transform with the child's local transform. This gives us that parent-transform relationship we see in game engines. It allows us, for example, to give an enemy a hat and have that hat follow the enemy's transforms, while also keeping a relative transformation for things like offset or rotation. 
+
 ### Extra
 
 The GQObject has a string property called its "name", but is unused.

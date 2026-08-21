@@ -147,7 +147,6 @@ Now that we have the basic understandings of transformations, we can look at eng
 The engine provides a Transform class, which holds three properties:
 - Position (3D vector)
 - Basis (3x3 matrix)
-- Scale (3D vector)
 
 These represent basic translations responsible for position, rotation, and scale. Usually, engines interface the rotation part as either an euler angle (3D vector of angles) or a quaternion. GurtQuake does not do either because:
 - Euler angles are subject to "Gimbal lock". This means that some configuration of these makes it impossible to represent others.
@@ -156,10 +155,10 @@ These represent basic translations responsible for position, rotation, and scale
 The basis simply holds the local axis. This means that it is also a orthonormalized matrix (orthogonal and normalized, remember!). We can get a transformation matrix if we apply these three properties like this:
 
 `
-| sx 0  0  0 |	   | b00 b01 b02 0 |	 | 1  0  0  0 |
-| 0  sy 0  0 |  *  | b10 b11 b12 0 |  *  | 0  1  0  0 |
-| 0  0  sz 0 |     | b20 b21 b22 0 |     | 0  0  1  0 |
-| 0  0  0  1 |     | 0   0   0   1 |     | px py pz 1 |
+| b00 b01 b02 0 |	  | 1  0  0  0 |
+| b10 b11 b12 0 |  *  | 0  1  0  0 |
+| b20 b21 b22 0 |     | 0  0  1  0 |
+| 0   0   0   1 |     | px py pz 1 |
 `
 
 The engine provides a `Transform::get_matrix()` method to provide the resulting matrix. This matrix can be applied to any vector4D (or a position vector with a 1 as the w component) and it will transform the point from local space to world space. Later, you will see that this will be our "model" matrix.
