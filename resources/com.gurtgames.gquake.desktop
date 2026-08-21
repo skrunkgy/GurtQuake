@@ -7,5 +7,5 @@ Version=1.0
 Name=GurtQuake
 Terminal=false
 Path=/path/to/GurtQuake
-Exec=/path/to/GurtQuake/gquake
-Icon=/path/to/GurtQuake/resources/icon.png
+Exec=gquake
+Icon=resources/icon.png

@@ -1,13 +1,20 @@
 #shader VERTEX
 
+out vec2 outUV;
+
 void main()
 {
     gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0);
+	outUV = UV;
 }
 
 #shader FRAGMENT
 
+uniform sampler2D TEXTURE;
+
+in vec2 outUV;
+
 void main()
 {
-    COLOR = vec4(0, 0, 0, 1);
+    COLOR = texture(TEXTURE, outUV);
 }

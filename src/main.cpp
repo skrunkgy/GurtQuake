@@ -112,6 +112,7 @@ void App::init()
 	Shader* t_HatShader = new Shader("$shaders/hat.gqshader");
 	Shader* t_SkyShader = new Shader("%shaders/skybox.gqshader");
 	Texture2D* t_Texture = new Texture2D("$bobert.png");
+	Texture2D* t_HatTexture = new Texture2D("$hat.png");
 
 	// Insert actors into our tree
 	m_tree->add_child(t_Bobert);
@@ -127,9 +128,9 @@ void App::init()
 	t_Hat->attach_shader(t_HatShader);
 	t_Skybox->attach_shader(t_SkyShader);
 
-	// Set some crap up
+	// Set the transform of our hat
 	t_Hat->transform.position = vec3(0, 0.4, 0);
-	t_Hat->transform.basis = mat3x3({
+	t_Hat->transform.basis = mat3x3({ // Basically scaling it :)
 		.5, 0, 0,
 		0, .5, 0,
 		0, 0, .5
@@ -140,12 +141,17 @@ void App::init()
 	glUniform1i(glGetUniformLocation(t_Shader->get_shader(), "TEXTURE"), 0);
 	t_Texture->use_texture(0);
 	glUseProgram(0);
+
+	t_HatShader->use_shader();
+	glUniform1i(glGetUniformLocation(t_HatShader->get_shader(), "TEXTURE"), 1);
+	t_HatTexture->use_texture(1);
+	glUseProgram(0);
 }
 
 void App::loop(float32_t delta)
 {
 	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
-	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 0.f, 1.0));
+	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 1.f, 0.0));
 }
 
 int main(int argc, char** kwarg)
