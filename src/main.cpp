@@ -127,7 +127,7 @@ void App::init()
 	t_Skybox->attach_shader(t_SkyShader);
 
 	// Set some crap up
-	t_Mesh->transform.position = vec3(0, 1, 0);
+	t_Mesh->transform.position = vec3(0, .7, 0);
 	
 	// Set shader to use our texture // TODO: MAKE A WRAPPER FOR THIS!
 	t_Shader->use_shader();
@@ -139,7 +139,9 @@ void App::init()
 void App::loop(float32_t delta)
 {
 	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
+	Mesh* t_Mesh2 = m_tree->get_child<Mesh>(1);
 	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 1.f, 0.0));
+	t_Mesh2->transform.rotate_axis(PI * delta, vec3(0.f, -1.f, 0.0));
 }
 
 int main(int argc, char** kwarg)

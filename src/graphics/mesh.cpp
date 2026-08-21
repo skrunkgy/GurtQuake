@@ -100,7 +100,7 @@ void Mesh::draw()
 	
 	uint32_t location;
 	location = glGetUniformLocation(m_shader->get_shader(), "MODEL_MAT");
-	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Model));
+	glUniformMatrix4fv(location, 1, GL_FALSE, reinterpret_cast<float*>(&t_Model));
 
 	glDrawElements(GL_TRIANGLES, m_triCount * 3, GL_UNSIGNED_INT, 0);
 

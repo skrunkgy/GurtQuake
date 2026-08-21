@@ -1062,8 +1062,19 @@ I may plan to make the Transform use a 4x3 matrix basis, in which the 3x3 part w
 - Each GQObject has a transform. I am iffy about this in case I want to add things that don't have one, but I will figure something out.
 - Each GQObject has a global transform, that is PRIVATE! The global transform can only be accessed by other GQObjects (i think I can do this? according to google i can) and is set. Yet again, another traversal. We can afford some more anyways.
 
+We need to rework the transform class, a little at least.
+
 ## Multiple meshes issue
 
 There seems to be an issue with multiple meshes, as I think they are fighting over their uniforms being set. No problem, this means that RenderObjects need to set their unique uniforms in the draw() call, while the _render() can pass global information.
 
 Again, another hint from the great above that I should use the UBO. Sigh, we carry on.
+Fixed.
+
+## Transform shenanigans
+
+At the moment, I am almost happy with the transform class. I had to consider that although I am using row-major, our shader is multiplying with column vectors, as well as using column-major matrices. This is like, a double transpose, so we don't transpose this matrix when sending it to the GPU.
+
+I also want to be able to purely represent the Transform matrix as a 4x3 matrix, as well as be able to cast it to a 4x4 matrix. I also want to be able to cast vectors to different sizes too. I will write all of this tomorrow.
+
+Finally, I want every object to have both a local transform (which will just be called transform), as well as a read-only globalTransform. This global matrix is only set by either the entity that calls the initial travel, as well as each other. The idea is that during a traversal, we hijack the traversal so that the parent is setting the child's globalTransform by multiplying the child's transform with the parent's own globalTransform.

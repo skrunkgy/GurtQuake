@@ -8,14 +8,12 @@ using namespace gquake;
 int main()
 {
 	Transform parent;
-	Transform child;
 
-	parent.position = {2.0, 0.0, 0.0};
+	parent.rotate_axis(PI / 2, vec3(0, 0, 1));
+	parent.position += vec3(0, 1, 0);
+	vec4 point = parent.get_matrix() * vec4(1.0, 0.0, 0.0, 1.0);
 
-	mat4x4 new_transform = child.get_matrix() * parent.get_matrix();
-	vec4 position = vec4(0, 0, 0, 1) * new_transform;
-
-	print_vec(position);
+	print_vec(point);
 	
 	return 0;
 }

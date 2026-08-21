@@ -53,7 +53,7 @@ void App::run()
 		
 		float32_t delta = SDL_GetTicksNS() - beforeTime;
 		loop(delta * .000000001f);
-
+		
 		m_tree->traverse({
 			.type = GQ_LOGIC_POKE,
 			.dt = (delta) * .000000001f

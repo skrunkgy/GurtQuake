@@ -18,6 +18,7 @@ class GQObject
 {
 private:
 	std::vector<GQObject*> m_children;
+	Transform m_globalTrans;
 
 public:
 
@@ -39,7 +40,7 @@ public:
 		return reinterpret_cast<T*>(m_children[index]);
 	}
 
-	const mat4x4& get_global();
+	const Transform& get_global() const;
 	
 	// Functions for different traversal passes
 	virtual void _enter() {};
