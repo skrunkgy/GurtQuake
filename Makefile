@@ -10,4 +10,4 @@ debug:
 	g++ -g ${LIBS} ${SRCS} -o debug
 
 gqtest:
-	g++ ${LIBS} test/main.cpp -o gqtest
+	g++ ${LIBS} test/main.cpp src/core/gqobject.cpp -o gqtest

@@ -40,6 +40,8 @@ public:
 		return reinterpret_cast<T*>(m_children[index]);
 	}
 
+	void t_set_global();
+
 	const Transform& get_global() const;
 	
 	// Functions for different traversal passes

@@ -1,0 +1,13 @@
+#shader VERTEX
+
+void main()
+{
+    gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0);
+}
+
+#shader FRAGMENT
+
+void main()
+{
+    COLOR = vec4(0, 0, 0, 1);
+}

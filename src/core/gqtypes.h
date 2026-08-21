@@ -19,7 +19,8 @@ enum GQ_POKE_TYPE
 	GQ_LOGIC_POKE,
 	GQ_RENDER_POKE,
 	GQ_INPUT_POKE,
-	GQ_DELETE_POKE
+	GQ_DELETE_POKE,
+	GQ_TRANSFORM_POKE,
 };
 
 // Inspired by the SDL_Event type :)

@@ -60,8 +60,6 @@ public:
 	Mesh(MeshData data);
 	~Mesh();
 
-	Transform transform;
-	
 	// In the case we want to modify the actual array
 	void attach_shader(Shader* shader);
 

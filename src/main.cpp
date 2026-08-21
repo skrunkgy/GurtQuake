@@ -101,20 +101,21 @@ void App::init()
 	m_tree = new SceneRoot();
 	
 	// Create our actors
-	Mesh* t_Mesh = new Mesh(gqtest::bobert_data);
-	Mesh* t_Mesh2 = new Mesh(gqtest::bobert_data);
+	Mesh* t_Bobert = new Mesh(gqtest::bobert_data);
+	Mesh* t_Hat = new Mesh(gqtest::hat_data);
 	FlyCam *t_Camera = new FlyCam();
 	Skybox* t_Skybox = new Skybox;
 	
 	// Load our resources
 	// All these cause memory leaks if we do not have a Resource Manager
 	Shader* t_Shader = new Shader("$shaders/test2.gqshader");
+	Shader* t_HatShader = new Shader("$shaders/hat.gqshader");
 	Shader* t_SkyShader = new Shader("%shaders/skybox.gqshader");
 	Texture2D* t_Texture = new Texture2D("$bobert.png");
 
 	// Insert actors into our tree
-	m_tree->add_child(t_Mesh);
-	m_tree->add_child(t_Mesh2);
+	m_tree->add_child(t_Bobert);
+	t_Bobert->add_child(t_Hat);
 	m_tree->add_child(t_Camera);
 	m_tree->add_child(t_Skybox);
 	
@@ -122,12 +123,17 @@ void App::init()
 	m_mainCamera = t_Camera;
 	
 	// Assign resources to our actors
-	t_Mesh->attach_shader(t_Shader);
-	t_Mesh2->attach_shader(t_Shader);
+	t_Bobert->attach_shader(t_Shader);
+	t_Hat->attach_shader(t_HatShader);
 	t_Skybox->attach_shader(t_SkyShader);
 
 	// Set some crap up
-	t_Mesh->transform.position = vec3(0, .7, 0);
+	t_Hat->transform.position = vec3(0, 0.4, 0);
+	t_Hat->transform.basis = mat3x3({
+		.5, 0, 0,
+		0, .5, 0,
+		0, 0, .5
+	});
 	
 	// Set shader to use our texture // TODO: MAKE A WRAPPER FOR THIS!
 	t_Shader->use_shader();
@@ -139,9 +145,7 @@ void App::init()
 void App::loop(float32_t delta)
 {
 	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
-	Mesh* t_Mesh2 = m_tree->get_child<Mesh>(1);
-	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 1.f, 0.0));
-	t_Mesh2->transform.rotate_axis(PI * delta, vec3(0.f, -1.f, 0.0));
+	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 0.f, 1.0));
 }
 
 int main(int argc, char** kwarg)

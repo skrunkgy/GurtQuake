@@ -35,7 +35,7 @@ App::App(const char* name, uint32_t x, uint32_t y)
 	glViewport(0, 0, x, y);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	glCullFace(GL_BACK);
 	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
 
 }
@@ -50,29 +50,35 @@ void App::run()
 
 	while (m_state.running)
 	{	
+		// Perform a traversal to set global transforms of child nodes
+		m_tree->m_globalTrans = m_tree->transform;
+		m_tree->traverse({
+			.type = GQ_TRANSFORM_POKE
+		});
 		
+		// Perform logic traversals, and a custom call to loop()
 		float32_t delta = SDL_GetTicksNS() - beforeTime;
+		beforeTime = SDL_GetTicksNS();
+
 		loop(delta * .000000001f);
-		
 		m_tree->traverse({
 			.type = GQ_LOGIC_POKE,
 			.dt = (delta) * .000000001f
 		});
-		beforeTime = SDL_GetTicksNS();
 		
-		// For now, logic will act as both render and logic
+		// Process events, shouldn't matter where we put this
+		while(SDL_PollEvent(&event))
+		{
+			App::poll_events(event);
+		}
+		
+		// Render traversals, and then process the render queue
 		m_tree->traverse({
 			.type = GQ_RENDER_POKE,
 			.app = this
 		});
-		
-		// process events
-		while(SDL_PollEvent(&event)) // Poll events
-		{
-			App::poll_events(event);
-		}
-
 		render();
+
 	}
 }
 

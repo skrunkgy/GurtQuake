@@ -16,8 +16,6 @@ public:
 	Camera();
 	~Camera();
 
-	Transform transform;
-
 	float32_t near;
 	float32_t far;
 	float32_t fov;

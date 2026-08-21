@@ -13,7 +13,7 @@ void GQObject::traverse(PokeData poke)
         for ( GQObject* child : m_children)
         {
 			// Update global transforms of children
-			// if (poke.type == GQ_LOGIC_POKE) child->m_globalTrans = child->transform * m_globalTrans;
+			if (poke.type == GQ_TRANSFORM_POKE) child->m_globalTrans = child->transform * m_globalTrans;
             child->traverse(poke);
         }
     }
@@ -50,4 +50,9 @@ void GQObject::pop_child(int index)
 const Transform& GQObject::get_global() const
 {
 	return m_globalTrans;
+}
+
+void GQObject::t_set_global()
+{
+	m_globalTrans = transform; 
 }
