@@ -7,6 +7,7 @@
 #include <SDL3/SDL_events.h>
 
 #include "gqtypes.h"
+#include "../math/transform.h"
 
 namespace gquake {
 
@@ -20,7 +21,10 @@ private:
 
 public:
 
+	friend class App;
+
 	std::string name; // Make gqID in the future, struct
+	Transform transform;
 	
 	virtual ~GQObject() = default;
 
@@ -34,6 +38,8 @@ public:
 		if (m_children.size() <= index) return nullptr;
 		return reinterpret_cast<T*>(m_children[index]);
 	}
+
+	const mat4x4& get_global();
 	
 	// Functions for different traversal passes
 	virtual void _enter() {};

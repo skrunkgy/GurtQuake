@@ -7,16 +7,15 @@ using namespace gquake;
 
 int main()
 {
-	mat3x3 m = 
-	{
-		1, 0, 0,
-		0, 1, 0,
-		1, 2, 1,
-	};
-	vec3 v = {4, 3, 1};
+	Transform parent;
+	Transform child;
 
-	vec3 result = v * m;
-	print_vec(result);
+	parent.position = {2.0, 0.0, 0.0};
+
+	mat4x4 new_transform = child.get_matrix() * parent.get_matrix();
+	vec4 position = vec4(0, 0, 0, 1) * new_transform;
+
+	print_vec(position);
 	
 	return 0;
 }

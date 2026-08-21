@@ -1053,3 +1053,17 @@ which is correct! That was why our transformation matrix was not working, and we
 
 results in
 `| 4  3  4x+3y+1 |^T`, which is... wrong...
+This should be obvious, so we should probably remove the latter.
+
+## Parenting
+
+I may plan to make the Transform use a 4x3 matrix basis, in which the 3x3 part would be orthonormalized. Anyways, I would like to create a system for setting the global transform of the child. I am not sure how this would work, but I assume it would be done with another traversal. The idea is simple:
+
+- Each GQObject has a transform. I am iffy about this in case I want to add things that don't have one, but I will figure something out.
+- Each GQObject has a global transform, that is PRIVATE! The global transform can only be accessed by other GQObjects (i think I can do this? according to google i can) and is set. Yet again, another traversal. We can afford some more anyways.
+
+## Multiple meshes issue
+
+There seems to be an issue with multiple meshes, as I think they are fighting over their uniforms being set. No problem, this means that RenderObjects need to set their unique uniforms in the draw() call, while the _render() can pass global information.
+
+Again, another hint from the great above that I should use the UBO. Sigh, we carry on.

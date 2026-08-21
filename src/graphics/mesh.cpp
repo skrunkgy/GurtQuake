@@ -64,15 +64,10 @@ void Mesh::_render(App* app)
 {
 
 	RenderObject::_render(app);
-
-	mat4x4 t_Model = transform.get_matrix();
 	
 	glUseProgram(m_shader->get_shader());
 
 	uint32_t location;
-
-	location = glGetUniformLocation(m_shader->get_shader(), "MODEL_MAT");
-	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Model));
 
 	mat4x4 t_View  = app->get_main_cam().get_view();
 	mat4x4 t_Proj  = app->get_main_cam().get_proj();
@@ -100,6 +95,13 @@ void Mesh::draw()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
 	glBindVertexArray(m_vao);
 	m_shader->use_shader();
+
+	mat4x4 t_Model = transform.get_matrix();
+	
+	uint32_t location;
+	location = glGetUniformLocation(m_shader->get_shader(), "MODEL_MAT");
+	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Model));
+
 	glDrawElements(GL_TRIANGLES, m_triCount * 3, GL_UNSIGNED_INT, 0);
 
 	// Cleanup

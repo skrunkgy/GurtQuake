@@ -94,52 +94,52 @@ class FlyCam : public Camera
 
 void App::init()
 {
-
+	// Set the project's root directory
 	Resource::m_root = "/home/andrew/Projects/GurtQuake/resources/";
 
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();
-
+	
+	// Create our actors
 	Mesh* t_Mesh = new Mesh(gqtest::bobert_data);
+	Mesh* t_Mesh2 = new Mesh(gqtest::bobert_data);
+	FlyCam *t_Camera = new FlyCam();
+	Skybox* t_Skybox = new Skybox;
 	
+	// Load our resources
+	// All these cause memory leaks if we do not have a Resource Manager
 	Shader* t_Shader = new Shader("$shaders/test2.gqshader");
-	t_Mesh->attach_shader(t_Shader); // Memory leak here too lol
-	
-	// BAD: This causes a memory leak...
+	Shader* t_SkyShader = new Shader("%shaders/skybox.gqshader");
 	Texture2D* t_Texture = new Texture2D("$bobert.png");
 
-	// set our uniform to use our texture
+	// Insert actors into our tree
+	m_tree->add_child(t_Mesh);
+	m_tree->add_child(t_Mesh2);
+	m_tree->add_child(t_Camera);
+	m_tree->add_child(t_Skybox);
+	
+	// Set the App's main cam // TODO: UBO!!!
+	m_mainCamera = t_Camera;
+	
+	// Assign resources to our actors
+	t_Mesh->attach_shader(t_Shader);
+	t_Mesh2->attach_shader(t_Shader);
+	t_Skybox->attach_shader(t_SkyShader);
+
+	// Set some crap up
+	t_Mesh->transform.position = vec3(0, 1, 0);
+	
+	// Set shader to use our texture // TODO: MAKE A WRAPPER FOR THIS!
 	t_Shader->use_shader();
 	glUniform1i(glGetUniformLocation(t_Shader->get_shader(), "TEXTURE"), 0);
 	t_Texture->use_texture(0);
 	glUseProgram(0);
-
-	// Insert it into our tree
-	m_tree->add_child(t_Mesh);
-
-	// Create and insert a Skybox
-	Shader* t_SkyShader = new Shader("%shaders/skybox.gqshader");
-	Skybox* t_Skybox = new Skybox;
-	t_Skybox->attach_shader(t_SkyShader);
-	m_tree->add_child(t_Skybox);
-
-	// Create camera then push to tree
-	FlyCam *t_Camera = new FlyCam();
-	m_tree->add_child(t_Camera);
-
-	// Set app's main Cam
-	m_mainCamera = t_Camera;
 }
 
 void App::loop(float32_t delta)
 {
 	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
 	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 1.f, 0.0));
-	
-	// Code that makes the triangle watch you :)
-	// t_Mesh->transform.basis[2] = normalize(m_mainCamera->transform.position - t_Mesh->transform.position);
-	// t_Mesh->transform.basis[0] = normalize(cross(vec3(0.f, 1.f, 0.f), t_Mesh->transform.basis[2]));
-	// t_Mesh->transform.basis[1] = normalize(cross(t_Mesh->transform.basis[2], t_Mesh->transform.basis[0]));
 }
 
 int main(int argc, char** kwarg)
