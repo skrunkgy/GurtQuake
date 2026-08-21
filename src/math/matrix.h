@@ -36,10 +36,10 @@ struct alignas(T) Matrix
 	}
 
 	// Assignment
-	template<typename U>
+	template <typename U>
 	Matrix<r, c, T>& operator= (const Matrix<r, c, U>& o)
 	{
-		AUTOFOR(i, r * c)
+		AUTOFOR(i, r)
 		{
 			this->data[i] = o.data[i];
 		}
@@ -62,7 +62,7 @@ struct alignas(T) Matrix
 	Matrix<r, c, T> operator+ (Matrix<r, c, U> &o)
 	{
 		Matrix<r, c, T> result;
-		AUTOFOR(i, r * c)
+		AUTOFOR(i, r)
 		{
 			result.data[i] = this->data[i] + o.data[i];
 		}
@@ -73,7 +73,7 @@ struct alignas(T) Matrix
 	Matrix<r, c, T> operator- (Matrix<r, c, U> &o)
 	{
 		Matrix<r, c, T> result;
-		AUTOFOR(i, r * c)
+		AUTOFOR(i, r)
 		{
 			result.data[i] = this->data[i] - o.data[i];
 		}
@@ -84,11 +84,10 @@ struct alignas(T) Matrix
 	Matrix<r, c, T> operator* (U scalar)
 	{
 		Matrix<r, c, T> result;
-		AUTOFOR(i, r * c)
+		AUTOFOR(i, r)
 		{
 			result.data[i] = this->data[i] * scalar;
 		}
-		printf("%s\n");
 		return result;
 	}
 
@@ -96,7 +95,7 @@ struct alignas(T) Matrix
 	Matrix<r, c, T> operator/ (U scalar)
 	{
 		Matrix<r, c, T> result;
-		AUTOFOR(i, r * c)
+		AUTOFOR(i, r)
 		{
 			result.data[i] = this->data[i] / scalar;
 		}

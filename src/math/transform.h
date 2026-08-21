@@ -38,7 +38,7 @@ struct Transform
 	{
 		AUTOFOR(i, 3)
 		{
-			basis[i] = normalize(rotate_point(basis[i], axis, angle)); // Normalize because basis should always be normalized
+			basis[i] = normalize(rotate_point(basis[i], axis, angle)) * length(basis[i]); // Do our best to circumvent floating point precision error
 		}
 	}
 	

@@ -1078,3 +1078,30 @@ At the moment, I am almost happy with the transform class. I had to consider tha
 I also want to be able to purely represent the Transform matrix as a 4x3 matrix, as well as be able to cast it to a 4x4 matrix. I also want to be able to cast vectors to different sizes too. I will write all of this tomorrow.
 
 Finally, I want every object to have both a local transform (which will just be called transform), as well as a read-only globalTransform. This global matrix is only set by either the entity that calls the initial travel, as well as each other. The idea is that during a traversal, we hijack the traversal so that the parent is setting the child's globalTransform by multiplying the child's transform with the parent's own globalTransform.
+
+# 8/21
+
+Implementation of the parent transforms have been a success! Noted that the left is being transformed, so we do child->transform.get_matrix() * m_globalTrans. The next things I want to work on:
+
+- Rework transform. I will make an anonymous union of a mat4x3, and an anonymous struct of a basis (mat3x3) and a position (vec3). To retrieve the matrix, we simply convert the mat4x3 into a mat4x4, which requires a rework of the matrix and vector class, which brings us to...
+- Rework assignment of matrices and vectors. If we increase the size of a vector, fill the rest with 0s. If we decrease, we simply cut. For matrices, same idea. If we are increasing a matrix's size to a square and the empty spot is in the same row and column, it will be filled with a 1 instead.
+- Create materials. By design, I don't want shaders and textures to reference each other. Instead, there should be a container for both, like a material. This will also be a resource, and will reference other resources (the docs say they shouldn't but I don't see why not).
+
+The material resource will inheret the shader resource. The textures will be supplementary to the shader. For example, I can have something like:
+```cpp
+class BasicMaterial : public Shader
+{
+	
+	Texture* texture;
+	BasicMaterial() : Shader("defaults/basic.gqshader") {}
+
+	void use_shader() override // overwrite Shader::use_shader(), which we will change to be virtual
+	{
+		// set stuff up for the draw call
+	}
+};
+```
+
+I think another cool thing I want to do is make a "missing texture" texture, like in Source. To achieve this, we fill the texture slots with a reference to a prebuilt texture after every frame. I don't really care for this at the moment, as this is only useful for large scale production.
+
+I need to rework the Transform class and the Vector/Matrix structs. This is really boring...

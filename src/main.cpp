@@ -129,12 +129,9 @@ void App::init()
 	t_Skybox->attach_shader(t_SkyShader);
 
 	// Set the transform of our hat
-	t_Hat->transform.position = vec3(0, 0.4, 0);
-	t_Hat->transform.basis = mat3x3({ // Basically scaling it :)
-		.5, 0, 0,
-		0, .5, 0,
-		0, 0, .5
-	});
+	t_Hat->transform.position = vec3(0, 0.3, 0);
+	t_Hat->transform.rotate_axis(PI / 4, vec3(0.0, 1.0, 0.0));
+	t_Hat->transform.basis = t_Hat->transform.basis * .5;
 	
 	// Set shader to use our texture // TODO: MAKE A WRAPPER FOR THIS!
 	t_Shader->use_shader();
