@@ -95,7 +95,7 @@ class FlyCam : public Camera
 void App::init()
 {
 	// Set the project's root directory
-	Resource::m_root = "/home/andrew/Projects/GurtQuake/resources/";
+	Resource::m_root = std::string(__FILE__).substr(0, std::string(__FILE__).find_last_of('/') + 1) + "../resources/";
 
 	// Create a new scene and assign it to the tree
 	m_tree = new SceneRoot();

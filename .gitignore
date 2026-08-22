@@ -1,10 +1,13 @@
 # made by bear or whatever you wanna use
 compile_commands.json
 
-# gquake move
+# binaries
 /gquake
 /gqtest
 /debug
+
+# path to built object files for faster compile 
+build/
 
 # shit produced by clang
 .cache

@@ -1,13 +1,33 @@
-RESOURCE_PATH = "/home/andrew/Projects/GurtQuake/resources/"
-SRCS := $(shell find src -wholename "src/*.cpp")
-OBJS := $(SRCS:.cpp=.o)
-LIBS := -lglbinding -lGL -lSDL3 -lSDL3_image
+# Define our linker and compiler
+CC := g++
+LD := g++
 
-gquake:
-	g++ ${LIBS} ${SRCS} -o gquake
+CFLAGS := -O2
+LFLAGS := -lglbinding -lGL -lSDL3 -lSDL3_image
 
-debug:
-	g++ -g ${LIBS} ${SRCS} -o debug
+BINDIR := build
+OBJDIR := build/obj
+SRCDIR := src
+TARGET := $(BINDIR)/gquake
 
-gqtest:
-	g++ ${LIBS} test/main.cpp src/core/gqobject.cpp -o gqtest
+SRCS := $(shell find $(SRCDIR) -name *.cpp)
+SRCFILES := $(notdir $(SRCS))
+OBJS := $(SRCFILES:%.cpp=$(OBJDIR)/%.o)
+
+SRCSUB := $(shell find $(SRCDIR) -type d)
+vpath %.cpp $(SRCSUB)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS) | $(BINDIR)
+	$(LD) $(LFLAGS) $^ -o $@
+
+$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR) $(BINDIR):
+	mkdir -p $@
+
+.PHONY: clean
+clean: $(BINDIR)
+	rm -r $(BINDIR)
