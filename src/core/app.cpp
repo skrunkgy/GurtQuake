@@ -17,7 +17,7 @@ using namespace gl;
 App::App(const char* name, uint32_t x, uint32_t y)
 {	
 	
-	SDL_SetHint("SDL_HINT_APP_ID", "com.gurtgames.gquake"); // Set app ID before SDL.init()
+	 SDL_SetAppMetadata("GURTQUAKE", "1.0.0", "com.gurtgames.gquake"); // Set app ID before SDL.init()
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
