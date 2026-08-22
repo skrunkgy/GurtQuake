@@ -32,7 +32,7 @@ public:
 	Shader(const char* path);
 	~Shader();
 
-	void use_shader();
+	virtual void use_shader();
 	uint32_t get_shader(); // For setting uniforms manually, TODO: REMOVE
 	
 	template <typename T>

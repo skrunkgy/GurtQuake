@@ -1,8 +1,8 @@
 #shader VERTEX
 
 layout (location = 0) in vec3 POSITION;
-// layout (location = 1) in vec2 UV;
-// layout (location = 2) in vec3 NORMAL;
+layout (location = 1) in vec2 UV;
+layout (location = 2) in vec3 NORMAL;
 
 uniform mat4 MODEL_MAT;
 uniform mat4 VIEW_MAT;
@@ -19,7 +19,7 @@ void main()
 #shader FRAGMENT
 
 in vec2 outPos;
-out vec4 fragOut;
+out vec4 COLOR;
 
 void main()
 {

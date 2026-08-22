@@ -1,0 +1,27 @@
+#shader VERTEX
+
+layout (location = 0) in vec3 POSITION;
+layout (location = 1) in vec2 UV;
+layout (location = 2) in vec3 NORMAL;
+
+uniform mat4 MODEL_MAT;
+uniform mat4 VIEW_MAT;
+uniform mat4 PROJ_MAT;
+
+out vec2 outUV;
+
+void main()
+{
+    gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0);
+	outUV = UV;
+}
+
+#shader FRAGMENT
+
+in vec2 outUV;
+out vec4 COLOR;
+
+void main()
+{
+    COLOR = vec4(0.0, 1.0, 1.0, 1.0);
+}

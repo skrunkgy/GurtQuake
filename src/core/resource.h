@@ -17,23 +17,29 @@ public:
 	Resource() {}
 	Resource(std::string path)
 	{
+		m_filepath = parse_path(path);
+		uid = path;
+	}
+	~Resource() {}
+	
+	inline std::string parse_path(std::string path)
+	{
 		if (path[0] == '$')
 		{
-			m_filepath = m_root + path.substr(1);
+			return m_root + path.substr(1);
 		}
 		else if (path[0] == '%')
 		{
 			std::string cwd = __FILE__; // current working directory
-			m_filepath = cwd.substr(0, cwd.find_last_of('/') + 1) + "../defaults/" + path.substr(1);
+			return cwd.substr(0, cwd.find_last_of('/') + 1) + "../" + path.substr(1);
 		}
 		else
 		{
 			printf("No root specififer, assuming file is absolute.\n");
-			m_filepath = path;
+			return path;
 		}
-		uid = path;
+
 	}
-	~Resource() {}
 
 	virtual void load() {}
 	inline std::string get_path()

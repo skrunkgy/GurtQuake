@@ -1121,42 +1121,12 @@ Tasks I must do:
 
 ## Matrix/Vector shenanigans
 
-The only thing I want to rework is the assignment, really. I could also add a few more operations if I really wanted to. For vectors, I could do something like
-```cpp
-template <uint32_t m, typename U>
-Vector<n, T>& operator=(const Vector<m, U>& o)
-{
-	AUTOFOR(i, n)
-	{
-		if (i >= m) this->data[i] = T(0);
-		else this->data[i] = o.data[i];
-	}
-	return *this;
-}
-```
-I am still not sure when we do & or not.
+There was code here, but the idea was just using the = operator. However, the compiler was complaining, and it was supposed to be a contructor.
 
-For matrices, we would do
-```cpp
-template <uint32_t _r, uint32_t _c, typename U>
-Matrix<r, c, T>& operator=(const Matrix<_r, _c, U>& o)
-{
-	Matrix<r, c, T> result;
-	AUTOFOR(i, r)
-	{
-		if (i >= _r) result[i] = Vector<c, T>();
-		else result[i] = o[i];
-		AUTOFOR(j, c)
-		{
-			if ((i >= _r || j >= _c) && r == c)
-			{
-				result[i][j] = T(1);
-			}
-		}
-	}
-}
-```
+Ok, I just finished implementing this.
 
-Ok, I just finished implementing this. It turns out you do not want an ASSIGNMENT operator, but rather a constructor operator instead. Oops.
+I also just finished reworking the transform. The problem is that I can't do an anoymous union struct thing to make a mat4x3 with a mat3x3 and a vec3, so I had to do some manual stuff. But, the code is a lot more neater.
 
-I also just finished reworking the transform. The problem is that I can't do an anoymous union struct thing to make a mat4x3 with a mat3x3 and a vec3.
+## Shader rework
+
+I like that Godot has some defaults for shaders, but for now it looks like an ombiguous mess, and I might scrap it. However, I do want to make a "Material" class that inherits the Shader class. This will have parameters, uniform blocks, and other things for lighting to make it easier to quickly shade our mesh. I am quite looking forward to this!

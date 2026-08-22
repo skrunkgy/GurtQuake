@@ -75,8 +75,8 @@ Shader::Shader(const char* path) : Resource::Resource(path)
 
 	if (!file)
 	{
-		printf("Shader path not found, aborting shader loader\n");
-		return;
+		printf("Shader \"%s\" not found, defaulting...\n", m_filepath.c_str());
+		file.open(parse_path("%defaults/shaders/template.gqshader"));
 	}
 
 	while (file >> word_buffer)
@@ -89,24 +89,24 @@ Shader::Shader(const char* path) : Resource::Resource(path)
 
 			shader_source.append("#version 460 core\n");
 
-			if (shader_type == "VERTEX")
-			{
-				// Append vertex layout
-				shader_source.append(
-					"layout (location = 0) in vec3 POSITION;\n" \
-					"layout (location = 1) in vec2 UV;\n" \
-					"layout (location = 2) in vec3 NORMAL;\n" \
-					"uniform mat4 MODEL_MAT;\n" \
-					"uniform mat4 VIEW_MAT;\n" \
-					"uniform mat4 PROJ_MAT;\n"
-					);
-			}
-			if (shader_type == "FRAGMENT")
-			{
-				shader_source.append(
-					"out vec4 COLOR;\n"
-				);
-			}
+			// if (shader_type == "VERTEX")
+			// {
+			// 	// Append vertex layout
+			// 	shader_source.append(
+			// 		"layout (location = 0) in vec3 POSITION;\n" \
+			// 		"layout (location = 1) in vec2 UV;\n" \
+			// 		"layout (location = 2) in vec3 NORMAL;\n" \
+			// 		"uniform mat4 MODEL_MAT;\n" \
+			// 		"uniform mat4 VIEW_MAT;\n" \
+			// 		"uniform mat4 PROJ_MAT;\n"
+			// 		);
+			// }
+			// if (shader_type == "FRAGMENT")
+			// {
+			// 	shader_source.append(
+			// 		"out vec4 COLOR;\n"
+			// 	);
+			// }
 
 			while (peek_word(file) != "#shader" && std::getline(file, word_buffer))
 			{

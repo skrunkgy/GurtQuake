@@ -108,9 +108,9 @@ void App::init()
 	
 	// Load our resources
 	// All these cause memory leaks if we do not have a Resource Manager
-	Shader* t_Shader = new Shader("$shaders/test2.gqshader");
-	Shader* t_HatShader = new Shader("$shaders/hat.gqshader");
-	Shader* t_SkyShader = new Shader("%shaders/skybox.gqshader");
+	Shader* t_Shader = new Shader("$shaders/bobert.gqshader");
+	Shader* t_HatShader = new Shader("$shaders/bobert.gqshader");
+	Shader* t_SkyShader = new Shader("%defaults/shaders/skybox.gqshader");
 	Texture2D* t_Texture = new Texture2D("$bobert.png");
 	Texture2D* t_HatTexture = new Texture2D("$hat.png");
 
