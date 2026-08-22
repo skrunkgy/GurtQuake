@@ -1105,3 +1105,7 @@ class BasicMaterial : public Shader
 I think another cool thing I want to do is make a "missing texture" texture, like in Source. To achieve this, we fill the texture slots with a reference to a prebuilt texture after every frame. I don't really care for this at the moment, as this is only useful for large scale production.
 
 I need to rework the Transform class and the Vector/Matrix structs. This is really boring...
+
+## Redoing Makefile
+
+I learned a little more about Makefile in order to create a better build system. Any time we update a source file, it recompiles the appropriate object file in the `build/obj/` folder, and then `build/gquake` gets linked again. The only issue atm is that header files aren't accounted for, but that SHOULD be fine I think. Another thing is to just use the -B header. There really is no solution for this, as .o files already contain the contents of the header files and theres no real good way to know who included what.
