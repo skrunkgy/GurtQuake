@@ -1109,3 +1109,54 @@ I need to rework the Transform class and the Vector/Matrix structs. This is real
 ## Redoing Makefile
 
 I learned a little more about Makefile in order to create a better build system. Any time we update a source file, it recompiles the appropriate object file in the `build/obj/` folder, and then `build/gquake` gets linked again. The only issue atm is that header files aren't accounted for, but that SHOULD be fine I think. Another thing is to just use the -B header. There really is no solution for this, as .o files already contain the contents of the header files and theres no real good way to know who included what.
+
+# 8/22
+
+Tasks I must do:
+
+- Rework matrix/vector stuff
+- Rework Transform class
+- Fallback shader parser
+- UBOs
+
+## Matrix/Vector shenanigans
+
+The only thing I want to rework is the assignment, really. I could also add a few more operations if I really wanted to. For vectors, I could do something like
+```cpp
+template <uint32_t m, typename U>
+Vector<n, T>& operator=(const Vector<m, U>& o)
+{
+	AUTOFOR(i, n)
+	{
+		if (i >= m) this->data[i] = T(0);
+		else this->data[i] = o.data[i];
+	}
+	return *this;
+}
+```
+I am still not sure when we do & or not.
+
+For matrices, we would do
+```cpp
+template <uint32_t _r, uint32_t _c, typename U>
+Matrix<r, c, T>& operator=(const Matrix<_r, _c, U>& o)
+{
+	Matrix<r, c, T> result;
+	AUTOFOR(i, r)
+	{
+		if (i >= _r) result[i] = Vector<c, T>();
+		else result[i] = o[i];
+		AUTOFOR(j, c)
+		{
+			if ((i >= _r || j >= _c) && r == c)
+			{
+				result[i][j] = T(1);
+			}
+		}
+	}
+}
+```
+
+Ok, I just finished implementing this. It turns out you do not want an ASSIGNMENT operator, but rather a constructor operator instead. Oops.
+
+I also just finished reworking the transform. The problem is that I can't do an anoymous union struct thing to make a mat4x3 with a mat3x3 and a vec3.

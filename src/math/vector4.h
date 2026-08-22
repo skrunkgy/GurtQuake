@@ -27,11 +27,23 @@ struct alignas(T) Vector<4, T>
 	{ 
 		this->x = T(0); this->y = T(0); this->z = T(0); this->w = T(0);
 	}
+
 	template<typename U>
 	Vector(const Vector<4, U> &o)
 	{ 
 		this->x = o.x; this->y = o.y; this->z = o.z; this->w = o.w;
 	}
+
+	template<uint32_t m, typename U>
+	Vector(const Vector<m, U>& o)
+	{
+		AUTOFOR(i, 4)
+		{
+			if (i >= m) this->data[i] = T(0);
+			else this->data[i] = o.data[i];
+		}
+	}
+
 	Vector(T _x, T _y, T _z, T _w) 
 	{ 
 		this->x = _x; this->y = _y; this->z = _z; this->w = _w;

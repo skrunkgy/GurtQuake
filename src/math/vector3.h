@@ -27,11 +27,23 @@ struct alignas(T) Vector<3, T>
 	{ 
 		this->x = T(0); this->y = T(0); this->z = T(0);
 	}
+
 	template<typename U>
 	Vector(const Vector<3, U> &o)
 	{ 
 		this->x = o.x; this->y = o.y; this->z = o.z; 
 	}
+
+	template<uint32_t m, typename U>
+	Vector(const Vector<m, U>& o)
+	{
+		AUTOFOR(i, 3)
+		{
+			if (i >= m) this->data[i] = T(0);
+			else this->data[i] = o.data[i];
+		}
+	}
+
 	Vector(T _x, T _y, T _z) 
 	{ 
 		this->x = _x; this->y = _y; this->z = _z; 
@@ -44,15 +56,6 @@ struct alignas(T) Vector<3, T>
 	// Assignment
 	template<typename U>
 	Vector<3, T>& operator= (const Vector<3, U> &o)
-	{
-		this->x = o.x;
-		this->y = o.y;
-		this->z = o.z;
-		return *this;
-	}
-
-	template<typename U>
-	Vector<3, T> operator= (Vector<3, U> o)
 	{
 		this->x = o.x;
 		this->y = o.y;

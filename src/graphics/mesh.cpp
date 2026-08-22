@@ -96,7 +96,7 @@ void Mesh::draw()
 	glBindVertexArray(m_vao);
 	m_shader->use_shader();
 
-	mat4x4 t_Model = get_global().get_matrix();
+	mat4x4 t_Model = get_global().matrix();
 	
 	uint32_t location;
 	location = glGetUniformLocation(m_shader->get_shader(), "MODEL_MAT");

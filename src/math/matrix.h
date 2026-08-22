@@ -19,7 +19,13 @@ struct alignas(T) Matrix
 	Vector<c, T> data[r];
 	
 	// Constructors
-	Matrix() {}
+	Matrix()
+	{
+		if (r == c)
+		{
+			AUTOFOR(i, r) this->data[i][i] = T(1);
+		}
+	}
 	Matrix(T _data[r * c])
 	{
 		// Under the assumption it is tightly packed
@@ -32,6 +38,23 @@ struct alignas(T) Matrix
 		AUTOFOR(i, r) AUTOFOR(j, c)
 		{
 			this->data[i][j] = _data.begin()[i * c + j];
+		}
+	}
+
+	template <uint32_t _r, uint32_t _c, typename U>
+	Matrix(const Matrix<_r, _c, U>& o)
+	{
+		AUTOFOR(i, r)
+		{
+			if (i >= _r) this->data[i] = Vector<c, T>();
+			else this->data[i] = o.data[i];
+			AUTOFOR(j, c)
+			{
+				if ((i >= _r || j >= _c) && r == c && i == j)
+				{
+					this->data[i][j] = T(1);
+				}
+			}
 		}
 	}
 

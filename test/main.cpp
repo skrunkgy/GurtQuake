@@ -2,30 +2,24 @@
 
 #include <stdio.h>
 #include "../src/math/math.h"
-#include "../src/core/gqobject.h"
 
 using namespace gquake;
 
 int main()
 {
-	GQObject parent;
-	GQObject child;
-
-	parent.transform.rotate_axis(PI, vec3(0, 0, 1));
-	parent.transform.position = vec3(0, -1, 0);
-	child.transform.position = vec3(0, 2, 0);
-
-	parent.add_child(&child);
 	
-	parent.t_set_global();
-	parent.traverse({
-		.type = GQ_LOGIC_POKE,
-		.dt = 0
-	});
+	Transform test;
+	test.basis = {
+		1.0, 0.0, 0.0,
+		0.0, 1.0, 0.0,
+		0.0, 0.0, 1.0
+	};
+	test.position = {10, 11, 12};
 
-	vec4 point = vec4(1.0, 0.0, 0.0, 1.0);
+	Transform b;
+	b.position = {2, 1, 0};
 
-	print_mat(child.get_global().get_matrix());
+	print_mat((test * b).matrix());
 	
 	return 0;
 }
