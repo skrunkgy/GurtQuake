@@ -69,9 +69,9 @@ public:
 	void draw();
 
 private:
-	Shader* m_shader;
-	uint32_t m_vao, m_vbo, m_ebo;
-	uint32_t m_triCount;
+	Shader* m_Shader;
+	uint32_t m_VAO, m_VBO, m_EBO;
+	uint32_t m_TriCount;
 };
 
 } // namespace gquake

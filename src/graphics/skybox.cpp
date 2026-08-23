@@ -4,7 +4,7 @@
 using namespace gquake;
 using namespace gl;
 
-Skybox::Skybox() : Mesh(m_data)
+Skybox::Skybox() : Mesh(m_Data)
 {
 	
 };

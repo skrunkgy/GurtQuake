@@ -19,9 +19,9 @@ public:
 	void use_texture(uint32_t unit);
 
 private:
-	uint32_t m_texture;
-	uint32_t m_width;
-	uint32_t m_height;
+	uint32_t m_Texture;
+	uint32_t m_Width;
+	uint32_t m_Height;
 };
 
 } // namespace gquake 

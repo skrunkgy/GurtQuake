@@ -17,8 +17,8 @@ class App; // We just need this for now...
 class GQObject
 {
 private:
-	std::vector<GQObject*> m_children;
-	Transform m_globalTrans;
+	std::vector<GQObject*> m_Children;
+	Transform m_GlobalTrans;
 
 public:
 
@@ -36,8 +36,8 @@ public:
 	template <typename T>
 	T* get_child(int index)
 	{
-		if (m_children.size() <= index) return nullptr;
-		return reinterpret_cast<T*>(m_children[index]);
+		if (m_Children.size() <= index) return nullptr;
+		return reinterpret_cast<T*>(m_Children[index]);
 	}
 
 	void t_set_global();

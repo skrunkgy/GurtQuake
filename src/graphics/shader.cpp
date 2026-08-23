@@ -16,7 +16,7 @@ Shader::Shader()
 
 Shader::~Shader()
 {
-	glDeleteProgram(m_program);
+	glDeleteProgram(m_Program);
 	printf("Shader has been destroyed\n");
 }
 
@@ -49,7 +49,7 @@ void Shader::compile_shader(const char* source, GQ_SHADER_TYPE type)
 		printf("%s COMPILING ERROR:: %s\n", m_filepath.c_str(), info);
 	}
 
-	glAttachShader(m_program, shader);
+	glAttachShader(m_Program, shader);
 	glDeleteShader(shader); // This "schedueles" a deletion of the shader after linking it
 
 }
@@ -66,7 +66,7 @@ std::string peek_word(std::fstream &file)
 Shader::Shader(const char* path) : Resource::Resource(path)
 {
 	// create the shader
-	m_program = glCreateProgram();
+	m_Program = glCreateProgram();
 	
 	// Creates multiple shaders based on a file
 	std::string word_buffer;
@@ -120,22 +120,22 @@ Shader::Shader(const char* path) : Resource::Resource(path)
 		}
 	}
 
-	glLinkProgram(m_program);
+	glLinkProgram(m_Program);
 
 	int success;
 	char info[512];
 
-	glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+	glGetProgramiv(m_Program, GL_LINK_STATUS, &success);
 	if (!success)
 	{
-		glGetProgramInfoLog(m_program, 512, NULL, info);
+		glGetProgramInfoLog(m_Program, 512, NULL, info);
 		printf("LINKING ERROR:: %s\n", info);
 	}
 }
 
 void Shader::use_shader()
 {
-	glUseProgram(m_program);
+	glUseProgram(m_Program);
 }
 
 template <typename T>
@@ -146,5 +146,5 @@ void Shader::set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data)
 
 uint32_t Shader::get_shader()
 {
-	return m_program;
+	return m_Program;
 }

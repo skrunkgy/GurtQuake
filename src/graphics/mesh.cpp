@@ -18,14 +18,14 @@ Mesh::Mesh()
 
 Mesh::Mesh(MeshData data)
 {
-	glGenVertexArrays(1, &m_vao);	
-	glGenBuffers(1, &m_vbo);
-	glGenBuffers(1, &m_ebo);
+	glGenVertexArrays(1, &m_VAO);	
+	glGenBuffers(1, &m_VBO);
+	glGenBuffers(1, &m_EBO);
 
 	// Bind buffers and arrays 
-	glBindVertexArray(m_vao);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+	glBindVertexArray(m_VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	
 	// Insert data into vertex buffers
 	glBufferData(GL_ARRAY_BUFFER, data.nVerts * ATTRIB_COUNT * sizeof(float32_t), data.vertices, GL_STATIC_DRAW);
@@ -49,14 +49,14 @@ Mesh::Mesh(MeshData data)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-	m_triCount = data.nTris;
+	m_TriCount = data.nTris;
 }
 
 Mesh::~Mesh()
 {
-	glDeleteBuffers(1, &m_vbo);
-	glDeleteBuffers(1, &m_ebo);
-	glDeleteVertexArrays(1, &m_vao);
+	glDeleteBuffers(1, &m_VBO);
+	glDeleteBuffers(1, &m_EBO);
+	glDeleteVertexArrays(1, &m_VAO);
 	printf("Mesh has been destroyed\n");
 }
 
@@ -65,17 +65,17 @@ void Mesh::_render(App* app)
 
 	RenderObject::_render(app);
 	
-	glUseProgram(m_shader->get_shader());
+	glUseProgram(m_Shader->get_shader());
 
 	uint32_t location;
 
 	mat4x4 t_View  = app->get_main_cam().get_view();
 	mat4x4 t_Proj  = app->get_main_cam().get_proj();
 
-	location = glGetUniformLocation(m_shader->get_shader(), "VIEW_MAT");
+	location = glGetUniformLocation(m_Shader->get_shader(), "VIEW_MAT");
 	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_View));
 
-	location = glGetUniformLocation(m_shader->get_shader(), "PROJ_MAT");
+	location = glGetUniformLocation(m_Shader->get_shader(), "PROJ_MAT");
 	glUniformMatrix4fv(location, 1, GL_TRUE, reinterpret_cast<float*>(&t_Proj));
 
 	// Unset for safe keeping
@@ -86,23 +86,23 @@ void Mesh::_render(App* app)
 
 void Mesh::attach_shader(Shader* shader)
 {
-	m_shader = shader;
+	m_Shader = shader;
 }
 
 void Mesh::draw()
 {
 	// IMPORTANT: VBOs dont need to be binded, but EBOs do!
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-	glBindVertexArray(m_vao);
-	m_shader->use_shader();
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+	glBindVertexArray(m_VAO);
+	m_Shader->use_shader();
 
 	mat4x4 t_Model = get_global().matrix();
 	
 	uint32_t location;
-	location = glGetUniformLocation(m_shader->get_shader(), "MODEL_MAT");
+	location = glGetUniformLocation(m_Shader->get_shader(), "MODEL_MAT");
 	glUniformMatrix4fv(location, 1, GL_FALSE, reinterpret_cast<float*>(&t_Model));
 
-	glDrawElements(GL_TRIANGLES, m_triCount * 3, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, m_TriCount * 3, GL_UNSIGNED_INT, 0);
 
 	// Cleanup
 	// Note, UNBIND VAO BEFORE EBO, IGNORING THIS WILL CAUSE SEGFAULT LOL

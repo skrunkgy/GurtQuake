@@ -30,16 +30,16 @@ public:
 	void run();
 	
 private:
-	SDL_Window* m_window;
+	SDL_Window* m_Window;
 
 	// Eventually add Viewport class
-	AppState m_state;
-	SDL_GLContext m_context;
+	AppState m_State;
+	SDL_GLContext m_Context;
 
-	std::queue<RenderObject*> m_renderQueue;
+	std::queue<RenderObject*> m_RenderQueue;
 
 	Camera* m_mainCamera = nullptr;
-	GQObject* m_tree = nullptr;
+	GQObject* m_Tree = nullptr;
 	
 	// Functions to be overwritten
 	void init();

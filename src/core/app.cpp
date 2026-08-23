@@ -20,8 +20,8 @@ App::App(const char* name, uint32_t x, uint32_t y)
 	 SDL_SetAppMetadata("GURTQUAKE", "1.0.0", "com.gurtgames.gquake"); // Set app ID before SDL.init()
 	SDL_Init(SDL_INIT_VIDEO);
 
-	m_window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
-	m_context = SDL_GL_CreateContext(m_window);
+	m_Window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
+	m_Context = SDL_GL_CreateContext(m_Window);
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
@@ -30,13 +30,13 @@ App::App(const char* name, uint32_t x, uint32_t y)
 
 	glbinding::initialize(SDL_GL_GetProcAddress);
 
-	m_state = {true, {.6, .5, .9}};
+	m_State = {true, {.6, .5, .9}};
 
 	glViewport(0, 0, x, y);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glClearColor(m_state.fillColor.r, m_state.fillColor.g, m_state.fillColor.b, 1.0);
+	glClearColor(m_State.fillColor.r, m_State.fillColor.g, m_State.fillColor.b, 1.0);
 
 }
 
@@ -48,11 +48,11 @@ void App::run()
 	SDL_Event event;
 	uint64_t beforeTime = SDL_GetTicksNS();
 
-	while (m_state.running)
+	while (m_State.running)
 	{	
 		// Perform a traversal to set global transforms of child nodes
-		m_tree->m_globalTrans = m_tree->transform;
-		m_tree->traverse({
+		m_Tree->m_GlobalTrans = m_Tree->transform;
+		m_Tree->traverse({
 			.type = GQ_TRANSFORM_POKE
 		});
 		
@@ -61,7 +61,7 @@ void App::run()
 		beforeTime = SDL_GetTicksNS();
 
 		loop(delta * .000000001f);
-		m_tree->traverse({
+		m_Tree->traverse({
 			.type = GQ_LOGIC_POKE,
 			.dt = (delta) * .000000001f
 		});
@@ -73,7 +73,7 @@ void App::run()
 		}
 		
 		// Render traversals, and then process the render queue
-		m_tree->traverse({
+		m_Tree->traverse({
 			.type = GQ_RENDER_POKE,
 			.app = this
 		});
@@ -88,7 +88,7 @@ void App::poll_events(SDL_Event& event)
 	{
 		case SDL_EVENT_QUIT:
 			SDL_QuitEvent();
-			m_state.running = false;
+			m_State.running = false;
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
 			glViewport(0, 0, event.window.data1, event.window.data2);
@@ -96,7 +96,7 @@ void App::poll_events(SDL_Event& event)
 			break;
 		// If we have keyboard or mouse inputs, we do input traversal :) For now, we redirect all other events to _input(SDL_Event&)
 		default:
-			m_tree->traverse({
+			m_Tree->traverse({
 				.type = GQ_INPUT_POKE,
 				.event = &event
 			});
@@ -106,34 +106,34 @@ void App::poll_events(SDL_Event& event)
 
 void App::add_to_render_queue(RenderObject* object)
 {
-	m_renderQueue.push(object);
+	m_RenderQueue.push(object);
 }
 
 void App::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	while (!m_renderQueue.empty())
+	while (!m_RenderQueue.empty())
 	{
-		m_renderQueue.front()->draw();
-		m_renderQueue.pop();
+		m_RenderQueue.front()->draw();
+		m_RenderQueue.pop();
 	}
-	SDL_GL_SwapWindow(m_window);
+	SDL_GL_SwapWindow(m_Window);
 }
 
 App::~App()
 {
-	SDL_DestroyWindow(m_window);
-	SDL_GL_DestroyContext(m_context);
+	SDL_DestroyWindow(m_Window);
+	SDL_GL_DestroyContext(m_Context);
 
 	// Free our render queue
-	while (!m_renderQueue.empty())
+	while (!m_RenderQueue.empty())
 	{
-		if (m_renderQueue.front()) delete m_renderQueue.front(); // NULL ptr guard
-		m_renderQueue.pop();
+		if (m_RenderQueue.front()) delete m_RenderQueue.front(); // NULL ptr guard
+		m_RenderQueue.pop();
 	}
 
 	// Free the tree
-	m_tree->traverse({
+	m_Tree->traverse({
 		GQ_DELETE_POKE
 	});
 

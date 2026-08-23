@@ -16,7 +16,7 @@ public:
 
 private:
 
-	inline static Vertex m_vertices[] = {
+	inline static Vertex m_Vertices[] = {
 		{-1, -1, -1},
 		{-1,  1, -1},
 		{ 1,  1, -1},
@@ -28,7 +28,7 @@ private:
 		{ 1, -1,  1}
 	};
 
-	inline static uint32_t m_indices[] = 
+	inline static uint32_t m_Indices[] = 
 	{
 		0, 2, 1, 0, 3, 2,
 		0, 1, 5, 0, 5, 4,
@@ -38,10 +38,10 @@ private:
 		1, 6, 5, 1, 2, 6
 	};
 
-	inline static const MeshData m_data = 
+	inline static const MeshData m_Data = 
 	{
-		.vertices = m_vertices,
-		.indices = m_indices,
+		.vertices = m_Vertices,
+		.indices = m_Indices,
 		.nVerts = 8,
 		.nTris = 12
 

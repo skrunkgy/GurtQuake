@@ -39,7 +39,7 @@ public:
 	void set_uniform(const char* name, GQ_UNIFORM_TYPE type, T data);
 
 private:
-	unsigned int m_program;
+	unsigned int m_Program;
 	void compile_shader(const char* source_file, GQ_SHADER_TYPE type);
 
 };

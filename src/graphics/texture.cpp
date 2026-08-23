@@ -18,8 +18,8 @@ Texture2D::Texture2D(const char* path) : Resource::Resource(path)
 {
 	
 	// Create and bind our texture
-	glGenTextures(1, &m_texture);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glGenTextures(1, &m_Texture);
+	glBindTexture(GL_TEXTURE_2D, m_Texture);
 	
 	// Should be able to set these
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -32,10 +32,10 @@ Texture2D::Texture2D(const char* path) : Resource::Resource(path)
 
 	if (img_data)
 	{
-		m_width = img_data->w;
-		m_height = img_data->h;
+		m_Width = img_data->w;
+		m_Height = img_data->h;
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data->pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data->pixels);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
@@ -49,17 +49,17 @@ Texture2D::Texture2D(const char* path) : Resource::Resource(path)
 
 Texture2D::~Texture2D()
 {
-	glDeleteTextures(1, &m_texture);
+	glDeleteTextures(1, &m_Texture);
 	printf("Texture has been deleted\n");
 }
 
 uint32_t Texture2D::get_texture()
 {
-	return m_texture;
+	return m_Texture;
 }
 
 void Texture2D::use_texture(uint32_t unit)
 {
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_Texture);
 }

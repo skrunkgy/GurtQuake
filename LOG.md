@@ -1130,3 +1130,37 @@ I also just finished reworking the transform. The problem is that I can't do an 
 ## Shader rework
 
 I like that Godot has some defaults for shaders, but for now it looks like an ombiguous mess, and I might scrap it. However, I do want to make a "Material" class that inherits the Shader class. This will have parameters, uniform blocks, and other things for lighting to make it easier to quickly shade our mesh. I am quite looking forward to this!
+
+## UBOs
+
+A nice starting point would be to just define a uniform block in the Bobert shader. It will be just two matrices for now. Perhaps we can define another block for lights (a struct, perchance?)
+
+The only issue at the moment is WHO sets the matrices? Who sets the UBO? At the moment, it seems like only the App should, and I would agree. This means the app would hold the UBO reference, and be responsible for uploading the camera and projection matrix, as well as any other globals we want to share across shaders. However, I do not really like this, so we have a new task at hand!
+
+### The RenderTarget
+
+Haha. It was about time this caught up to me. Our App is becoming a bit more responsible for rendering things, such as giving shaders the camera projection matrix, etc. It looks a bit silly when we call `_render(App* app)`, but would probably be more reasonable to do something like `_render(RenderTarget* rt)`. The prototype would be something like
+```cpp
+class RenderTarget
+{
+private:
+	std::queue m_RenderQueue;
+	Camera* m_MainCam;	
+	Light m_Lights[MAX_LIGHTS];
+
+	uint32_t m_UboMat;
+	uint32_t m_UboLights;
+
+public:
+	void set_main_cam(Camera*);
+	void update_ubo();
+	void append_render(RenderObject*);
+};
+```
+The App would call `update_ubo()` during the `draw()` method of the game loop. RenderObjects would use `append_render(this)` to insert themselves into the queue. The App is also responsible for setting the main camera. The camera can still be in the scene tree, but the RenderTarget needs to know who to view the scene from. I will implement this after I play some Fortnite.
+
+Side note before I forget, we need to make a `Matrix::transpose()` function, as the UBO does not have a feature to tranpose matrices since its just raw data.
+
+## Change in naming convention
+
+Anything with an extension will use camel case, like `m_RenderQueue`.

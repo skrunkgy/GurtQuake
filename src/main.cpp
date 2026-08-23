@@ -23,12 +23,13 @@ class FlyCam : public Camera
 	vec2 movement;
 	float32_t speed = 3.f;
 	bool look_lock = true;
-	float32_t sensitivity = .003f;
+	float32_t sensitivity = 1.7f;
 	
 	void _enter()
 	{
 		transform.position = {0.f, 0.f, 3.f};
 		aspect_ratio = 1.3333f;
+		fov = 100.f;
 		printf("FlyCam has entered scene tree!\n");
 	}
 
@@ -52,8 +53,10 @@ class FlyCam : public Camera
 			// Rotate our basis based on if we aren't locked and our mouse movement
 			case SDL_EVENT_MOUSE_MOTION: if (!look_lock)
 			{
-				transform.rotate_axis(event.motion.xrel * -sensitivity, {0.f, 1.f, 0.f});
-				transform.rotate_axis(event.motion.yrel * -sensitivity, transform.basis[0]);
+				Vector<2, int> window_size;
+				SDL_GetWindowSize(SDL_GetWindowFromEvent(&event), &window_size.x, &window_size.y);
+				transform.rotate_axis((event.motion.xrel / window_size.x) * -sensitivity, {0.f, 1.f, 0.f});
+				transform.rotate_axis((event.motion.yrel / window_size.y) * -sensitivity, transform.basis[0]);
 				if (dot(vec3(0.f, 1.f, 0.f), transform.basis[1]) < 0) // detects if we are upside down, whether from top or bottom
 				{
 					if (transform.basis[2].y < 0)
@@ -98,7 +101,7 @@ void App::init()
 	Resource::m_root = std::string(__FILE__).substr(0, std::string(__FILE__).find_last_of('/') + 1) + "../resources/";
 
 	// Create a new scene and assign it to the tree
-	m_tree = new SceneRoot();
+	m_Tree = new SceneRoot();
 	
 	// Create our actors
 	Mesh* t_Bobert = new Mesh(gqtest::bobert_data);
@@ -110,15 +113,15 @@ void App::init()
 	// All these cause memory leaks if we do not have a Resource Manager
 	Shader* t_Shader = new Shader("$shaders/bobert.gqshader");
 	Shader* t_HatShader = new Shader("$shaders/bobert.gqshader");
-	Shader* t_SkyShader = new Shader("%defaults/shaders/skybox.gqshader");
+	Shader* t_SkyShader = new Shader("$shaders/rainbow_sky.gqshader");
 	Texture2D* t_Texture = new Texture2D("$bobert.png");
 	Texture2D* t_HatTexture = new Texture2D("$hat.png");
 
 	// Insert actors into our tree
-	m_tree->add_child(t_Bobert);
+	m_Tree->add_child(t_Bobert);
 	t_Bobert->add_child(t_Hat);
-	m_tree->add_child(t_Camera);
-	m_tree->add_child(t_Skybox);
+	m_Tree->add_child(t_Camera);
+	m_Tree->add_child(t_Skybox);
 	
 	// Set the App's main cam // TODO: UBO!!!
 	m_mainCamera = t_Camera;
@@ -147,7 +150,7 @@ void App::init()
 
 void App::loop(float32_t delta)
 {
-	Mesh* t_Mesh = m_tree->get_child<Mesh>(0);
+	Mesh* t_Mesh = m_Tree->get_child<Mesh>(0);
 	t_Mesh->transform.rotate_axis(PI * delta, vec3(0.f, 1.f, 0.0));
 }
 
