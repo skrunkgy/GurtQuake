@@ -11,7 +11,7 @@
 
 namespace gquake {
 
-class App; // We just need this for now...
+class RenderTarget; // We just need this for now...
 
 // Node for a tree
 class GQObject
@@ -48,7 +48,7 @@ public:
 	virtual void _enter() {};
 	virtual void _loop(float32_t dt) {};
 	virtual void _input(SDL_Event& event) {};
-	virtual void _render(App* app) {};
+	virtual void _render(RenderTarget* rt) {};
 };
 
 } // namespace gquake

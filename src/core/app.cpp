@@ -17,7 +17,7 @@ using namespace gl;
 App::App(const char* name, uint32_t x, uint32_t y)
 {	
 	
-	 SDL_SetAppMetadata("GURTQUAKE", "1.0.0", "com.gurtgames.gquake"); // Set app ID before SDL.init()
+	SDL_SetAppMetadata("GURTQUAKE", "1.0.0", "com.gurtgames.gquake"); // Set app ID before SDL.init()
 	SDL_Init(SDL_INIT_VIDEO);
 
 	m_Window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
@@ -31,6 +31,8 @@ App::App(const char* name, uint32_t x, uint32_t y)
 	glbinding::initialize(SDL_GL_GetProcAddress);
 
 	m_State = {true, {.6, .5, .9}};
+
+	m_RenderTarget.init();
 
 	glViewport(0, 0, x, y);
 	glEnable(GL_DEPTH_TEST);
@@ -75,7 +77,7 @@ void App::run()
 		// Render traversals, and then process the render queue
 		m_Tree->traverse({
 			.type = GQ_RENDER_POKE,
-			.app = this
+			.rt = &m_RenderTarget
 		});
 		render();
 
@@ -92,7 +94,7 @@ void App::poll_events(SDL_Event& event)
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
 			glViewport(0, 0, event.window.data1, event.window.data2);
-			m_mainCamera->aspect_ratio = (float32_t)event.window.data1 / event.window.data2;
+			m_RenderTarget.m_MainCam->aspect_ratio = (float32_t)event.window.data1 / event.window.data2;
 			break;
 		// If we have keyboard or mouse inputs, we do input traversal :) For now, we redirect all other events to _input(SDL_Event&)
 		default:
@@ -104,19 +106,12 @@ void App::poll_events(SDL_Event& event)
 	}
 }
 
-void App::add_to_render_queue(RenderObject* object)
-{
-	m_RenderQueue.push(object);
-}
-
 void App::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	while (!m_RenderQueue.empty())
-	{
-		m_RenderQueue.front()->draw();
-		m_RenderQueue.pop();
-	}
+
+	m_RenderTarget.update_ubo();
+	m_RenderTarget.process_queue();
 	SDL_GL_SwapWindow(m_Window);
 }
 
@@ -125,23 +120,10 @@ App::~App()
 	SDL_DestroyWindow(m_Window);
 	SDL_GL_DestroyContext(m_Context);
 
-	// Free our render queue
-	while (!m_RenderQueue.empty())
-	{
-		if (m_RenderQueue.front()) delete m_RenderQueue.front(); // NULL ptr guard
-		m_RenderQueue.pop();
-	}
-
 	// Free the tree
 	m_Tree->traverse({
 		GQ_DELETE_POKE
 	});
 
 	printf("Goodbye!\n");
-}
-
-Camera& App::get_main_cam()
-{
-	assert(m_mainCamera);
-	return *m_mainCamera;
 }

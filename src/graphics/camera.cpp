@@ -5,7 +5,7 @@
 
 using namespace gquake;
 
-void Camera::_render(App* app)
+void Camera::_render(RenderTarget* rt)
 {
 	// TODO: make UBO and then pass to UBO
 }

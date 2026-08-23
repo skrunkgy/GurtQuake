@@ -1,10 +1,10 @@
 #include "renderobject.h"
-#include "../core/app.h"
+#include "../graphics/rendertarget.h"
 
 using namespace gquake;
 
 // Will override all render objects and ones inherited i hope!
-void RenderObject::_render(App* app)
+void RenderObject::_render(RenderTarget* rt)
 {
-	app->add_to_render_queue(this);
+	rt->add_to_queue(this);
 }

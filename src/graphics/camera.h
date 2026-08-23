@@ -4,7 +4,7 @@
 
 #include "../core/gqtypes.h"
 #include "../core/gqobject.h"
-#include "../math/transform.h"
+#include "../math/math_types.h"
 
 namespace gquake
 {
@@ -21,7 +21,7 @@ public:
 	float32_t fov;
 	float32_t aspect_ratio;
 
-	void _render(App* app); // Update matrices with stuff
+	void _render(RenderTarget* rt); // Update matrices with stuff
 
 	mat4x4 get_view();
 	mat4x4 get_proj();

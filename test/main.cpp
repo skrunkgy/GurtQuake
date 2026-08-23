@@ -8,18 +8,14 @@ using namespace gquake;
 int main()
 {
 	
-	Transform test;
-	test.basis = {
-		1.0, 0.0, 0.0,
-		0.0, 1.0, 0.0,
-		0.0, 0.0, 1.0
+	mat3x2 a = 
+	{
+		1.0, 2.0,
+		0.0, 4.0,
+		5.0, 6.0
 	};
-	test.position = {10, 11, 12};
 
-	Transform b;
-	b.position = {2, 1, 0};
-
-	print_mat((test * b).matrix());
+	print_mat(a.transpose());
 	
 	return 0;
 }

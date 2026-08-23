@@ -3,11 +3,10 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include <queue>
 #include "../graphics/camera.h"
 #include "../graphics/renderobject.h"
 #include "gqtypes.h"
-#include "resourcemanager.h"
+#include "../graphics/rendertarget.h"
 
 namespace gquake
 {
@@ -36,9 +35,8 @@ private:
 	AppState m_State;
 	SDL_GLContext m_Context;
 
-	std::queue<RenderObject*> m_RenderQueue;
+	RenderTarget m_RenderTarget;
 
-	Camera* m_mainCamera = nullptr;
 	GQObject* m_Tree = nullptr;
 	
 	// Functions to be overwritten

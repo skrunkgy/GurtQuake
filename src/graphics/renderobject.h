@@ -7,13 +7,15 @@
 namespace gquake
 {
 
+class RenderTarget;
+
 class RenderObject : public GQObject
 {
 public:
 	virtual ~RenderObject() = default;
 	virtual void draw() = 0;
 	
-	virtual void _render(App* app);
+	virtual void _render(RenderTarget* rt);
 };
 
 } // namespace gquake

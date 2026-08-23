@@ -1164,3 +1164,12 @@ Side note before I forget, we need to make a `Matrix::transpose()` function, as 
 ## Change in naming convention
 
 Anything with an extension will use camel case, like `m_RenderQueue`.
+
+## UBOs update
+
+I did it! Here are some issues I ran into, however:
+
+- The RenderTarget must only be initialized when glbinding has been initialized. We could technically circumvent this by making the App's render target a pointer and then initializing it later. I will decide on this later, as well as how I want to do all of this.
+- I need a convention on including files and forward-declaring classes. I will probably want to clean this all up before I begin working on other crap.
+
+The commit now will feature the working demo of UBOs.

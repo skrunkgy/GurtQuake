@@ -162,6 +162,16 @@ struct alignas(T) Matrix
 		}
 		return result;
 	}
+
+	Matrix<c, r, T> transpose()
+	{
+		Matrix<c, r, T> result;
+		AUTOFOR(i, r) AUTOFOR(j, c)
+		{
+			result[j][i] = (*this)[i][j];
+		}
+		return result;
+	}
 };
 
 } // namespace gquake

@@ -11,6 +11,8 @@
 #include "graphics/texture.h"
 #include "graphics/skybox.h"
 
+#include "math/math.h"
+
 #include "../resources/bobert.h"
 
 using namespace gquake;
@@ -124,7 +126,7 @@ void App::init()
 	m_Tree->add_child(t_Skybox);
 	
 	// Set the App's main cam // TODO: UBO!!!
-	m_mainCamera = t_Camera;
+	m_RenderTarget.set_main_cam(t_Camera);
 	
 	// Assign resources to our actors
 	t_Bobert->attach_shader(t_Shader);

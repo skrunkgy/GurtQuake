@@ -6,7 +6,7 @@
 
 namespace gquake {
 
-class App;
+class RenderTarget;
 
 enum GQ_RETURN_CODE
 {
@@ -29,7 +29,7 @@ typedef struct GQ_POKE_DATA
 	GQ_POKE_TYPE type;
 	union
 	{	// Each of the members in this union should be separated for each poke type, like structs
-		App* app; // GQ_RENDER_POKE
+		RenderTarget* rt; // GQ_RENDER_POKE
 		float dt; // GQ_LOGIC_POKE 
 		SDL_Event* event; // GQ_INPUT_POKE
 	};

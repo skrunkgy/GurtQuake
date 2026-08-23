@@ -1,5 +1,3 @@
-#include <functional>
-
 #include "gqtypes.h"
 #include "gqobject.h"
 
@@ -25,7 +23,7 @@ void GQObject::traverse(PokeData poke)
 			this->_loop(poke.dt);
 			break;
 		case GQ_RENDER_POKE:
-			this->_render(poke.app);
+			this->_render(poke.rt);
 			break;
 		case GQ_INPUT_POKE:
 			this->_input(*poke.event);

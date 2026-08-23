@@ -4,7 +4,6 @@
 
 #include <initializer_list>
 #include <cassert>
-#include "../math/math.h"
 #include "../graphics/renderobject.h"
 #include "../core/gqtypes.h"
 #include "shader.h"
@@ -63,7 +62,7 @@ public:
 	// In the case we want to modify the actual array
 	void attach_shader(Shader* shader);
 
-	void _render(App* app); // Inherits the RenderObject poke(), no need to implement (yet)
+	void _render(RenderTarget* rt); // Inherits the RenderObject poke(), no need to implement (yet)
 
 	// Call this AFTER setting the vertices of the mesh!
 	void draw();

@@ -21,7 +21,7 @@ CC := g++
 LD := g++
 
 # Flags for compiler and linker
-CFLAGS := -O2
+CFLAGS := -O2 -g
 LFLAGS := -lglbinding -lGL -lSDL3 -lSDL3_image
 
 # Directories and target file
