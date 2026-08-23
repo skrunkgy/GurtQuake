@@ -3,6 +3,7 @@
 #pragma once 
 
 #include <vector>
+#include <queue>
 #include <string>
 #include <SDL3/SDL_events.h>
 
@@ -11,7 +12,7 @@
 
 namespace gquake {
 
-class RenderTarget; // We just need this for now...
+class RenderObject; // We just need this for now...
 
 // Node for a tree
 class GQObject
@@ -48,7 +49,7 @@ public:
 	virtual void _enter() {};
 	virtual void _loop(float32_t dt) {};
 	virtual void _input(SDL_Event& event) {};
-	virtual void _render(RenderTarget* rt) {};
+	virtual void _render(std::queue<RenderObject*>& rQueue) {};
 };
 
 } // namespace gquake

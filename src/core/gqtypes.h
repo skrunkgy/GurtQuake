@@ -3,10 +3,11 @@
 #pragma once
 
 #include <SDL3/SDL_events.h>
+#include <queue>
 
 namespace gquake {
 
-class RenderTarget;
+class RenderObject;
 
 enum GQ_RETURN_CODE
 {
@@ -29,7 +30,7 @@ typedef struct GQ_POKE_DATA
 	GQ_POKE_TYPE type;
 	union
 	{	// Each of the members in this union should be separated for each poke type, like structs
-		RenderTarget* rt; // GQ_RENDER_POKE
+		std::queue<RenderObject*>* rQueue; // GQ_RENDER_POKE
 		float dt; // GQ_LOGIC_POKE 
 		SDL_Event* event; // GQ_INPUT_POKE
 	};

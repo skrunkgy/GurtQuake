@@ -62,7 +62,7 @@ public:
 	// In the case we want to modify the actual array
 	void attach_shader(Shader* shader);
 
-	void _render(RenderTarget* rt); // Inherits the RenderObject poke(), no need to implement (yet)
+	void _render(std::queue<RenderObject*>& rQueue); // Inherits the RenderObject poke(), no need to implement (yet)
 
 	// Call this AFTER setting the vertices of the mesh!
 	void draw();

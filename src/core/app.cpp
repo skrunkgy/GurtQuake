@@ -22,6 +22,12 @@ App::App(const char* name, uint32_t x, uint32_t y)
 
 	m_Window = SDL_CreateWindow(name, x, y, SDL_WINDOW_OPENGL| SDL_WINDOW_RESIZABLE);
 	m_Context = SDL_GL_CreateContext(m_Window);
+	
+	// Set some stuff up, some would be from a project setting
+	m_GlobalState = {
+		.fillColor = {.6, .5, .9},
+		.running = true
+	};
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
@@ -29,16 +35,21 @@ App::App(const char* name, uint32_t x, uint32_t y)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	glbinding::initialize(SDL_GL_GetProcAddress);
-
-	m_State = {true, {.6, .5, .9}};
-
-	m_RenderTarget.init();
-
+	
+	{	//Generate uniform buffers for our global stuff, in brackets because this is more specific
+		glGenBuffers(1, &m_GlobalState.uboMatrices);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboMatrices);
+		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(mat4x4), NULL, GL_STATIC_DRAW);
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_GlobalState.uboMatrices);
+	}
+		
+	// Set some OpenGL parameters
 	glViewport(0, 0, x, y);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glClearColor(m_State.fillColor.r, m_State.fillColor.g, m_State.fillColor.b, 1.0);
+	glClearColor(m_GlobalState.fillColor.r, m_GlobalState.fillColor.g, m_GlobalState.fillColor.b, 1.0);
 
 }
 
@@ -50,7 +61,7 @@ void App::run()
 	SDL_Event event;
 	uint64_t beforeTime = SDL_GetTicksNS();
 
-	while (m_State.running)
+	while (m_GlobalState.running)
 	{	
 		// Perform a traversal to set global transforms of child nodes
 		m_Tree->m_GlobalTrans = m_Tree->transform;
@@ -77,7 +88,7 @@ void App::run()
 		// Render traversals, and then process the render queue
 		m_Tree->traverse({
 			.type = GQ_RENDER_POKE,
-			.rt = &m_RenderTarget
+			.rQueue = &m_RenderQueue
 		});
 		render();
 
@@ -90,11 +101,11 @@ void App::poll_events(SDL_Event& event)
 	{
 		case SDL_EVENT_QUIT:
 			SDL_QuitEvent();
-			m_State.running = false;
+			m_GlobalState.running = false;
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
 			glViewport(0, 0, event.window.data1, event.window.data2);
-			m_RenderTarget.m_MainCam->aspect_ratio = (float32_t)event.window.data1 / event.window.data2;
+			m_MainCam->aspect_ratio = (float32_t)event.window.data1 / event.window.data2;
 			break;
 		// If we have keyboard or mouse inputs, we do input traversal :) For now, we redirect all other events to _input(SDL_Event&)
 		default:
@@ -110,8 +121,24 @@ void App::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_RenderTarget.update_ubo();
-	m_RenderTarget.process_queue();
+	{	// Update UBOs
+		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboMatrices);
+		mat4x4 transposed;
+
+		transposed = m_MainCam->get_view().transpose();
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4x4), &transposed);
+		
+		transposed = m_MainCam->get_proj().transpose();
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4x4), sizeof(mat4x4), &transposed);
+
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	}
+
+	while (!m_RenderQueue.empty())
+	{
+		m_RenderQueue.front()->draw();
+		m_RenderQueue.pop();
+	}
 	SDL_GL_SwapWindow(m_Window);
 }
 

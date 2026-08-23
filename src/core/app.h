@@ -6,16 +6,9 @@
 #include "../graphics/camera.h"
 #include "../graphics/renderobject.h"
 #include "gqtypes.h"
-#include "../graphics/rendertarget.h"
 
 namespace gquake
 {
-
-struct AppState 
-{
-	bool running;
-	vec3 fillColor;
-};
 
 class App
 {
@@ -30,13 +23,19 @@ public:
 	
 private:
 	SDL_Window* m_Window;
-
-	// Eventually add Viewport class
-	AppState m_State;
 	SDL_GLContext m_Context;
 
-	RenderTarget m_RenderTarget;
-
+	// Eventually add Viewport class
+	Camera* m_MainCam;
+	std::queue<RenderObject*> m_RenderQueue;
+	
+	// Manage our globals
+	struct
+	{
+		uint32_t uboMatrices;
+		vec3 fillColor;
+		bool running;
+	} m_GlobalState;
 	GQObject* m_Tree = nullptr;
 	
 	// Functions to be overwritten

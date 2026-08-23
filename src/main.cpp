@@ -115,7 +115,7 @@ void App::init()
 	// All these cause memory leaks if we do not have a Resource Manager
 	Shader* t_Shader = new Shader("$shaders/bobert.gqshader");
 	Shader* t_HatShader = new Shader("$shaders/bobert.gqshader");
-	Shader* t_SkyShader = new Shader("$shaders/rainbow_sky.gqshader");
+	Shader* t_SkyShader = new Shader("%defaults/shaders/skybox.gqshader");
 	Texture2D* t_Texture = new Texture2D("$bobert.png");
 	Texture2D* t_HatTexture = new Texture2D("$hat.png");
 
@@ -126,7 +126,7 @@ void App::init()
 	m_Tree->add_child(t_Skybox);
 	
 	// Set the App's main cam // TODO: UBO!!!
-	m_RenderTarget.set_main_cam(t_Camera);
+	m_MainCam = t_Camera;
 	
 	// Assign resources to our actors
 	t_Bobert->attach_shader(t_Shader);

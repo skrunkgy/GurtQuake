@@ -1173,3 +1173,29 @@ I did it! Here are some issues I ran into, however:
 - I need a convention on including files and forward-declaring classes. I will probably want to clean this all up before I begin working on other crap.
 
 The commit now will feature the working demo of UBOs.
+
+## Restructuring
+
+So I think we may still keep the RenderTarget in the future, but for now it is not needed. What we need is something that manages our global UBOs.
+
+Currently, RenderTarget manages:
+- UBOs
+- The main cam
+- How RenderObjects get passed to the queue
+- processing the render queue
+
+Urgh! This is so difficult! I will ponder on this later. At the moment, I do not care about multiple cameras, so no need for any kind of render target. Everything can just be managed by the app.
+
+To be honest, I think the _render() class ONLY needs a reference to the queue so that it can append itself. To the knowledged reader, one may ask "_render() is called by the RenderObject when the App travels through the tree. Why not just add the RenderObject to the queue?". We can't do this because that would require reflection, something we currently do not possess and something I want to stay away from. I know that c++26 is coming with reflection, but the standard at the moment is c++20 (or at least thats what my compiler says).
+
+### Globals manager
+Will figure it next day (written in next day)
+
+TODO:
+- Tweak `GQObject::_render()` and derived calls to pass a queue instead of an App or RenderTarget.
+- Alleviate the RenderTarget class
+- Create some kind of
+
+# 8/23
+
+I was very tired at the end, but I got what I wanted to do done. I simply wrapped all my global states inside a little struct inside the App class, holding the UBOs as well as fill color and running state. Maybe I should add the main camera too, but its very trivial. I moved all the code for updating UBOs and initializing them inside the App definitions too, but kept them inside brackets to denote where the code for those are in case I want to abstract that away too. Everything works, and I am happy :)

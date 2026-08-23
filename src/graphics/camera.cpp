@@ -5,11 +5,6 @@
 
 using namespace gquake;
 
-void Camera::_render(RenderTarget* rt)
-{
-	// TODO: make UBO and then pass to UBO
-}
-
 Camera::Camera()
 {
 	transform.position = {0.0, 0.0, 0.0};

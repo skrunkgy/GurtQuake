@@ -21,8 +21,6 @@ public:
 	float32_t fov;
 	float32_t aspect_ratio;
 
-	void _render(RenderTarget* rt); // Update matrices with stuff
-
 	mat4x4 get_view();
 	mat4x4 get_proj();
 

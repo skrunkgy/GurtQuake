@@ -58,9 +58,9 @@ Mesh::~Mesh()
 	printf("Mesh has been destroyed\n");
 }
 
-void Mesh::_render(RenderTarget* rt)
+void Mesh::_render(std::queue<RenderObject*>& rQueue)
 {
-	RenderObject::_render(rt);
+	RenderObject::_render(rQueue);
 }
 
 void Mesh::attach_shader(Shader* shader)

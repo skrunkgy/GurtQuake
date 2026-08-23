@@ -15,7 +15,7 @@ public:
 	virtual ~RenderObject() = default;
 	virtual void draw() = 0;
 	
-	virtual void _render(RenderTarget* rt);
+	virtual void _render(std::queue<RenderObject*>& rQueue);
 };
 
 } // namespace gquake
