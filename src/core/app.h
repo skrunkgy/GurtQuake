@@ -33,6 +33,7 @@ private:
 	struct
 	{
 		uint32_t uboMatrices;
+		uint32_t uboParameters;
 		vec3 fillColor;
 		bool running;
 	} m_GlobalState;

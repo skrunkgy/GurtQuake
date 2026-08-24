@@ -1,0 +1,73 @@
+#shader VERTEX
+
+layout (location = 0) in vec3 POSITION;
+layout (location = 1) in vec2 UV;
+layout (location = 2) in vec3 NORMAL;
+
+layout (std140, binding = 0) uniform Matrices
+{
+	mat4 VIEW_MAT;
+	mat4 PROJ_MAT;
+	vec3 VIEW_POS;
+};
+
+layout (std140, binding = 1) uniform Parameters
+{
+	float TIME;
+};
+
+uniform mat4 MODEL_MAT;
+
+out INOUT
+{
+	vec3 pos;
+	vec2 uv;
+	vec3 normal;
+	vec3 cameraPos;
+} VS_OUT;
+
+void main()
+{
+	vec3 pos = vec3(POSITION.x, 100 * sin(TIME), POSITION.z);
+    gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(pos, 1.0);
+
+	VS_OUT.pos = vec3(MODEL_MAT * vec4(pos, 1.0));
+	VS_OUT.uv = UV;
+	VS_OUT.normal = NORMAL;
+	VS_OUT.cameraPos = VIEW_POS;
+}
+
+#shader FRAGMENT
+
+in INOUT
+{
+	vec3 pos;
+	vec2 uv;
+	vec3 normal;
+	vec3 cameraPos;
+} FS_IN;
+
+vec3 get_sky(vec3 direction)
+{
+	// vec3 base = vec3(.7, .9, 1);
+	//
+	// vec3 sun = vec3(1.0);
+	// vec3 sun_direction = vec3(.707, .707, 0.0);
+	// vec3 ground = vec3(0.149, 0.129, 0.11);
+	//
+	// return mix(ground, mix(base, sun, clamp(pow(300, dot(direction, sun_direction) - .98), -1, 1)), clamp(pow(500, dot(direction, vec3(0.0, 1.0, 0.0))), 0, 1));
+	
+	return direction;
+}
+
+layout (std140, binding = 1) uniform Parameters
+{
+	float TIME;
+};
+
+out vec4 COLOR;
+
+void main()
+{
+	COLOR = vec4(vec3(TIME), 1.0);
+}

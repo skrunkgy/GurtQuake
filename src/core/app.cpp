@@ -1,3 +1,4 @@
+#include <SDL3/SDL_timer.h>
 #include <SDL3/SDL_video.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3_image/SDL_image.h>
@@ -38,10 +39,18 @@ App::App(const char* name, uint32_t x, uint32_t y)
 	
 	{	//Generate uniform buffers for our global stuff, in brackets because this is more specific
 		glGenBuffers(1, &m_GlobalState.uboMatrices);
+		glGenBuffers(1, &m_GlobalState.uboParameters);\
+
 		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboMatrices);
-		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(mat4x4), NULL, GL_STATIC_DRAW);
+		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(mat4x4) + sizeof(vec4), NULL, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboParameters);
+		glBufferData(GL_UNIFORM_BUFFER, sizeof(float32_t) * 4, NULL, GL_STATIC_DRAW);
+
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_GlobalState.uboMatrices);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_GlobalState.uboParameters);
 	}
 		
 	// Set some OpenGL parameters
@@ -124,12 +133,18 @@ void App::render()
 	{	// Update UBOs
 		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboMatrices);
 		mat4x4 transposed;
-
 		transposed = m_MainCam->get_view().transpose();
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4x4), &transposed);
-		
 		transposed = m_MainCam->get_proj().transpose();
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4x4), sizeof(mat4x4), &transposed);
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(mat4x4) * 2, sizeof(vec3), &m_MainCam->transform.position);
+		
+		float32_t time = SDL_GetTicksNS() * .000000001f;
+
+		printf("Time since init: %f\n", time);
+
+		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboParameters);
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(float32_t), sizeof(float32_t), &time);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
