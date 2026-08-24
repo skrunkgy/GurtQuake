@@ -1,0 +1,58 @@
+#shader VERTEX
+
+layout (location = 0) in vec3 POSITION;
+layout (location = 1) in vec2 UV;
+layout (location = 2) in vec3 NORMAL;
+
+layout (std140, binding = 0) uniform Matrices
+{
+	mat4 VIEW_MAT;
+	mat4 PROJ_MAT;
+};
+
+uniform mat4 MODEL_MAT;
+
+out INOUT
+{
+	vec3 pos;
+	vec2 uv;
+} VS_OUT;
+
+void main()
+{
+    gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0);
+
+	VS_OUT.pos = vec3(VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0));
+	VS_OUT.uv = UV;
+}
+
+#shader FRAGMENT
+
+in INOUT
+{
+	vec3 pos;
+	vec2 uv;
+} FS_IN;
+
+// Parameters
+uniform sampler2D DIFFUSE_TEX;
+// uniform sampler2D NORMAL_TEX;
+// uniform sampler2D ROUGH_TEX;
+// uniform sampler2D SPECULAR_TEX;
+// uniform sampelr2D EMISSION_TEX
+
+uniform samplerCube CUBEMAP;
+
+uniform struct MATERIAL
+{
+	float roughness;
+	float specular;
+	float emission;
+} MAT_PARAMS;
+
+out vec4 COLOR;
+
+void main()
+{
+    COLOR = texture(DIFFUSE_TEX, FS_IN.uv);
+}

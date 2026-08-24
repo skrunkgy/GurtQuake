@@ -50,7 +50,7 @@ Texture2D::Texture2D(const char* path) : Resource::Resource(path)
 Texture2D::~Texture2D()
 {
 	glDeleteTextures(1, &m_Texture);
-	printf("Texture has been deleted\n");
+	printf("Texture has been destroyed\n");
 }
 
 uint32_t Texture2D::get_texture()

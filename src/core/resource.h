@@ -12,7 +12,7 @@ class Resource
 
 public:
 
-	friend class App; // The App can set the resource class haha
+	friend class App; // The App can set the resource's root
 	
 	Resource() {}
 	Resource(std::string path)
@@ -38,7 +38,6 @@ public:
 			printf("No root specififer, assuming file is absolute.\n");
 			return path;
 		}
-
 	}
 
 	virtual void load() {}

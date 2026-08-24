@@ -1199,3 +1199,45 @@ TODO:
 # 8/23
 
 I was very tired at the end, but I got what I wanted to do done. I simply wrapped all my global states inside a little struct inside the App class, holding the UBOs as well as fill color and running state. Maybe I should add the main camera too, but its very trivial. I moved all the code for updating UBOs and initializing them inside the App definitions too, but kept them inside brackets to denote where the code for those are in case I want to abstract that away too. Everything works, and I am happy :)
+
+There is still plenty to do I have in mind, so here are my tasks for now:
+- Create a BasicMaterial, which inherits shader and parses a default shader. This class can also hold textures and other attributes that will be updated for shaders.
+- Create a basic Texture class, so that we can inherit this when creating other kinds of textures.
+- Make a CubemapTexture class so that we can start loading skyboxes with such, as well as giving it to our BasicMaterial for cooler lighting
+- Housekeeping, I need to look at those forward declarations and includes I have been sleeping on. Also managing things with .inl files to separate declaration and inlines for those header-only stuff.
+
+In the future, here are some features I'd like to add:
+- Normal support, as well as update our meshes with those new normals
+- Normal mapping for our BasicMaterial
+- An asset importer. I want to use .gltf or .glb, but I can start off with .obj support.
+- Lights. This can be through our awesome new UBO support :)
+- Particles. For my first iteration, it will not need physics support, but I think it'd be cool!
+
+In the more advanced future, I have been thinking about:
+- Shadows. It could be a global texture that all lights contribute to. I want to also have that soft shadow stuff too, which will be interesting!
+- Render passes. For post processing, and a speedier increase in shading when we have lots of lighting and objects.
+- GUI system. I know there is Dear ImGUI, but I want to implement it by myself. We could begin making an editor of sorts with this.
+- Physics. I heard about some method using convex objects and something with shadows? I would like to do some testing on an implementation of sorts.
+- Animation. This would be such a feature, and I couldn't even begin to fathom how I'd pull it off. However, it seems that I could use Transforms for the bones and have that parent-transform thing. I will read more about this.
+
+## BasicMaterial
+
+Basic implementation, but for some reason I was thinking that I would only have to make one Material instance, but we attach textures to each of those materials. :(
+
+What I could do is have a static instance of our shader program, and that we have shader options instead. However, I want Mesh's to use both Shader and Materials. I guess we will have to live with this. :(
+
+Another idea is to have a "ShaderContainer". This could store both a shader and some parameters. The BasicMaterial could inherit from this instead. We would have a static Shader that would cycle through what we would pass through it. To be honest, the exchange here is simply GPU storage and GPU data transfer, with GPU storage being optimized with less Shaders being passed around, and GPU data transfer being optimized by only setting some uniforms only once.
+
+## Different textures
+
+My next focus is on redoing textures a bit. At the moment, we only support 2D texture creation, however the idea across all of them remain the same:
+- generate a texture object
+- bind and parse some settings like filtering and wrapping
+- load the data into the texture
+- unbind it and destroy it
+
+Everything but the 3rd point can be streamlined, the texture target just needs to be changed. Individual classes will be responsible for loading files (Texture2Ds will load a single file, Cubemaps will load 6 files). I will do all of this tomorrow.
+
+## Fun addition, ocean
+
+I have been thinking about writing an ocean function. Once I get Cubemaps going, I can write an ocean shader. Now you may be asking "ok, we can displace the geometry in the ocean, but how will you update the normals?" A brilliant question, the idea is to use derivatives of the sorts to calculate the normals. If I recall from Calc 3, we can get this from the gradient of the function.

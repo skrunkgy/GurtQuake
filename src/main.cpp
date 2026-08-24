@@ -6,6 +6,7 @@
 
 #include "core/app.h"
 #include "core/sceneroot.h"
+#include "graphics/basicmaterial.h"
 #include "graphics/mesh.h"
 #include "core/resource.h"
 #include "graphics/texture.h"
@@ -113,11 +114,12 @@ void App::init()
 	
 	// Load our resources
 	// All these cause memory leaks if we do not have a Resource Manager
-	Shader* t_Shader = new Shader("$shaders/bobert.gqshader");
-	Shader* t_HatShader = new Shader("$shaders/bobert.gqshader");
+	BasicMaterial* t_MaterialBobert = new BasicMaterial;
+	BasicMaterial* t_MaterialHat = new BasicMaterial;
 	Shader* t_SkyShader = new Shader("%defaults/shaders/skybox.gqshader");
-	Texture2D* t_Texture = new Texture2D("$bobert.png");
-	Texture2D* t_HatTexture = new Texture2D("$hat.png");
+	
+	t_MaterialBobert->diffuseMap = new Texture2D("$bobert.png");
+	t_MaterialHat->diffuseMap = new Texture2D("$hat.png");
 
 	// Insert actors into our tree
 	m_Tree->add_child(t_Bobert);
@@ -125,29 +127,19 @@ void App::init()
 	m_Tree->add_child(t_Camera);
 	m_Tree->add_child(t_Skybox);
 	
-	// Set the App's main cam // TODO: UBO!!!
+	// Set the App's main cam
 	m_MainCam = t_Camera;
 	
 	// Assign resources to our actors
-	t_Bobert->attach_shader(t_Shader);
-	t_Hat->attach_shader(t_HatShader);
+	t_Bobert->attach_shader(t_MaterialBobert);
+	t_Hat->attach_shader(t_MaterialHat);
 	t_Skybox->attach_shader(t_SkyShader);
 
 	// Set the transform of our hat
 	t_Hat->transform.position = vec3(0, 0.3, 0);
 	t_Hat->transform.rotate_axis(PI / 4, vec3(0.0, 1.0, 0.0));
 	t_Hat->transform.basis = t_Hat->transform.basis * .5;
-	
-	// Set shader to use our texture // TODO: MAKE A WRAPPER FOR THIS!
-	t_Shader->use_shader();
-	glUniform1i(glGetUniformLocation(t_Shader->get_shader(), "TEXTURE"), 0);
-	t_Texture->use_texture(0);
-	glUseProgram(0);
-
-	t_HatShader->use_shader();
-	glUniform1i(glGetUniformLocation(t_HatShader->get_shader(), "TEXTURE"), 1);
-	t_HatTexture->use_texture(1);
-	glUseProgram(0);
+	t_Hat->transform.rotate_axis(PI / 15, vec3(0.0, 0.0, 1.0));
 }
 
 void App::loop(float32_t delta)
