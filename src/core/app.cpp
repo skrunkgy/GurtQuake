@@ -45,7 +45,7 @@ App::App(const char* name, uint32_t x, uint32_t y)
 		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(mat4x4) + sizeof(vec4), NULL, GL_STATIC_DRAW);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboParameters);
-		glBufferData(GL_UNIFORM_BUFFER, sizeof(float32_t) * 4, NULL, GL_STATIC_DRAW);
+		glBufferData(GL_UNIFORM_BUFFER, sizeof(float32_t), NULL, GL_STATIC_DRAW);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
@@ -141,10 +141,8 @@ void App::render()
 		
 		float32_t time = SDL_GetTicksNS() * .000000001f;
 
-		printf("Time since init: %f\n", time);
-
 		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboParameters);
-		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(float32_t), sizeof(float32_t), &time);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(float32_t), &time);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}

@@ -114,7 +114,7 @@ void App::init()
 	Skybox* t_Skybox = new Skybox;
 
 	// We have a special actor, our ocean
-	gqtest::init_ocean(3, 5);
+	gqtest::init_ocean(20, 5);
 	Mesh* t_Ocean = new Mesh(gqtest::ocean_data);
 	t_Ocean->attach_shader(new Shader("$shaders/ocean.gqshader"));
 	t_Ocean->transform.position = vec3(0.0, -0.6, 0.0);

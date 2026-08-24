@@ -26,14 +26,30 @@ out INOUT
 	vec3 cameraPos;
 } VS_OUT;
 
+float ocean_function(float x, float z)
+{
+	return .1 * (sin(4 * x + TIME) + cos(2 * z + TIME));
+}
+
+vec3 ocean_normal(float x, float z)
+{
+	
+	float delta = .0001;
+
+	float dx = (ocean_function(x + delta, z) - ocean_function(x, z)) / delta;
+	float dz = (ocean_function(x, z + delta) - ocean_function(x, z)) / delta;
+	return normalize(vec3(-dx, 1, -dz));
+
+}
+
 void main()
 {
-	vec3 pos = vec3(POSITION.x, 100 * sin(TIME), POSITION.z);
+	vec3 pos = vec3(POSITION.x, ocean_function(POSITION.x, POSITION.z), POSITION.z);
     gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(pos, 1.0);
 
 	VS_OUT.pos = vec3(MODEL_MAT * vec4(pos, 1.0));
 	VS_OUT.uv = UV;
-	VS_OUT.normal = NORMAL;
+	VS_OUT.normal = ocean_normal(POSITION.x, POSITION.z);
 	VS_OUT.cameraPos = VIEW_POS;
 }
 
@@ -49,13 +65,13 @@ in INOUT
 
 vec3 get_sky(vec3 direction)
 {
-	// vec3 base = vec3(.7, .9, 1);
-	//
-	// vec3 sun = vec3(1.0);
-	// vec3 sun_direction = vec3(.707, .707, 0.0);
-	// vec3 ground = vec3(0.149, 0.129, 0.11);
-	//
-	// return mix(ground, mix(base, sun, clamp(pow(300, dot(direction, sun_direction) - .98), -1, 1)), clamp(pow(500, dot(direction, vec3(0.0, 1.0, 0.0))), 0, 1));
+	vec3 base = vec3(.7, .9, 1);
+
+	vec3 sun = vec3(1.0);
+	vec3 sun_direction = vec3(.707, .707, 0.0);
+	vec3 ground = vec3(0.149, 0.129, 0.11);
+
+	return mix(ground, mix(base, sun, clamp(pow(300, dot(direction, sun_direction) - .98), -1, 1)), clamp(pow(500, dot(direction, vec3(0.0, 1.0, 0.0))), 0, 1));
 	
 	return direction;
 }
@@ -69,5 +85,8 @@ out vec4 COLOR;
 
 void main()
 {
-	COLOR = vec4(vec3(TIME), 1.0);
+	float fresnel = 1 - dot(normalize(FS_IN.cameraPos - FS_IN.pos), FS_IN.normal);
+	vec3 reflection = get_sky(reflect(normalize(FS_IN.pos - FS_IN.cameraPos), FS_IN.normal));
+	vec3 water = vec3(0.4, 0.6, 0.9);
+	COLOR = vec4(water + (reflection - water) * fresnel, 1.0);
 }
