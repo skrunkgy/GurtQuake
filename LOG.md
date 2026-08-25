@@ -1264,3 +1264,31 @@ I also wanted to bring to attention about loading resources. I am considering re
 ## Slight Resource rework
 
 I am such a neat freak, but I think everything that requires an import (Resources, ahem) need a `load()` method. These are methods that explicitly grab data from files and shoves them into the class. This is so that in the future, we can maybe move all of these into that ResourceMangaer class that handles loading each of these. The primary objective is so that we separate resource creation and resource loading, and I will probably work on that tomorrow.
+
+# 8/25
+
+This engine is a JOB. Anyways, first things first.
+
+## Resource::load()
+
+The following resources need to implement this, and then call it in their respective constructor:
+- Shader
+- Texture2D
+- Cubemap
+
+This is so that when we begin loading resources with a ResourceManager, it will be a bit easier. For this reason, we do not have a `load()` function for Meshes (yet, unless we turn MeshData into a Resource :p).
+
+Finished this :)
+
+## Shader Parameters
+
+I want to figure out a way where we can assign textures and uniforms to our shaders. What I could do is have a list of texture pointers (or perhaps an array, so it can live in the stack), and have functions to set different kinds of parameters (colors, floats, stuff like that). I am not sure whether I want to include this into our base shader, but I might as well.
+
+For now, we only care about shaders passing texture information. What we can do is we can specify an array of strings that denote our textures in the shader, and then use an array of Texture*'s to activate them and bind them to the correct unit.
+
+I am not sure how I want to go about the first part. Perhaps we can do
+```cpp
+Shader::Shader(const char* path, string shader_names[])
+```
+
+Ill figure it out in the next commit.

@@ -40,7 +40,7 @@ public:
 		}
 	}
 
-	virtual void load() {}
+	virtual void load() = 0; // For now, every resource must provide a way to load itself
 	inline std::string get_path()
 	{
 		return m_filepath;

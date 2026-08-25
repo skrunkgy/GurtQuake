@@ -19,7 +19,7 @@ public:
 	Texture();
 	Texture(const char* path);
 	~Texture();
-
+	
 	virtual uint32_t get_texture() = 0;
 	virtual void use_texture(uint32_t unit) = 0;
 
@@ -36,6 +36,7 @@ public:
 	Texture2D(const char* path);
 	~Texture2D();
 
+	void load();
 	uint32_t get_texture();
 	void use_texture(uint32_t unit);
 
@@ -51,7 +52,8 @@ public:
 	Cubemap();
 	Cubemap(const char* path);
 	~Cubemap();
-
+	
+	void load();
 	uint32_t get_texture();
 	void use_texture(uint32_t unit);
 

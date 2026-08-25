@@ -33,6 +33,7 @@ public:
 	~Shader();
 
 	virtual void use_shader();
+	void load();
 	uint32_t get_shader(); // For setting uniforms manually, TODO: REMOVE
 	
 	template <typename T>

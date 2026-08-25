@@ -67,7 +67,12 @@ Shader::Shader(const char* path) : Resource::Resource(path)
 {
 	// create the shader
 	m_Program = glCreateProgram();
-	
+	load();
+}
+
+// Load shader from file from m_path
+void Shader::load()
+{
 	// Creates multiple shaders based on a file
 	std::string word_buffer;
 	std::string shader_source;

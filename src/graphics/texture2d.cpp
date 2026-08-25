@@ -17,6 +17,11 @@ Texture2D::Texture2D() : Texture::Texture()
 Texture2D::Texture2D(const char* path) : Texture::Texture(path)
 {
 	glGenTextures(1, &m_Texture);
+	load();
+}
+
+void Texture2D::load()
+{
 	glBindTexture(GL_TEXTURE_2D, m_Texture);
 	
 	// Should be able to set these
@@ -46,7 +51,6 @@ Texture2D::Texture2D(const char* path) : Texture::Texture(path)
 
 	// clean up
 	glBindTexture(GL_TEXTURE_2D, 0);
-
 }
 
 uint32_t Texture2D::get_texture()

@@ -22,6 +22,11 @@ static const char* cubemap_extensions[6] = {
 Cubemap::Cubemap(const char* path) : Texture::Texture(path)
 {
 	glGenTextures(1, &m_Texture);
+	load();
+}
+
+void Cubemap::load()
+{
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_Texture);
 	
 	// Should be able to set these
@@ -55,6 +60,7 @@ Cubemap::Cubemap(const char* path) : Texture::Texture(path)
 	
 	// clean up
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
 }
 
 uint32_t Cubemap::get_texture()
