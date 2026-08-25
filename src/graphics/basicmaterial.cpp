@@ -8,7 +8,7 @@ using namespace gl;
 
 BasicMaterial::BasicMaterial() : Shader("%defaults/shaders/basicmaterial.gqshader")
 {
-	
+	// append_shader(diffuseMap); <- for some reason, causes a seg fault down the line :(
 }
 
 BasicMaterial::~BasicMaterial()

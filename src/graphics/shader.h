@@ -49,8 +49,9 @@ public:
 
 private:
 	uint32_t m_Program;
-	std::vector<Texture*> m_Textures;
 	void compile_shader(const char* source_file, GQ_SHADER_TYPE type);
+protected:
+	std::vector<Texture*> m_Textures;
 
 };
 

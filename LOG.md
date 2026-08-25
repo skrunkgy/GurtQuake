@@ -1292,3 +1292,43 @@ Shader::Shader(const char* path, string shader_names[])
 ```
 
 Ok, so I think what I'll do is just manually set these things up. For now, we will have a list of textures that the shader will iterate through and set as active. Also, I just looked it up and we can explicitly set the locations of our textures using `layout (binding = i)`! Let's do that for our shaders.
+
+## BasicMaterial issues
+
+At the moment, the BasicMaterial is a bit obsolete now, and trying to use it doesn't really work. These are because:
+- BasicMaterial makes a copy of the shader anyways
+- We aren't passing per-shader parameters yet
+- Texture binding is automated
+- A seg fault occurs when we try to add a shader by using diffuseMap and appending it in the constructor.
+
+The last one happens because diffuseMap (a Texture2D pointer) is automatically assigned in the stack, I think. This automatic assignment is pushed into the Shader textures pool. However, we need to create a new Texture2D and assign that pointer to diffuseMap. This causes a mismatch between whats diffuseMap (after assigning a new Texture) and whats inside the pool of textures. So for now, we simply just assign a texture.
+
+## Tweak to our Texture pool
+
+While writing the previous section, it came to me that we are associating the index of a Texture in the list as the binding. However, this may be unwanted. We could probably associate a texture with a binding, perhaps by adding a struct that associates the pair. I could also put the binding inside the actual Texture class, but that may limit how we use a texture in a class, so we don't really care atm.
+
+## TODO:
+
+We still need to do lighting, which involves making a new UBO. This also means setting up normals, which will eventually lead to an object loader. 
+
+## Lighting
+
+There will be two kinds of lights for now: directional and point lights. Directional lights will have a direction, color, and brightness. Point lights will have a position, color, brightness, and falloff constant (the exponent part). Perhaps we can do the same trick where we have a struct with a type, and then a union with other structs. However, using std140 might make it much more tricky.
+
+In fact, GLSL doesn't even support unions :(. However, this makes our lives a bit easier anyways knowing that we need to take a sillier approach:
+
+Our struct could look something like this:
+```glsl
+struct Light
+{
+	int type;
+	vec3 data3;
+	vec3 color;
+	float brightness;
+	float exponent;
+};
+```
+
+`type` will be either a direction light or a point light. `data3` simply represents either a position or a direction. the rest are self explanatory. we iterate through all of these lights in the shader. we will use a UBO to store an array of these in our app. we can also create a Light class that inherits GQObject, and then two classes that inherit Light. These Lights will need access to the UBO to upload themselves when they are passed in the render poke.
+
+We may have to refactor some code in order to support this, as currently the Light wouldnt be able to update the UBO without access to the GlobalState of the app. We can probably pass the queue into that GlobalState, and then everybody would be happy. I will implement this later, perhaps.

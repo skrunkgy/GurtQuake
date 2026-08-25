@@ -40,5 +40,5 @@ layout (binding = 0) uniform samplerCube CUBEMAP;
 void main()
 {
 
-	COLOR = texture(CUBEMAP, FS_IN.pos);
+	COLOR = texture(CUBEMAP, normalize(FS_IN.pos));
 }

@@ -6,7 +6,6 @@
 
 #include "core/app.h"
 #include "core/sceneroot.h"
-#include "graphics/basicmaterial.h"
 #include "graphics/mesh.h"
 #include "core/resource.h"
 #include "graphics/texture.h"
@@ -115,8 +114,8 @@ void App::init()
 	
 	// Load our resources
 	// All these cause memory leaks if we do not have a Resource Manager
-	BasicMaterial* t_MaterialBobert = new BasicMaterial;
-	BasicMaterial* t_MaterialHat = new BasicMaterial;
+	Shader* t_MaterialBobert = new Shader("%defaults/shaders/basicmaterial.gqshader");
+	Shader* t_MaterialHat = new Shader("%defaults/shaders/basicmaterial.gqshader");
 	Shader* t_SkyShader = new Shader("%defaults/shaders/skybox.gqshader");
 	
 	t_MaterialBobert->append_texture(new Texture2D("$bobert.png"));
