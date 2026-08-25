@@ -11,34 +11,37 @@ layout (std140, binding = 0) uniform Matrices
 	vec3 VIEW_POS;
 };
 
-out INOUT
-{
-	vec3 pos;
-} VS_OUT;
-
 uniform mat4 MODEL_MAT;
+
+out vec3 outPos;
 
 void main()
 {
 	mat4 view = mat4(mat3(VIEW_MAT));
 	vec4 temp = PROJ_MAT * view * vec4(POSITION, 1.f);
 	gl_Position = temp.xyww; // depth test will only pass if nothing is in front of it
-	VS_OUT.pos = POSITION;
+	outPos = POSITION;
 }
 
 #shader FRAGMENT
 
-in INOUT
-{
-	vec3 pos;
-} FS_IN;
-
+in vec3 outPos;
 out vec4 COLOR;
 
 uniform samplerCube CUBEMAP;
 
 void main()
 {
+	vec3 direction = normalize(outPos);
 
-	COLOR = texture(CUBEMAP, FS_IN.pos);
+	vec3 base = vec3(.7, .9, 1);
+
+	vec3 sun = vec3(1.0);
+	vec3 sun_direction = vec3(.707, .707, 0.0);
+	vec3 ground = vec3(0.149, 0.129, 0.11);
+
+	vec3 outColor = mix(ground, mix(base, sun, clamp(pow(300, dot(direction, sun_direction) - .98), -1, 1)), clamp(pow(500, dot(direction, vec3(0.0, 1.0, 0.0))), 0, 1));
+	
+
+	COLOR = vec4(outColor, 1.0);
 }

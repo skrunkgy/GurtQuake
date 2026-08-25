@@ -1250,4 +1250,13 @@ Next thing to do is generalize textures and then create two subclasses.
 
 I am somewhat stuck, however. There is not much redundant code when creating textures, but its such a pain in the ass trying to reduce that little redundancy. However, Godot has a base "Texture" class.
 
-Something I could just do is make Texture a purely abstrat class, since we define the same functions for both classes. This could be at least somewhat reasonable.
+Something I could just do is make Texture a purely abstrat class, since we define the same functions for both classes. This could be at least somewhat reasonable. This is what I will roll with for now.
+
+## Cubemap loading
+
+Now that we are finally over with that, we need to figure out a convention of loading cubemaps. I was thinking the resource would point to a directory, in which we would load "i.ext", where i is a nuber from 0-5 and ext is the extension. Or perhaps I can create a special file format of sorts..., but I'd have to create a tool then.
+
+I think what I will do is have it so that the resource filepath is "file.ext", but the loader will format it to "file_e.ext", with e being
+px, nx, etc.
+
+I also wanted to bring to attention about loading resources. I am considering rewriting it so that all Resources have a `load()` method of sorts. For now, we will trudge along until this bothers me some more.

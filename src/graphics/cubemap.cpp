@@ -15,6 +15,10 @@ Cubemap::Cubemap() : Texture::Texture()
 	glGenTextures(1, &m_Texture);
 }
 
+static const char* cubemap_extensions[6] = {
+	"px", "nx", "py", "ny", "pz", "nz"
+};
+
 Cubemap::Cubemap(const char* path) : Texture::Texture(path)
 {
 	glGenTextures(1, &m_Texture);
@@ -28,24 +32,29 @@ Cubemap::Cubemap(const char* path) : Texture::Texture(path)
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	
 	// Code to load texture
-	// SDL_Surface *img_data = IMG_Load(m_filepath.c_str());
-	// SDL_FlipSurface(img_data, SDL_FLIP_VERTICAL);
-	//
-	// if (img_data)
-	// {
-	// 	m_Width = img_data->w;
-	// 	m_Height = img_data->h;
-	//
-	// 	glTexImage2D(GL_TEXTURE_CUBE_MAP, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data->pixels);
-	// 	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-	// }
-	// else
-	// {
-	// 	printf("Failed to load texture: %s\n", SDL_GetError());
-	// }
+	AUTOFOR(i, 6)
+	{
+		std::string formatted = m_filepath;
+		formatted.insert(formatted.find_last_of("."), "_" + std::string(cubemap_extensions[i]));
+		SDL_Surface *img_data = IMG_Load(formatted.c_str());
+		// SDL_FlipSurface(img_data, SDL_FLIP_VERTICAL);
+
+		if (img_data)
+		{
+			uint32_t m_Width = img_data->w;
+			uint32_t m_Height = img_data->h;
+
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data->pixels);
+			SDL_DestroySurface(img_data);
+		}
+		else
+		{
+			printf("Failed to load texture: %s\n", SDL_GetError());
+		}
+	}
+	
 	// clean up
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-	// SDL_DestroySurface(img_data);
 }
 
 uint32_t Cubemap::get_texture()

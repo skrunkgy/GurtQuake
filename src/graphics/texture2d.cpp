@@ -36,15 +36,17 @@ Texture2D::Texture2D(const char* path) : Texture::Texture(path)
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data->pixels);
 		glGenerateMipmap(GL_TEXTURE_2D);
+
+		SDL_DestroySurface(img_data);
 	}
 	else
 	{
 		printf("Failed to load texture: %s\n", SDL_GetError());
 	}
-	
+
 	// clean up
 	glBindTexture(GL_TEXTURE_2D, 0);
-	SDL_DestroySurface(img_data);
+
 }
 
 uint32_t Texture2D::get_texture()

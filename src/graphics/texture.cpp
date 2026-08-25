@@ -14,5 +14,5 @@ Texture::Texture(const char* path) : Resource::Resource(path)
 
 Texture::~Texture()
 {
-	
+
 }
