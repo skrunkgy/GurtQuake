@@ -1260,3 +1260,7 @@ I think what I will do is have it so that the resource filepath is "file.ext", b
 px, nx, etc.
 
 I also wanted to bring to attention about loading resources. I am considering rewriting it so that all Resources have a `load()` method of sorts. For now, we will trudge along until this bothers me some more.
+
+## Slight Resource rework
+
+I am such a neat freak, but I think everything that requires an import (Resources, ahem) need a `load()` method. These are methods that explicitly grab data from files and shoves them into the class. This is so that in the future, we can maybe move all of these into that ResourceMangaer class that handles loading each of these. The primary objective is so that we separate resource creation and resource loading, and I will probably work on that tomorrow.
