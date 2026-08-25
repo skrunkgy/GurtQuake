@@ -3,12 +3,12 @@
 #include <glbinding/gl/enum.h>
 #include <glbinding/gl/functions.h>
 #include <glbinding/gl/gl.h>
+
+#include "../core/utils.h"
 #include "texture.h"
 
 using namespace gquake;
 using namespace gl;
-
-#define AUTOFOR(i, n) for(uint32_t i = 0; i < n; i++)
 
 Cubemap::Cubemap() : Texture::Texture()
 {

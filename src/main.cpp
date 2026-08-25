@@ -118,10 +118,10 @@ void App::init()
 	BasicMaterial* t_MaterialBobert = new BasicMaterial;
 	BasicMaterial* t_MaterialHat = new BasicMaterial;
 	Shader* t_SkyShader = new Shader("%defaults/shaders/skybox.gqshader");
-	Cubemap* t_SkyTexture = new Cubemap("$nightsky/skybox.png");
 	
-	t_MaterialBobert->diffuseMap = new Texture2D("$bobert.png");
-	t_MaterialHat->diffuseMap = new Texture2D("$hat.png");
+	t_MaterialBobert->append_texture(new Texture2D("$bobert.png"));
+	t_MaterialHat->append_texture(new Texture2D("$hat.png"));
+	t_SkyShader->append_texture(new Cubemap("$nightsky/skybox.png"));
 
 	// Insert actors into our tree
 	m_Tree->add_child(t_Bobert);
@@ -136,11 +136,6 @@ void App::init()
 	t_Bobert->attach_shader(t_MaterialBobert);
 	t_Hat->attach_shader(t_MaterialHat);
 	t_Skybox->attach_shader(t_SkyShader);
-
-	// Set our skybox shader thing
-	t_SkyShader->use_shader();
-	glUniform1i(glGetUniformLocation(t_SkyShader->get_shader(), "CUBEMAP"), 2);
-	t_SkyTexture->use_texture(2);
 
 	// Set the transform of our hat
 	t_Hat->transform.position = vec3(0, 0.3, 0);

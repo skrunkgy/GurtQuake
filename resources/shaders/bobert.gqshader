@@ -22,7 +22,7 @@ void main()
 
 #shader FRAGMENT
 
-uniform sampler2D TEXTURE;
+laytout (binding = 0) uniform sampler2D TEXTURE;
 
 in vec2 outUV;
 out vec4 COLOR;

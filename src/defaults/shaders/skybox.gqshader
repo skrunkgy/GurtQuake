@@ -35,7 +35,7 @@ in INOUT
 
 out vec4 COLOR;
 
-uniform samplerCube CUBEMAP;
+layout (binding = 0) uniform samplerCube CUBEMAP;
 
 void main()
 {

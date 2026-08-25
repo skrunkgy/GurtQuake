@@ -36,13 +36,13 @@ in INOUT
 } FS_IN;
 
 // Parameters
-uniform sampler2D DIFFUSE_TEX;
-// uniform sampler2D NORMAL_TEX;
-// uniform sampler2D ROUGH_TEX;
-// uniform sampler2D SPECULAR_TEX;
-// uniform sampelr2D EMISSION_TEX
+layout(binding = 0) uniform sampler2D DIFFUSE_TEX;
+// layout(binding = 1) sampler2D NORMAL_TEX;
+// layout(binding = 2) sampler2D ROUGH_TEX;
+// layout(binding = 3) sampler2D SPECULAR_TEX;
+// layout(binding = 4) sampelr2D EMISSION_TEX
 
-uniform samplerCube CUBEMAP;
+layout(binding = 1) uniform samplerCube CUBEMAP;
 
 uniform struct MATERIAL
 {

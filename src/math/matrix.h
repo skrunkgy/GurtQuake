@@ -3,11 +3,11 @@
 #pragma once
 
 #include <cassert>
-#include <stdio.h>
 #include <string.h>
 #include <initializer_list>
 
 #include "qualifier.h"
+#include "../core/utils.h"
 #include "../core/gqtypes.h"
 
 namespace gquake

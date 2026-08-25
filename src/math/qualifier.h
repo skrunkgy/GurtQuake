@@ -7,8 +7,6 @@
 namespace gquake 
 {
 
-#define AUTOFOR(i, n) for(uint32_t i = 0; i < n; i++)
-
 template <uint32_t n, typename T>
 struct Vector;
 

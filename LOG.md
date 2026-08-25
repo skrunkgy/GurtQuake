@@ -1291,4 +1291,4 @@ I am not sure how I want to go about the first part. Perhaps we can do
 Shader::Shader(const char* path, string shader_names[])
 ```
 
-Ill figure it out in the next commit.
+Ok, so I think what I'll do is just manually set these things up. For now, we will have a list of textures that the shader will iterate through and set as active. Also, I just looked it up and we can explicitly set the locations of our textures using `layout (binding = i)`! Let's do that for our shaders.

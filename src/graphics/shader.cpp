@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 
+#include "../core/utils.h"
 #include "shader.h"
 
 using namespace gquake;
@@ -68,6 +69,12 @@ Shader::Shader(const char* path) : Resource::Resource(path)
 	// create the shader
 	m_Program = glCreateProgram();
 	load();
+
+}
+
+void Shader::append_texture(Texture* texture)
+{
+	m_Textures.push_back(texture);
 }
 
 // Load shader from file from m_path
@@ -140,6 +147,10 @@ void Shader::load()
 
 void Shader::use_shader()
 {
+	AUTOFOR(i, m_Textures.size())
+	{
+		m_Textures[i]->use_texture(i);
+	}
 	glUseProgram(m_Program);
 }
 

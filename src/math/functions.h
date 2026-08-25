@@ -2,9 +2,12 @@
 
 #pragma once
 
-#include "../core/gqtypes.h"
-#include "math_types.h"
 #include <cmath>
+
+#include "../core/gqtypes.h"
+#include "../core/utils.h"
+#include "math_types.h"
+#include <stdio.h>
 
 #define GQ_VEC_TEMP template<uint32_t n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
 

@@ -6,6 +6,7 @@
 #include <cassert>
 
 #include "qualifier.h"
+#include "../core/utils.h"
 
 namespace gquake
 {

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "shader.h"
-#include "texture.h"
 
 namespace gquake
 {
@@ -23,12 +22,6 @@ public:
 	~BasicMaterial();
 
 	MaterialParameters params;
-
-	Texture2D* diffuseMap;
-	// Texture2D* normalMap;
-	// Texture2D* specularMap;
-	// Texture2D* roughnessMap;
-	// CubeTexture* cubemap;
 
 	void use_shader();
 };
