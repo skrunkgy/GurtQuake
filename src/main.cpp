@@ -15,7 +15,7 @@
 #include "math/math.h"
 
 #include "../resources/bobert.h"
-#include "../resources/ocean.h"
+#include "../resources/plane.h"
 
 using namespace gquake;
 using namespace gl;
@@ -112,12 +112,6 @@ void App::init()
 	Mesh* t_Hat = new Mesh(gqtest::hat_data);
 	FlyCam *t_Camera = new FlyCam();
 	Skybox* t_Skybox = new Skybox;
-
-	// We have a special actor, our ocean
-	gqtest::init_ocean(20, 5);
-	Mesh* t_Ocean = new Mesh(gqtest::ocean_data);
-	t_Ocean->attach_shader(new Shader("$shaders/ocean.gqshader"));
-	t_Ocean->transform.position = vec3(0.0, -0.6, 0.0);
 	
 	// Load our resources
 	// All these cause memory leaks if we do not have a Resource Manager
@@ -133,8 +127,6 @@ void App::init()
 	t_Bobert->add_child(t_Hat);
 	m_Tree->add_child(t_Camera);
 	m_Tree->add_child(t_Skybox);
-
-	m_Tree->add_child(t_Ocean);
 
 	// Set the App's main cam
 	m_MainCam = t_Camera;

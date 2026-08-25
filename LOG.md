@@ -1241,3 +1241,13 @@ Everything but the 3rd point can be streamlined, the texture target just needs t
 ## Fun addition, ocean
 
 I have been thinking about writing an ocean function. Once I get Cubemaps going, I can write an ocean shader. Now you may be asking "ok, we can displace the geometry in the ocean, but how will you update the normals?" A brilliant question, the idea is to use derivatives of the sorts to calculate the normals. If I recall from Calc 3, we can get this from the gradient of the function.
+
+Did a commit with it, and it brought insight of some more parameters we need. First, a new parameter ubo, and a camera position inside our first UBO. We cant get the camera position from our view matrix, as we used a dot product. (we technically COULD get it, but that requires solving 3 systems of equations and i am not gonna do that)
+
+## Back to textures
+
+Next thing to do is generalize textures and then create two subclasses.
+
+I am somewhat stuck, however. There is not much redundant code when creating textures, but its such a pain in the ass trying to reduce that little redundancy. However, Godot has a base "Texture" class.
+
+Something I could just do is make Texture a purely abstrat class, since we define the same functions for both classes. This could be at least somewhat reasonable.
