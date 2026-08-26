@@ -1,27 +1,20 @@
 # GurtQuake
 
-This is going to be a game using my own engine written in C. I don't know much about writing good C code, but this will be a good experience!
+GurtQuake is a research project in aims to help create a game of sorts. This is mostly done to learn more about building software, and engines. This will be my first official iteration of a game engine.
 
-## Layout
-The engine has an App class that controls the program. Actors are derived from the "GQObject", which is a virtual class part of a tree-like system. The App holds a GQObject as its root (or any derivative, such as a SceneRoot). The App loop performs multiple traversals, including input, logic, and rendering.
-
-## Graphics
-OPENGL 4.6!!! Overview of how I abstract things:
-
-## Mesh
-A Mesh is derived from the RenderObject, which is derived from the gqObject. When poked, the RenderObject inserts itself in the Apps render_queue. The render_queue holds pointers to RenderObjects, which will have their own draw() method called. The Mesh() will also insert itself to the queue, while also passing necessary uniforms to it's shaders.
-
-### DISCLAIMER
-Ideally, it would only pass its model matrix (location + scale + rotation), but for now we will also pass the main Camera's matrices as well. I will change this once I have uniform buffer objects, or something.
-
-## Shader
-The Shader class can be attached to a Mesh in order to be drawn. The Shader's constructor takes a path to a `.gqshader` file, which uses a syntax that is MOSTLY from the GLSL. The only difference is that there is no declaration of the "#version" header, but instead you define a "#shader" header with a shader type ( "VERTEX" or "FRAGMENT" ), which makes development easier. In the future, the Shader will provide default programs for each the vertex and fragment, as well as default textures.
-
-## Wayland
-
-Wayland doesn't support changing the icon from the program. A .desktop file is provided in the "/resources" directory to insert in the proper directory.
+It will use OpenGL 4.6, since I found it easier to begin with and can focus more on just managing logic, even at the expense of drive overhead.
 
 ## Building
 
-Make sure to have SDL3, SDL3_image, and glbinding. Use makefile. I run this command to generate the compile_commands.json for the clangd lsp:
-`bear -- make gquake`
+The project uses a Makefile. The project requires the following libraries:
+- SDL3
+- SDL3_image
+- glbinding
+
+In order to build, use GNU's `make` command. Optionally, use `bear` to generate a `compile_commands.json` for clangd, for anyone who wants to develop:
+`bear -- make`
+The generated file will be in `build/gquake`.
+
+## Wayland
+
+Wayland does not support bit streaming to the compositor (or something like that), so a .desktop file is provided in the resources folder for anyone interested.

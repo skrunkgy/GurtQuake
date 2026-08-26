@@ -31,8 +31,8 @@ class FlyCam : public Camera
 	void _enter()
 	{
 		transform.position = {0.f, 0.f, 3.f};
-		aspect_ratio = 1.3333f;
-		fov = 100.f;
+		aspect_ratio = 16.0/9.0;
+		fov = 90.f;
 		printf("FlyCam has entered scene tree!\n");
 	}
 
@@ -151,7 +151,7 @@ void App::loop(float32_t delta)
 
 int main(int argc, char** kwarg)
 {
-	App app("GURTQUAKE", 800, 600);
+	App app("GURTQUAKE", 1280, 720);
 	app.run();
 	return 0;
 }

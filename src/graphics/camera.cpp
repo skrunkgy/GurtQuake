@@ -38,8 +38,8 @@ mat4x4 Camera::get_proj()
 
 	return mat4x4
 	{
-		S, 0.f, 0.f, 0.f,
-		0.f, S * aspect_ratio, 0.f, 0.f,
+		S / aspect_ratio, 0.f, 0.f, 0.f,
+		0.f, S, 0.f, 0.f,
 		0.f, 0.f, (far + near) / (near - far), 2.f * far * near / (near - far),
 		0.f, 0.f, -1.f, 0.f
 	};

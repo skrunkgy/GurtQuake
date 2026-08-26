@@ -50,7 +50,7 @@ I have decided to just start from scratch (well, keeping the makefile and the bi
 
 ## Everything goes into main, and then we stow away...
 
-Basically, we add headers and shit later after we get a basic implementation working of what we want. The first thing we will do is abstract the app class.
+Basically, we add headers and crap later after we get a basic implementation working of what we want. The first thing we will do is abstract the app class.
 
 # 6/11
 
@@ -113,7 +113,7 @@ I want to start working on 3d before I start working on loading objects, since w
 
 # 6/17
 
-ATM its the next day (18) but I was starting to work on serialization (SLOWLY). I was gonna do the same thing with render queue but I think I am going to have a base class of Serialize, but it will return a void pointer and then we will have to recast it later. What I might also do is just use templates! We will have to write our own serialization for each object, so no point doing C++ serialization and figuring it out. Fuck it, we ball!
+ATM its the next day (18) but I was starting to work on serialization (SLOWLY). I was gonna do the same thing with render queue but I think I am going to have a base class of Serialize, but it will return a void pointer and then we will have to recast it later. What I might also do is just use templates! We will have to write our own serialization for each object, so no point doing C++ serialization and figuring it out. We ball!
 
 # 6/23
 
@@ -278,7 +278,7 @@ Hello, I decided to revisit this project, as it was looking a bit promising. It 
 
 # 9/2
 
-I start college semester today. I feel really bad for Dennis because his ECE251 professor is a piece of shit, according to others. I hope he is able to transfer out, or at least able to take it in the Winter. God bless him. Anyways, I have decided to modularize my code a little. I will still be using template specialization, but I wrote a template function to do some basics, so I don't have to keep writing code for arithmetic.
+I start college semester today. I feel really bad for Dennis because his ECE251 professor is a piece of crap, according to others. I hope he is able to transfer out, or at least able to take it in the Winter. God bless him. Anyways, I have decided to modularize my code a little. I will still be using template specialization, but I wrote a template function to do some basics, so I don't have to keep writing code for arithmetic.
 
 I am using "partial template specialization", so I can still abstract the type. In the future, I might abstract the templates even MORE so that I can work with multiple types (lets say, add a vec2i with a vec2f). For now, I see no reason for integer vectors and will continue.
 
@@ -315,7 +315,7 @@ Ok, I changed it so that we only use another template when using the non-member 
 I am going insane refactoring this code. God.
 
 
-Ok, I fixed it around a bunch. The engine spins, the only issues are with shaders (not engine's problem!). But I am still breaking my fucking head over clangd and making CMake produce me a compile_commands.json.
+Ok, I fixed it around a bunch. The engine spins, the only issues are with shaders (not engine's problem!). But I am still breaking my head over clangd and making CMake produce me a compile_commands.json.
 
 I FIGURED IT OUT!!! I have to add the command options " -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G 'MinGW Makefiles' " after my cmake command.
 
@@ -343,7 +343,7 @@ I also still have the problem of "object A needs a reference to object B", but t
 
 Reading into it and I realized I could POTENTIALLY automate serialization by using preprocessor directives. Must read more into this lol.
 
-We can serialize data using fstream and shit.
+We can serialize data using fstream and crap.
 
 # 9/29
 
@@ -351,7 +351,7 @@ Will work on 3d. Test commit
 
 # 10/1
 
-HAPPY SPOOKY MONTH! Still working on this piece of shit. At the moment, I need to just begin grinding 3d and actual functionality. Loading objects must become abstracted so I can focus on actual important shit. I don't even want to think about the hell I am about to go in.
+HAPPY SPOOKY MONTH! Still working on this piece of crap. At the moment, I need to just begin grinding 3d and actual functionality. Loading objects must become abstracted so I can focus on actual important crap. I don't even want to think about the hell I am about to go in.
 
 # 10/6
 
@@ -369,7 +369,7 @@ The app class is gonna manage the top level stuff about the application that run
 The app basically abstracts a bunch of SDL stuff. It also holds some important information and features...
 - pointer to the window
 - context (opengl)
-- an app state (idk what ill do with this, but it holds shit like flil color and windows)
+- an app state (idk what ill do with this, but it holds crap like flil color and windows)
 - RenderQueue, a queue for rendering stuff (its a vector at this moment, but ill make it a queue)
 - a static pointer to an instance, this is filled when created
 
@@ -464,7 +464,7 @@ inline static App* s_instance = nullptr;
 
 # 10/22
 
-I fixed the Windows clangd stuff. I had to add an argument to the extension called "--query-driver=" and then provide the compiler in the compile_commands.json. Fuck clangd, but it's the best we've got in our total revolution against MicroCock.
+I fixed the Windows clangd stuff. I had to add an argument to the extension called "--query-driver=" and then provide the compiler in the compile_commands.json.
 
 I am heavily considering using function pointers or lambdas for traversing trees. This is so I can provide more general behavior any time I want to do tree poking, and so that I'm not rewriting code all the time.
 
@@ -492,7 +492,7 @@ m_tree->traverse(this, void [](gqObject* self) {
         // ... code here
     });
 ```
-I can also do this with function pointers, but I think I'd rather use <functional> since I can use clauses. Clauses might let me update external stuff. I don't know. This is all new shit to me.
+I can also do this with function pointers, but I think I'd rather use <functional> since I can use clauses. Clauses might let me update external stuff. I don't know. This is all new crap to me.
 
 7:45pm update I DID IT!!!! Please see this commit
 
@@ -515,7 +515,7 @@ One at a time.. please..
 
 I don't want to make anything too complicated. I think I will try to make much of this very simple. I won't do scripting yet, but maybe I can use dynamic libraries...
 
-I still plan to use a level schema, but I will call them "scenes" instead. For now, I will not give a shit about serialization. I also don't want to use CMakeLists, since this project is supposed to be a bit smaller.
+I still plan to use a level schema, but I will call them "scenes" instead. For now, I will not give a crap about serialization. I also don't want to use CMakeLists, since this project is supposed to be a bit smaller.
 
 I wanted to move away from using a static instance (a singleton?), but this came with silly stuff. The gqObject::poke() now needs a pointer to the App to be passed, but everything works now.
 
@@ -595,11 +595,11 @@ I think const before is for the return value, and const after is telling the com
 
 # 8/6
 
-Problemo!!! I have said that column major order for GL compatability, yet I have been doing the math row major order. I am so fucking stupid. Standby.
+Problemo!!! I have said that column major order for GL compatability, yet I have been doing the math row major order.
 
 # 8/7 
 
-I hate autocomplete on md. Fuck you lazyvim. Anyways, I am working on multiplication with matrices and vectors. There was an issue with component access because I wanted to throw an error for an out of range case. However, GLM does this by using an `assert` macro. Should've just done this lol. To whom it may concern, most of this code looks plagiarized from GLM but its HEAVILY INSPIRED !!!! I know what all of this code does, but I do not want all the fancy stuff from GLM itself. This engine is for research purposes, and also a flex on my resume. But I also just love building stuff like this. Please hire me Epic.
+I hate autocomplete on md. Anyways, I am working on multiplication with matrices and vectors. There was an issue with component access because I wanted to throw an error for an out of range case. However, GLM does this by using an `assert` macro. Should've just done this lol. To whom it may concern, most of this code looks plagiarized from GLM but its HEAVILY INSPIRED !!!! I know what all of this code does, but I do not want all the fancy stuff from GLM itself. This engine is for research purposes, and also a flex on my resume. But I also just love building stuff like this. Please hire me Epic.
 
 # 8/8 
 
@@ -692,7 +692,7 @@ int main()
 }
 ```
 
-In a hopefully-not-the-case scenario, padding would be inserted for the last byte after vector a. However, this is not the case, and we print b :). We may move forward with the engine, and also have a piece of mind that the all might GLM library does the same stupid shit like us!
+In a hopefully-not-the-case scenario, padding would be inserted for the last byte after vector a. However, this is not the case, and we print b :). We may move forward with the engine, and also have a piece of mind that the all mighty GLM library does the same stupid crap like us!
 
 # 8/12
 
@@ -706,7 +706,7 @@ Maybe the app class should be a singleton again. This is because the engine shou
 ## Rendering
 At the moment, the App holds a render queue. This is fine if we only have one camera, but won't be useful if we decide to implement it. Also, our Camera is rendering to the default framebuffer target. In my ideal engine, we can change which camera renders to which render target, and also be able to change which render target we see, or which one for a texture etc. I bring this up because now the App can't have a main camera anymore (or maybe it can? idk). I also want to be able to toggle which thing a camera can see.
 
-Think of it like the portal game. The portals have their own cameras that have their own matrices and shit. They are also able to see Chell's model. They also render to their own framebuffer, which is then displayed on the portal.
+Think of it like the portal game. The portals have their own cameras that have their own matrices and crap. They are also able to see Chell's model. They also render to their own framebuffer, which is then displayed on the portal.
 
 I am not sure how I want to proceed with this. For now, I do want to make the App class a singleton. Perhaps render objects can have flag bits that determine which camera can see it? Each camera can have their own render queue maybe? I don't know man, I will do more research later. For now, default App cam, but add render targets maybe? Per camera? UGH!
 
@@ -750,7 +750,7 @@ I am now asking myself whether a singleton or passing the App as a parameter is 
 
 I have two issues with my organization.
 1. src files should also include our headers. In other repositories, I see that usually a foo.cpp is coupled with a foo.h, which probably makes development a bit quicker instead of scavenging for my files...
-2. Naming convention. In Godot, parameters are named p_name, types are named typesize_t, shit like that. They also have conventions for naming stuff in camel case and whatnot. I should probably put a convention like that...
+2. Naming convention. In Godot, parameters are named p_name, types are named typesize_t, crap like that. They also have conventions for naming stuff in camel case and whatnot. I should probably put a convention like that...
 
 A smaller issue I have is my "gtypes.h" header is too vague. I already have a "types.h" file in the math folder, so this one is a bit vague. It isn't a bad idea to have a "gqobject.h" and a "sceneroot.h". The standard is that classes and closely related classes/structs should be bundled in separate files.
 
@@ -942,7 +942,7 @@ Fixed a bug because I forgot to read docs. glVertexAttribPointer needs the offse
 
 ## Resource manager
 
-HOLY SHIT. I JUST FOUND OUT WHY MY TEXTURE KEPT NOT WORKING. Because the Texture2D I created was destroyed after the App::init function returned, the Texture2D::~Texture2D method was called, which deleted the internal texture in the GPU. However, I learned about a few things from this:
+HOLY crap. I JUST FOUND OUT WHY MY TEXTURE KEPT NOT WORKING. Because the Texture2D I created was destroyed after the App::init function returned, the Texture2D::~Texture2D method was called, which deleted the internal texture in the GPU. However, I learned about a few things from this:
 1. Renderdoc is awesome :)
 2. We need a Resource manager.
 
