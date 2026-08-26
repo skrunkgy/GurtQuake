@@ -3,7 +3,7 @@
 using namespace gquake;
 
 // Will override all render objects and ones inherited i hope!
-void RenderObject::_render(std::queue<RenderObject*>& rQueue)
+void RenderObject::_render(RenderInfo rTarget)
 {
-	rQueue.push(this);
+	rTarget.drawQueue->push(this);
 }

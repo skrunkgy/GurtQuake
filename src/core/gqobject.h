@@ -14,6 +14,13 @@ namespace gquake {
 
 class RenderObject; // We just need this for now...
 
+struct RenderTarget
+{
+	std::queue<RenderObject*> drawQueue;
+	// std::queue<Light*> lightQueue;
+	// Camera* camera;
+};
+
 // Node for a tree
 class GQObject
 {
@@ -49,7 +56,7 @@ public:
 	virtual void _enter() {};
 	virtual void _loop(float32_t dt) {};
 	virtual void _input(SDL_Event& event) {};
-	virtual void _render(std::queue<RenderObject*>& rQueue) {};
+	virtual void _render(RenderInfo rTarget) {};
 };
 
 } // namespace gquake

@@ -4,7 +4,7 @@ layout (location = 0) in vec3 POSITION;
 layout (location = 1) in vec2 UV;
 layout (location = 2) in vec3 NORMAL;
 
-layout (std140, binding = 0) uniform Matrices
+layout (std140, binding = 0) uniform CameraInfo
 {
 	mat4 VIEW_MAT;
 	mat4 PROJ_MAT;

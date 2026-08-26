@@ -15,6 +15,9 @@
 using namespace gquake;
 using namespace gl;
 
+#define MAX_LIGHTS 256
+#define LIGHT_SIZE 32
+
 App::App(const char* name, uint32_t x, uint32_t y)
 {	
 	
@@ -38,19 +41,25 @@ App::App(const char* name, uint32_t x, uint32_t y)
 	glbinding::initialize(SDL_GL_GetProcAddress);
 	
 	{	//Generate uniform buffers for our global stuff, in brackets because this is more specific
-		glGenBuffers(1, &m_GlobalState.uboMatrices);
-		glGenBuffers(1, &m_GlobalState.uboParameters);\
+		glGenBuffers(1, &m_GlobalState.uboCameraInfo);
+		glGenBuffers(1, &m_GlobalState.uboParameters);
+		glGenBuffers(1, &m_GlobalState.ssboLights);
 
-		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboMatrices);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboCameraInfo);
 		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(mat4x4) + sizeof(vec4), NULL, GL_STATIC_DRAW);
 
 		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboParameters);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(float32_t), NULL, GL_STATIC_DRAW);
 
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_GlobalState.ssboLights);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(uint32_t) + MAX_LIGHTS * LIGHT_SIZE, NULL, GL_STATIC_DRAW);
+		
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 
-		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_GlobalState.uboMatrices);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_GlobalState.uboCameraInfo);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_GlobalState.uboParameters);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, m_GlobalState.ssboLights);
 	}
 		
 	// Set some OpenGL parameters
@@ -97,10 +106,13 @@ void App::run()
 		// Render traversals, and then process the render queue
 		m_Tree->traverse({
 			.type = GQ_RENDER_POKE,
-			.rQueue = &m_RenderQueue
+			.rInfo = 
+				{
+					.drawQueue = &m_DrawQueue,
+					.ssboLights = m_GlobalState.ssboLights
+				}
 		});
 		render();
-
 	}
 }
 
@@ -131,7 +143,7 @@ void App::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	{	// Update UBOs
-		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboMatrices);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_GlobalState.uboCameraInfo);
 		mat4x4 transposed;
 		transposed = m_MainCam->get_view().transpose();
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(mat4x4), &transposed);
@@ -146,11 +158,11 @@ void App::render()
 
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
-
-	while (!m_RenderQueue.empty())
+	
+	while (!m_DrawQueue.empty())
 	{
-		m_RenderQueue.front()->draw();
-		m_RenderQueue.pop();
+		m_DrawQueue.front()->draw();
+		m_DrawQueue.pop();
 	}
 	SDL_GL_SwapWindow(m_Window);
 }

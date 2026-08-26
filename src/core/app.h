@@ -5,6 +5,7 @@
 #include <SDL3/SDL.h>
 #include "../graphics/camera.h"
 #include "../graphics/renderobject.h"
+#include "gqobject.h"
 #include "gqtypes.h"
 
 namespace gquake
@@ -27,13 +28,15 @@ private:
 
 	// Eventually add Viewport class
 	Camera* m_MainCam;
-	std::queue<RenderObject*> m_RenderQueue;
-	
+	std::queue<RenderObject*> m_DrawQueue;
+
 	// Manage our globals
 	struct
 	{
-		uint32_t uboMatrices;
+		uint32_t uboCameraInfo;
 		uint32_t uboParameters;
+		uint32_t ssboLights;
+
 		vec3 fillColor;
 		bool running;
 	} m_GlobalState;

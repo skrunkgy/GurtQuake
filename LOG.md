@@ -139,7 +139,7 @@ Once I do 3d, I will then get to work on making things serializable. Baby steps.
 
 Here's the test suite I made for serializing,
 
-```
+```cpp
 #include <stdio.h>
 
 class Serialize
@@ -1321,14 +1321,28 @@ Our struct could look something like this:
 ```glsl
 struct Light
 {
-	int type;
 	vec3 data3;
 	vec3 color;
 	float brightness;
 	float exponent;
+	int type;
 };
 ```
 
 `type` will be either a direction light or a point light. `data3` simply represents either a position or a direction. the rest are self explanatory. we iterate through all of these lights in the shader. we will use a UBO to store an array of these in our app. we can also create a Light class that inherits GQObject, and then two classes that inherit Light. These Lights will need access to the UBO to upload themselves when they are passed in the render poke.
 
 We may have to refactor some code in order to support this, as currently the Light wouldnt be able to update the UBO without access to the GlobalState of the app. We can probably pass the queue into that GlobalState, and then everybody would be happy. I will implement this later, perhaps.
+
+# 8/26
+
+Just found out about std430. Will look into this. Also, we will use a SSBO (shader storage buffer object) instead of a uniform. This is also because according to Khronos, only SSBOs support the std430. Uniforms do not.
+
+I also need to have `"#extension GL_NV_uniform_buffer_std430_layout : enable"` in my shader. Fun! I love learning more about these little things, I hope the world of graphics programming is vast.
+
+Eventually, we want our Light objects to pass their information to our shaders. The app can do this if we had something like a LightsQueue, similar to our RenderQueue. However, this means that the GQObject needs to pass some kind of rendering information. We could probably now use a RenderTarget class. It will hold:
+- Our render queues (objects to be drawn)
+- Lights queue (lights to be passed)
+- In the future, a reference to a Camera it will use
+- In the future, a FrameBuffer of sorts
+
+Ok, after a bunch of back and forth, I landed on simply passing crap as `RenderInfo`. We can add what we need in the future this way, without changing much of the internal structure. I also renamed `RenderQueue` to `DrawQueue`, as this is a more specific name.

@@ -23,7 +23,7 @@ void GQObject::traverse(PokeData poke)
 			this->_loop(poke.dt);
 			break;
 		case GQ_RENDER_POKE:
-			this->_render(*poke.rQueue);
+			this->_render(poke.rInfo);
 			break;
 		case GQ_INPUT_POKE:
 			this->_input(*poke.event);

@@ -24,13 +24,19 @@ enum GQ_POKE_TYPE
 	GQ_TRANSFORM_POKE,
 };
 
+struct RenderInfo
+{
+	std::queue<RenderObject*>* drawQueue;
+	uint32_t ssboLights;
+};
+
 // Inspired by the SDL_Event type :)
 typedef struct GQ_POKE_DATA
 {
 	GQ_POKE_TYPE type;
 	union
 	{	// Each of the members in this union should be separated for each poke type, like structs
-		std::queue<RenderObject*>* rQueue; // GQ_RENDER_POKE
+		RenderInfo rInfo; // GQ_RENDER_POKE
 		float dt; // GQ_LOGIC_POKE 
 		SDL_Event* event; // GQ_INPUT_POKE
 	};

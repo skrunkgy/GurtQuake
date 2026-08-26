@@ -1,14 +1,30 @@
 #shader VERTEX
 
+#extension GL_NV_uniform_buffer_std430_layout : enable
+
 layout (location = 0) in vec3 POSITION;
 layout (location = 1) in vec2 UV;
 layout (location = 2) in vec3 NORMAL;
 
-layout (std140, binding = 0) uniform Matrices
+layout (std140, binding = 0) uniform CameraInfo
 {
 	mat4 VIEW_MAT;
 	mat4 PROJ_MAT;
 	vec3 VIEW_POS;
+};
+
+struct Light
+{
+	vec3 position;
+	float brightness;
+	vec3 color;
+	float exponent;
+};
+
+layout (std430, binding = 2) buffer Lights
+{
+	int nLights;
+	Light lightArr[];
 };
 
 uniform mat4 MODEL_MAT;
