@@ -1346,3 +1346,5 @@ Eventually, we want our Light objects to pass their information to our shaders. 
 - In the future, a FrameBuffer of sorts
 
 Ok, after a bunch of back and forth, I landed on simply passing crap as `RenderInfo`. We can add what we need in the future this way, without changing much of the internal structure. I also renamed `RenderQueue` to `DrawQueue`, as this is a more specific name.
+
+At the moment, we only have two lights, and I do want to add different attributes. I also do thing that cramming all attributes together is silly, but I don't know what other way to do this... For now, I will have the Sun as a uniform, and the point lights as a SSBO.

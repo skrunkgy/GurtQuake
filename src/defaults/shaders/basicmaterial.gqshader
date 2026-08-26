@@ -13,20 +13,6 @@ layout (std140, binding = 0) uniform CameraInfo
 	vec3 VIEW_POS;
 };
 
-struct Light
-{
-	vec3 position;
-	float brightness;
-	vec3 color;
-	float exponent;
-};
-
-layout (std430, binding = 2) buffer Lights
-{
-	int nLights;
-	Light lightArr[];
-};
-
 uniform mat4 MODEL_MAT;
 
 out INOUT
@@ -44,6 +30,29 @@ void main()
 }
 
 #shader FRAGMENT
+
+struct SunLight
+{
+	vec3 direction;
+	float brightness;
+	vec3 color;
+};
+
+struct PointLight
+{
+	vec3 position;
+	float brightness;
+	vec3 color;
+	float exponent;
+};
+
+layout (std430, binding = 2) buffer Lights
+{
+	SunLight sunLight;
+	int nLights;
+	PointLight lightArr[];
+};
+
 
 in INOUT
 {
