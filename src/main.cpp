@@ -148,8 +148,9 @@ void App::init()
 
 	// Set up light
 	t_Light->transform.position += vec3(1.5, 1.0, 0.0);
-	t_Light->exponent = 3.0;
-	t_Light->color = vec3(0.5, 0.0, 1.0);
+	t_Light->exponent = 2.0;
+	t_Light->color = vec3(1.0, 1.0, 1.0);
+	t_Light->brightness = 5.0;
 }
 
 void App::loop(float32_t delta)

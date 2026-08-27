@@ -1374,3 +1374,19 @@ layout (binding = 0) buffer Lights
 ```
 
 I will learn about the rules more, but this seems so silly. std430 was supposed to make this easier, but I guess not.
+
+I am pretty sure w can save like 12 bytes by adding the nLight thing inside our SunLight struct inside the shader, but I don't really care rn.
+
+## TODO
+
+Today was annoying. Anyways, our next tasks are to start implementing normals, and then an asset parser. Because we are using indexed vertices, it will be a bit harder to pass normals if we want flat shading. For object files, only unique vectors are stored.
+
+- Finish calculating normals for Bobert and his hat
+- Work on basicmaterial.gqshader
+- Model importing
+
+# 8/27
+
+Finished a basic implementation of lighting. It uses the Lambertian lighting (i think thats what its called), where we use the dot product of the normal and the incoming light direction to calculate the brightness. I can't really tell if its working well, but it seems right. Another thing I do want to add is the "Billboard", which is just a plane that always faces the camera. I think I can acheive this in a simple manner.
+
+I'll also support geometry shaders, but not atm.

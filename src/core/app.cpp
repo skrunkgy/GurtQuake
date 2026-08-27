@@ -59,7 +59,7 @@ App::App(const char* name, uint32_t x, uint32_t y)
 
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_GlobalState.uboCameraInfo);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_GlobalState.uboParameters);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, m_GlobalState.ssboLights);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_GlobalState.ssboLights);
 	}
 		
 	// Set some OpenGL parameters
