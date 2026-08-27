@@ -1390,3 +1390,11 @@ Today was annoying. Anyways, our next tasks are to start implementing normals, a
 Finished a basic implementation of lighting. It uses the Lambertian lighting (i think thats what its called), where we use the dot product of the normal and the incoming light direction to calculate the brightness. I can't really tell if its working well, but it seems right. Another thing I do want to add is the "Billboard", which is just a plane that always faces the camera. I think I can acheive this in a simple manner.
 
 I'll also support geometry shaders, but not atm.
+
+## Billboards
+
+Just finished my first implementation, and it is quite neat. The idea is simple.
+
+First, we feed 4 points (with 6 indices), but their positions are all 0. Their UVs are set appropriately to which corner they would be in. In the vertex shader, we calculate where the center of the billboard would be (that 0 vector) in view space, and then simply offset that using the UV coordinate. I also plan to make it so that the x and y transforms dictate the scale as well when we pass it with the model matrix. Pretty cool!
+
+I did not come up with this, but I got the idea from Reddit. I don't like Reddit, but it was a neat idea.

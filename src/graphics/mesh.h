@@ -65,8 +65,9 @@ public:
 	// Call this AFTER setting the vertices of the mesh!
 	void draw();
 
-private:
+protected:
 	Shader* m_Shader;
+private:
 	uint32_t m_VAO, m_VBO, m_EBO;
 	uint32_t m_TriCount;
 };

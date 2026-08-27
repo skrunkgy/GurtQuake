@@ -1,0 +1,50 @@
+#shader VERTEX
+
+layout (location = 0) in vec3 POSITION;
+layout (location = 1) in vec2 UV;
+layout (location = 2) in vec3 NORMAL;
+
+layout (std140, binding = 0) uniform CameraInfo
+{
+	mat4 VIEW_MAT;
+	mat4 PROJ_MAT;
+	vec3 VIEW_POS;
+};
+
+uniform mat4 MODEL_MAT;
+
+out INOUT
+{
+	vec3 pos;
+	vec2 uv;
+	vec3 normal;
+} VS_OUT;
+
+void main()
+{
+	vec4 newPos = VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0);
+	newPos += vec4((UV - vec2(.5)) * vec2(length(MODEL_MAT[0]), length(MODEL_MAT[1])), 0.0, 0.0);
+
+	gl_Position = PROJ_MAT * newPos;
+
+	VS_OUT.uv = UV;
+}
+
+#shader FRAGMENT
+
+in INOUT
+{
+	vec3 pos;
+	vec2 uv;
+	vec3 normal;
+} FS_IN;
+
+uniform sampler2D COLOR_TEX;
+
+out vec4 COLOR;
+
+void main()
+{
+    COLOR = texture(COLOR_TEX, FS_IN.uv);
+	if (COLOR.a < .01) discard;
+}

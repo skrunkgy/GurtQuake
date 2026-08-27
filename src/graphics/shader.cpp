@@ -17,6 +17,13 @@ Shader::Shader()
 
 Shader::~Shader()
 {
+	// Delete texture list
+	AUTOFOR(i, m_Textures.size())
+	{
+		delete m_Textures[i];
+	}
+	m_Textures.clear();
+	// Delte program
 	glDeleteProgram(m_Program);
 	printf("Shader has been destroyed\n");
 }

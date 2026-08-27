@@ -25,6 +25,11 @@ Cubemap::Cubemap(const char* path) : Texture::Texture(path)
 	load();
 }
 
+Cubemap::~Cubemap()
+{
+
+}
+
 void Cubemap::load()
 {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_Texture);

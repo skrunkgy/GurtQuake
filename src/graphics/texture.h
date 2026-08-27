@@ -18,7 +18,7 @@ class Texture : public Resource
 public:
 	Texture();
 	Texture(const char* path);
-	~Texture();
+	virtual ~Texture();
 	
 	virtual uint32_t get_texture() = 0;
 	virtual void use_texture(uint32_t unit) = 0;
@@ -56,9 +56,6 @@ public:
 	void load();
 	uint32_t get_texture();
 	void use_texture(uint32_t unit);
-
-private:
-
 };
 
 } // namespace gquake 

@@ -87,7 +87,7 @@ void main()
 
 	for (int i = 0; i < nLights; i++)
 	{
-		float lambertian = dot(normalize(lightArr[i].position - FS_IN.pos), FS_IN.normal);
+		float lambertian = dot(normalize(lightArr[i].position - FS_IN.pos), normalize(FS_IN.normal));
 		float strength = 1.0 / pow(length(lightArr[i].position - FS_IN.pos), lightArr[i].exponent);
 		totalLight += lightArr[i].color * lightArr[i].brightness * strength * max(0, lambertian);
 	}

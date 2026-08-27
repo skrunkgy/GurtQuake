@@ -12,6 +12,7 @@
 #include "graphics/texture.h"
 #include "graphics/skybox.h"
 #include "graphics/light3d.h"
+#include "graphics/billboard.h"
 
 #include "math/math.h"
 
@@ -114,6 +115,7 @@ void App::init()
 	FlyCam *t_Camera = new FlyCam;
 	Skybox* t_Skybox = new Skybox;
 	PointLight* t_Light = new PointLight;
+	Billboard* t_Lightbulb = new Billboard("$lightbulb.png");
 	
 	// Load our resources
 	// All these cause memory leaks if we do not have a Resource Manager
@@ -131,6 +133,7 @@ void App::init()
 	m_Tree->add_child(t_Camera);
 	m_Tree->add_child(t_Skybox);
 	m_Tree->add_child(t_Light);
+	t_Light->add_child(t_Lightbulb);
 
 	// Set the App's main cam
 	m_MainCam = t_Camera;

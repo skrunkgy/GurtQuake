@@ -20,6 +20,11 @@ Texture2D::Texture2D(const char* path) : Texture::Texture(path)
 	load();
 }
 
+Texture2D::~Texture2D()
+{
+
+}
+
 void Texture2D::load()
 {
 	glBindTexture(GL_TEXTURE_2D, m_Texture);
