@@ -25,7 +25,7 @@ void main()
 {
     gl_Position = PROJ_MAT * VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0);
 
-	VS_OUT.pos = vec3(VIEW_MAT * MODEL_MAT * vec4(POSITION, 1.0));
+	VS_OUT.pos = vec3(MODEL_MAT * vec4(POSITION, 1.0));
 	VS_OUT.uv = UV;
 }
 
@@ -49,10 +49,9 @@ struct PointLight
 layout (std430, binding = 2) buffer Lights
 {
 	SunLight sunLight;
-	int nLights;
+	unsigned int nLights;
 	PointLight lightArr[];
 };
-
 
 in INOUT
 {
@@ -80,5 +79,13 @@ out vec4 COLOR;
 
 void main()
 {
-    COLOR = texture(DIFFUSE_TEX, FS_IN.uv);
+	vec3 outColor = texture(DIFFUSE_TEX, FS_IN.uv).xyz;
+
+	for (int i = 0; i < nLights; i++)
+	{
+		float strength = 1.0 / pow(length(lightArr[i].position - FS_IN.pos), lightArr[i].exponent);
+		outColor += lightArr[i].color * lightArr[i].brightness * strength;
+	}
+
+    COLOR = vec4(outColor, 1.0);
 }

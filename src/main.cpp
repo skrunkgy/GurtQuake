@@ -6,10 +6,12 @@
 
 #include "core/app.h"
 #include "core/sceneroot.h"
+#include "graphics/light3d.h"
 #include "graphics/mesh.h"
 #include "core/resource.h"
 #include "graphics/texture.h"
 #include "graphics/skybox.h"
+#include "graphics/light3d.h"
 
 #include "math/math.h"
 
@@ -109,8 +111,9 @@ void App::init()
 	// Create our actors
 	Mesh* t_Bobert = new Mesh(gqtest::bobert_data);
 	Mesh* t_Hat = new Mesh(gqtest::hat_data);
-	FlyCam *t_Camera = new FlyCam();
+	FlyCam *t_Camera = new FlyCam;
 	Skybox* t_Skybox = new Skybox;
+	PointLight* t_Light = new PointLight;
 	
 	// Load our resources
 	// All these cause memory leaks if we do not have a Resource Manager
@@ -127,6 +130,7 @@ void App::init()
 	t_Bobert->add_child(t_Hat);
 	m_Tree->add_child(t_Camera);
 	m_Tree->add_child(t_Skybox);
+	m_Tree->add_child(t_Light);
 
 	// Set the App's main cam
 	m_MainCam = t_Camera;
@@ -141,6 +145,11 @@ void App::init()
 	t_Hat->transform.rotate_axis(PI / 4, vec3(0.0, 1.0, 0.0));
 	t_Hat->transform.basis = t_Hat->transform.basis * .5;
 	t_Hat->transform.rotate_axis(PI / 15, vec3(0.0, 0.0, 1.0));
+
+	// Set up light
+	t_Light->transform.position += vec3(1.5, 1.0, 0.0);
+	t_Light->exponent = 3.0;
+	t_Light->color = vec3(0.5, 0.0, 1.0);
 }
 
 void App::loop(float32_t delta)

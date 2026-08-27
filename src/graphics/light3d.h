@@ -5,6 +5,9 @@
 #include "../core/gqobject.h"
 #include "../math/math_types.h"
 
+#define PLIGHT_SIZE 32
+#define DLIGHT_SIZE 32
+
 namespace gquake
 {
 
@@ -15,22 +18,6 @@ namespace gquake
 // 	GQ_SUN_LIGHT
 // };
 
-// From the shader
-struct ShaderSunLightStruct
-{
-	vec3 direction;
-	float brightness;
-	vec3 color;
-};
-
-struct ShaderPointLightStruct
-{
-	vec3 position;
-	float brightness;
-	vec3 color;
-	float exponent;
-};
-
 class PointLight : public GQObject
 {
 public:
@@ -38,11 +25,10 @@ public:
 	~PointLight();
 
 	void _render(RenderInfo rInfo);
-
+	
 	vec3 color;
-	float32_t falloff;
+	float32_t exponent;
 	float32_t brightness;
-
 };
 
 class SunLight : public GQObject

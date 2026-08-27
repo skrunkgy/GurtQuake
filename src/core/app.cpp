@@ -11,12 +11,12 @@
 
 #include "gqtypes.h"
 #include "app.h"
+#include "../graphics/light3d.h"
 
 using namespace gquake;
 using namespace gl;
 
 #define MAX_LIGHTS 256
-#define LIGHT_SIZE 32
 
 App::App(const char* name, uint32_t x, uint32_t y)
 {	
@@ -52,7 +52,7 @@ App::App(const char* name, uint32_t x, uint32_t y)
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(float32_t), NULL, GL_STATIC_DRAW);
 
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_GlobalState.ssboLights);
-		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(uint32_t) + MAX_LIGHTS * LIGHT_SIZE, NULL, GL_STATIC_DRAW);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(uint32_t) + DLIGHT_SIZE + MAX_LIGHTS * PLIGHT_SIZE, NULL, GL_STATIC_DRAW);
 		
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
@@ -109,7 +109,8 @@ void App::run()
 			.rInfo = 
 				{
 					.drawQueue = &m_DrawQueue,
-					.ssboLights = m_GlobalState.ssboLights
+					.ssboLights = m_GlobalState.ssboLights,
+					.lightIndex = &m_Functional.lightIndex
 				}
 		});
 		render();
@@ -159,11 +160,19 @@ void App::render()
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 	
+	{	// Update light info
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_GlobalState.ssboLights);
+		glBufferSubData(GL_SHADER_STORAGE_BUFFER, DLIGHT_SIZE, sizeof(uint32_t), &m_Functional.lightIndex);
+		m_Functional.lightIndex = 0;
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+	}
+
 	while (!m_DrawQueue.empty())
 	{
 		m_DrawQueue.front()->draw();
 		m_DrawQueue.pop();
 	}
+
 	SDL_GL_SwapWindow(m_Window);
 }
 

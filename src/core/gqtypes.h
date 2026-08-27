@@ -28,6 +28,7 @@ struct RenderInfo
 {
 	std::queue<RenderObject*>* drawQueue;
 	uint32_t ssboLights;
+	uint32_t* lightIndex;
 };
 
 // Inspired by the SDL_Event type :)

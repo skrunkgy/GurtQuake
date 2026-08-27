@@ -1348,3 +1348,29 @@ Eventually, we want our Light objects to pass their information to our shaders. 
 Ok, after a bunch of back and forth, I landed on simply passing crap as `RenderInfo`. We can add what we need in the future this way, without changing much of the internal structure. I also renamed `RenderQueue` to `DrawQueue`, as this is a more specific name.
 
 At the moment, we only have two lights, and I do want to add different attributes. I also do thing that cramming all attributes together is silly, but I don't know what other way to do this... For now, I will have the Sun as a uniform, and the point lights as a SSBO.
+
+## Debugging issues
+
+At the moment, it seems that our alignment isn't being properly set. I also have no idea what I am doing.
+
+## I FOUND THE SIZE!!!
+
+For the SunLight, it was 32 bytes. I am assuming it is because of the following:
+- The vectors are being tightly packed with everything, and then the actual size of the struct is then rounded up (12 + 12 + 4 = 28, but I guess we need to round up to something of base 16?) in order to test this, I will do a vec2 and a vec2 with a float. this should give me the same result if we are doing 16.
+
+Interesting, a vec2vec2float produces a size of 24. I assume this means that the structs pad the last stuff according to the biggest member. A vec3 goes to vec4, so it pads to something of factor 16. FINALLY FIGURED IT OUT! GOOGLE IS USELESS.
+
+There are a ton of weird gimicks in this. Apparently:
+a vec3vec3 float pads after the first vec3, but doesnt with the second. This is stupid :( We will have to keep note of this when we design our software.
+
+Also, it seems that our alignments for the entire SSBO is 
+```glsl
+layout (binding = 0) buffer Lights
+{
+	SunLight dLight; // 32 bytes
+	nLights; // 16 bytes ????
+	PointLight pLights[]; // 32 * i bytes I think
+};
+```
+
+I will learn about the rules more, but this seems so silly. std430 was supposed to make this easier, but I guess not.

@@ -40,6 +40,12 @@ private:
 		vec3 fillColor;
 		bool running;
 	} m_GlobalState;
+
+	struct
+	{
+		uint32_t lightIndex = 0;
+	} m_Functional; // idk what to call this
+
 	GQObject* m_Tree = nullptr;
 	
 	// Functions to be overwritten
