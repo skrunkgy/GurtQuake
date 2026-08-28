@@ -146,7 +146,7 @@ void App::init()
 	// Set the transform of our hat
 	t_Hat->transform.position = vec3(0, 0.3, 0);
 	t_Hat->transform.rotate_axis(PI / 4, vec3(0.0, 1.0, 0.0));
-	t_Hat->transform.basis = t_Hat->transform.basis * .5;
+	t_Hat->transform.basis *= .5;
 	t_Hat->transform.rotate_axis(PI / 15, vec3(0.0, 0.0, 1.0));
 
 	// Set up light
@@ -154,6 +154,7 @@ void App::init()
 	t_Light->exponent = 2.0;
 	t_Light->color = vec3(1.0, 1.0, 1.0);
 	t_Light->brightness = 5.0;
+	t_Lightbulb->transform.basis *= .5;
 }
 
 void App::loop(float32_t delta)

@@ -1398,3 +1398,105 @@ Just finished my first implementation, and it is quite neat. The idea is simple.
 First, we feed 4 points (with 6 indices), but their positions are all 0. Their UVs are set appropriately to which corner they would be in. In the vertex shader, we calculate where the center of the billboard would be (that 0 vector) in view space, and then simply offset that using the UV coordinate. I also plan to make it so that the x and y transforms dictate the scale as well when we pass it with the model matrix. Pretty cool!
 
 I did not come up with this, but I got the idea from Reddit. I don't like Reddit, but it was a neat idea.
+
+## Future
+
+At the moment, I have two things bothering me: scene creation and organization.
+
+Our `App::init()` definition is beginning to look very big. It would be nice if we can simply just outline what we want to load and properties of them. The problem is that this would take a long time since we would need a way to describe our scene, and be able to intantiate that. There is also the issue of custom objects like our FlyCam, which is technically not an engine default, and would need some way to be loaded and referenced (perhaps a ClassDB? ).
+
+Organization of the code is more about how I want everything to be stored, instantiated, and represented. On the top of my mind, this is mostly about Resources and how they get instantiated, how some GQObjects get instantiated, etc. I need to brainstorm some kind of convention...
+
+- Every Resource can be instantiated with a default constructor, which will provide default things (perhaps OpenGL backend stuff), while the load() file may take some kind of data to interpret and load(?) For now, this data will just be a filepath of itself perhaps.
+- GQObjects can also be default instantiated, since some of them need resources (looking at the Mesh)
+
+For now, I don't really want to think about serialization. I want to see if I can restructure some of the prototypes to be more consistent with what I like. For instance, the Billboard needs a filepath in order to draw its texture, but I want it so that we could load a texture later, or perhaps change it. That means I should also change the way Shaders hold textures, or if they should even hold textures to begin with. Urgh! We will have a look later... I do not want to think about this much more.
+
+# 8/28
+
+I am adding some standards so that I can fix my codebase to probably appease whoever reads it.
+
+## General
+
+Header files must ONLY have declarations. They must not have any definitions. Any function that needs an inlined definition will need an appropriate `.inl` file next to it.
+
+Header files should also move to a separate `include` folder.
+
+Files should be more organized if needed.
+
+## Resources
+
+Resources should NOT have an associated filename. Resources should NOT have code that reads data. Instead, the philosophy goes as follows:
+- Resources can be instantiated without any data.
+- Data is given to Resources
+- Resources call a `load()` function once given data.
+- A ResourceManager will do the heavy lifting of calling data.
+
+All resources should just be a container of data, and not a reference to some data. This means a Texture would hold the data to the image data, or a Shader would hold the source code for it.
+
+Possibly a method to flush out data (after it gets loaded maybe) to save some memory.
+
+### Resource Manager
+
+This will be a class, despite many things being static. This is because it will hold a pool of our resources (an unordered map). The values will be of `string: Resource*` so that other objects can refer to resources through the ResourceManager.
+
+Resources will have "IDs" during storing and retrieved when loading, so I will not worry about such implementation yet. But they will need this "id" string for later.
+
+### Mesh
+
+The Mesh currently is instantiated with MeshData. Even though Mesh is not a resource, it needs somewhat of a Resource (MeshData). This will be an added field.
+
+### Shader
+
+The Shader currently passes a filepath to load, and then has a list of textures to use. This is stinky, as this violates our philosphy of parse data then load. The textures list is also just stinky, as the Shader and Texture should be separate objects.
+
+The Shader will just hold source data. It may reference multiple sources; that is up to implementation.
+
+### Texture
+
+A texture currently holds a filepath, and some variants will hold data about the texture (size, for example). They should instead store pixel data, and some metadata (depending on variant).
+
+The cubemap will store a simple array of 6 of these.
+
+### Default Resources
+
+Things like the billboard and cubemap rely on default shaders. That is fine, but they can create that resource during compile-time through either the resource manager or an inline. For example, a Billboard can either do something like
+```cpp
+m_Shader->source = Billboard::shader_code;
+```
+or 
+```cpp
+ResourceManager::load_data(m_Shader, "%shaders/billboard.gqshader");
+```
+
+## Main logic overhaul
+
+So far, our app does the following tasks:
+- Sets up the window, some OpenGL context states, and generates some buffer objects
+- Runs `init()` which initializes our scene
+- In our loop, does a transform pass, logic pass, input pass, then pre-render pass
+- Calls the render function, which goes through the draw queue.
+
+This seems fine, but I may reorder some of it.
+
+### GQObject::traversal()
+
+At the moment, the GQObject is responsible for which functions to call depending on the pass, as well as what to do with that information. While I do think this is an ok system, I fear it looks ugly and seems painful to update. I don't want the GQObject to be responsible for what to call during its traversal, but rather the App be responsible for it. That means the GQObject will be parsing function objects to their traversal. With this traversal, the GQObject should have access to their parent (a nullptr means it is the root!).
+
+This also means eliminating the need for `PokeData`, as the App is now directly responsible for what data to pass and how to call the object's functions, instead of offloading it to our GQObject.
+
+## Serialization
+
+This is more like a layout of how I want basic Serialization to go. Firstly, both GQObject and Resource can be serialized. A scene will store serializations of objects. If an object needs a resource, it will specify the RID needed. Eventually, other Scenes can be referenced to hold a bundle of objects.
+
+If an object needs a Resource that is not loaded, it will ask the Serializer and ResourceManager to fetch and load it into the pool. This also allows Resources to have references to other Resources.
+
+Much like the ResourceManager and Resources, objects should have methods for loading and storing its data to and from a bytestream. The Serializer will be responsible for converting each object in the Scene to text (or a binary file), and then be able to instantiate such scene again.
+
+Serialization would also support Scenes within Scenes, as they just spawn another tree.
+
+Currently no idea of how custom classes will be done.
+
+### Possible implementation
+
+The bytestream will need to keep track of children, which is the GQObject's responsibility. Each derived class will need to be responsible for the data they hold, and responsible for calling upward the serialization. There might be a macro for this, but I will have to see.

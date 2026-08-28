@@ -162,6 +162,16 @@ struct alignas(T) Matrix
 		}
 		return result;
 	}
+	
+	template <typename U>
+	Matrix<r, c, T>& operator*= (U scalar)
+	{
+		AUTOFOR(i, r)
+		{
+			this->data[i] *= scalar;
+		}
+		return *this;
+	}
 
 	Matrix<c, r, T> transpose()
 	{

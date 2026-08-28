@@ -8,5 +8,5 @@ SceneRoot::SceneRoot() {}
 
 SceneRoot::~SceneRoot()
 {
-    printf("SceneRoot desotryed\n");
+    printf("SceneRoot destroyed\n");
 }
