@@ -17,9 +17,6 @@ public:
 	App(const char* name, unsigned int x, unsigned int y);
 	~App();
 
-	Camera& get_main_cam();
-	void add_to_render_queue(RenderObject*);
-
 	void run();
 	
 private:

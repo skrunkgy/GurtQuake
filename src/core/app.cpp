@@ -85,8 +85,9 @@ void App::run()
 	{	
 		// Perform a traversal to set global transforms of child nodes
 		m_Tree->m_GlobalTrans = m_Tree->transform;
-		m_Tree->traverse({
-			.type = GQ_TRANSFORM_POKE
+		m_Tree->traverse([](GQObject* node) -> void
+		{
+			node->m_GlobalTrans = node->get_parent()->m_GlobalTrans * node->transform;
 		});
 		
 		// Perform logic traversals, and a custom call to loop()
@@ -94,9 +95,9 @@ void App::run()
 		beforeTime = SDL_GetTicksNS();
 
 		loop(delta * .000000001f);
-		m_Tree->traverse({
-			.type = GQ_LOGIC_POKE,
-			.dt = (delta) * .000000001f
+		m_Tree->traverse([&delta](GQObject* node) -> void
+		{
+			node->_loop(delta * .000000001f);
 		});
 		
 		// Process events, shouldn't matter where we put this
@@ -106,14 +107,13 @@ void App::run()
 		}
 		
 		// Render traversals, and then process the render queue
-		m_Tree->traverse({
-			.type = GQ_RENDER_POKE,
-			.rInfo = 
-				{
-					.drawQueue = &m_DrawQueue,
-					.ssboLights = m_GlobalState.ssboLights,
-					.lightIndex = &m_Functional.lightIndex
-				}
+		m_Tree->traverse([this](GQObject* node) -> void
+		{
+			node->_render({
+				.drawQueue  = &this->m_DrawQueue,
+				.ssboLights =  this->m_GlobalState.ssboLights,
+				.lightIndex = &this->m_Functional.lightIndex,
+			});
 		});
 		render();
 	}
@@ -133,9 +133,9 @@ void App::poll_events(SDL_Event& event)
 			break;
 		// If we have keyboard or mouse inputs, we do input traversal :) For now, we redirect all other events to _input(SDL_Event&)
 		default:
-			m_Tree->traverse({
-				.type = GQ_INPUT_POKE,
-				.event = &event
+			m_Tree->traverse([&event](GQObject* node) -> void
+			{
+				node->_input(event);
 			});
 			break;
 	}
@@ -184,8 +184,9 @@ App::~App()
 	SDL_GL_DestroyContext(m_Context);
 
 	// Free the tree
-	m_Tree->traverse({
-		GQ_DELETE_POKE
+	m_Tree->traverse([](GQObject* node) -> void
+	{
+		delete node;
 	});
 
 	printf("Goodbye!\n");

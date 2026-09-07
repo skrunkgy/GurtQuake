@@ -1500,3 +1500,11 @@ Currently no idea of how custom classes will be done.
 ### Possible implementation
 
 The bytestream will need to keep track of children, which is the GQObject's responsibility. Each derived class will need to be responsible for the data they hold, and responsible for calling upward the serialization. There might be a macro for this, but I will have to see.
+
+# 9/7
+
+I began by updating the App class to remove unnecessary garbage.
+
+I just finished removing PokeData and PokeType implementations. Everything now uses lambdas and the `std::function` stuff. I moved stuff out of `gqobject.h` for any inline stuff.
+
+Next I will work on the Resource base class to separate some stuff out.

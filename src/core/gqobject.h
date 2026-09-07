@@ -5,6 +5,7 @@
 #include <vector>
 #include <queue>
 #include <string>
+#include <functional>
 #include <SDL3/SDL_events.h>
 
 #include "gqtypes.h"
@@ -26,6 +27,7 @@ class GQObject
 {
 private:
 	std::vector<GQObject*> m_Children;
+	GQObject* m_Parent = nullptr;
 	Transform m_GlobalTrans;
 
 public:
@@ -39,14 +41,12 @@ public:
 
 	void add_child(GQObject* child);
 	void pop_child(int index);
-	void traverse(PokeData poke); // Method to perform on each node
+	void traverse(std::function<void(GQObject*)> func); // Method to perform on each node
 	
 	template <typename T>
-	T* get_child(int index)
-	{
-		if (m_Children.size() <= index) return nullptr;
-		return reinterpret_cast<T*>(m_Children[index]);
-	}
+	T* get_child(int index);
+	template <typename T = GQObject>
+	T* get_parent();
 
 	void t_set_global();
 

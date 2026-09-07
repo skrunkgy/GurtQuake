@@ -1,41 +1,25 @@
+#include <functional>
 #include "gqtypes.h"
 #include "gqobject.h"
 
 using namespace gquake;
 
-// Generic traverse function that takes function object
-void GQObject::traverse(PokeData poke)
+// Generic traverse function that takes function pointer
+void GQObject::traverse(std::function<void(GQObject*)> func)
 {
     if (!m_Children.empty())
     {
         for ( GQObject* child : m_Children)
         {
-			// Update global transforms of children
-			if (poke.type == GQ_TRANSFORM_POKE) child->m_GlobalTrans = child->transform * m_GlobalTrans;
-            child->traverse(poke);
+			child->traverse(func);
         }
     }
-	switch (poke.type)
-	{
-		default:
-			return;
-		case GQ_LOGIC_POKE:
-			this->_loop(poke.dt);
-			break;
-		case GQ_RENDER_POKE:
-			this->_render(poke.rInfo);
-			break;
-		case GQ_INPUT_POKE:
-			this->_input(*poke.event);
-			break;
-		case GQ_DELETE_POKE:
-			delete this;
-			break;
-	}
+	func(this);
 }
 
 void GQObject::add_child(GQObject* child)
 {
+	child->m_Parent = this;
 	child->_enter(); // I guess this works, for now?
 	m_Children.push_back(child);
 }
