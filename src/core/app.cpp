@@ -85,11 +85,6 @@ void App::run()
 	{
 		// Perform a traversal to set global transforms of child nodes
 		m_Tree->m_GlobalTrans = m_Tree->transform;
-		m_Tree->traverse([](GQObject* node) -> void
-		{
-			if (!node->get_parent()) return;
-			node->m_GlobalTrans = node->get_parent()->m_GlobalTrans * node->transform;
-		});
 		
 		// Perform logic traversals, and a custom call to loop()
 		float32_t delta = SDL_GetTicksNS() - beforeTime;

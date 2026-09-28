@@ -1515,4 +1515,17 @@ I will not use .inl, but still make the separation clear! There is also a seg fa
 
 Nvm just had to select a thread to backtrace. Cool! It turns out that I just had to check if a parent was null or not. Anyways, back to my plan.
 
+## Too complicated?
 
+I am not too fond of the lambda function stuff. I have been browsing idTech4 source code more, and see how they handle everything.
+
+## ANOTHER RESTRUCTURE!!!
+
+The plan is to scrap the generic visitor model. I want to cater more towards a specific game type, so I can be more strict. At the moment, we are being very open minded with our objects. We have a gqObject that is very generic, and allows a function object to be passed for traversals so that we can do multiple "passes". While this does work, the code looks a bit more sloppy, it relies on a std library (stinky!!), and is more error prone, probably. Also not to mention that more generic makes serialization a bit harder! Here is the plan:
+
+- Resources will still be reworked.
+- GQObject will hold a LOT more things. A model, shader, material parameters perhaps? And a generic process function. Also might rename it to GQActor, as to denote that these should only be entities in the scene.
+- Materials and RenderObjects will not inheret GQObject. They will be standalone components that have raw data
+- Would probably benefit from a singleton-ish object (much like gameLocal, i would call it gqProgramState)
+
+ I might keep Children for actors, as it would be less compuation for setting transforms
