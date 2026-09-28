@@ -1508,3 +1508,11 @@ I began by updating the App class to remove unnecessary garbage.
 I just finished removing PokeData and PokeType implementations. Everything now uses lambdas and the `std::function` stuff. I moved stuff out of `gqobject.h` for any inline stuff.
 
 Next I will work on the Resource base class to separate some stuff out.
+
+# 9/28
+
+I will not use .inl, but still make the separation clear! There is also a seg fault here, so thats not fun. Not sure why, and gdb is giving me a hard time.
+
+Nvm just had to select a thread to backtrace. Cool! It turns out that I just had to check if a parent was null or not. Anyways, back to my plan.
+
+

@@ -82,11 +82,12 @@ void App::run()
 	uint64_t beforeTime = SDL_GetTicksNS();
 
 	while (m_GlobalState.running)
-	{	
+	{
 		// Perform a traversal to set global transforms of child nodes
 		m_Tree->m_GlobalTrans = m_Tree->transform;
 		m_Tree->traverse([](GQObject* node) -> void
 		{
+			if (!node->get_parent()) return;
 			node->m_GlobalTrans = node->get_parent()->m_GlobalTrans * node->transform;
 		});
 		
