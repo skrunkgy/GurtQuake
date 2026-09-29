@@ -1,57 +1,11 @@
 // resource.h || Base class for the Resource class
 
-#pragma once 
+#ifndef GQ_RESOURCE_H
+#define GQ_RESOURCE_H
 
-#include <string>
-
-namespace gquake
+class gqResource 
 {
 
-class Resource 
-{
-
-public:
-
-	friend class App; // The App can set the resource's root
-	
-	Resource() {}
-	Resource(std::string path)
-	{
-		m_filepath = parse_path(path);
-		uid = path;
-	}
-	~Resource() {}
-	
-	inline std::string parse_path(std::string path)
-	{
-		if (path[0] == '$')
-		{
-			return m_root + path.substr(1);
-		}
-		else if (path[0] == '%')
-		{
-			std::string cwd = __FILE__; // current working directory
-			return cwd.substr(0, cwd.find_last_of('/') + 1) + "../" + path.substr(1);
-		}
-		else
-		{
-			printf("No root specififer, assuming file is absolute.\n");
-			return path;
-		}
-	}
-
-	virtual void load() = 0; // For now, every resource must provide a way to load itself
-	inline std::string get_path()
-	{
-		return m_filepath;
-	}
-
-protected:
-	std::string m_filepath; // Total file path...
-
-private:
-	inline static std::string m_root = ""; // Will be root of the resources...
-	std::string uid;
 };
 
-} // namespace gquake
+#endif

@@ -1529,3 +1529,30 @@ The plan is to scrap the generic visitor model. I want to cater more towards a s
 - Would probably benefit from a singleton-ish object (much like gameLocal, i would call it gqProgramState)
 
  I might keep Children for actors, as it would be less compuation for setting transforms
+
+
+## Branch update
+
+I decided to branch this to `rewrite`, and I have a few notes:
+- We will still have children, but this will only be for transforms. There might be a way we can get away with just recursion and going up the chain, but if we have multiple levels then it would create redundancy.
+- lights will be stored in gqWorld
+- I am naming all my classes starting with `gq` to copy id convention. namespaces are overrated, anyways (to any recruiter seeing this, i am definitely joking)
+- game state will be stored in a gqGame, and there will be a singleton called gameLocal. haha
+
+I must go through hell with these declarations, but I think I will manage. A good rule of thumb is to go with declarations first, and then consider implementation. I will probably have to go back to declarations later, and the cycle repeats until I get something good, but outline first.
+
+# 9/29
+
+I will probably rewrite my math library again, or at least reorganize it. I also want to rework the render system...
+
+## Rendering system rewrite
+
+We will probably outsource our rendering system now, instead of the App holding everything. It would hold the context, drawQueue, and other informatoin regarding rendering. We still use a queue for good practice, as we could perhaps use a separate thread.
+
+idEntity may have a gqDrawModel or a visual component of some sorts, which may be derived from something that can be drawn. I would maybe make it a type, just information to give to the renderer. Individual render objects would not be responsible for how they draw themselves. Instead, they could perhaps have flags to allow features! Let us do this.
+
+## Input logic
+
+idSoftware seems to use usercmds or something for input. However, my implementation walked the scene tree and called the object's `_input(...)` for every input the game recieves. I may keep this, as it could be thread safe.
+
+The other way I would do it is have some universal input map. This would keep the states of all keys (or simply direct to SDLs input key). However, lets say we run input handling on one thread and game logic on the other. If input thread is much faster then logic thread, we will miss a key or an event.

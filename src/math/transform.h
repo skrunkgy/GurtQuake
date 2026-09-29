@@ -5,9 +5,6 @@
 #include "math_types.h"
 #include "functions.h"
 
-namespace gquake 
-{
-
 struct Transform 
 {
 	mat3x3 basis;
@@ -43,5 +40,3 @@ struct Transform
 		return result_t;
 	}
 };
-
-} // namespace gquake

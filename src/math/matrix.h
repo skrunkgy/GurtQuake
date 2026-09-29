@@ -8,10 +8,8 @@
 
 #include "qualifier.h"
 #include "../core/utils.h"
-#include "../core/gqtypes.h"
+#include "../core/types.h"
 
-namespace gquake
-{
 
 template<uint32_t r, uint32_t c, typename T>
 struct alignas(T) Matrix
@@ -183,5 +181,3 @@ struct alignas(T) Matrix
 		return result;
 	}
 };
-
-} // namespace gquake

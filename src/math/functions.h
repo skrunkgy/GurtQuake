@@ -4,15 +4,12 @@
 
 #include <cmath>
 
-#include "../core/gqtypes.h"
+#include "../core/types.h"
 #include "../core/utils.h"
 #include "math_types.h"
 #include <stdio.h>
 
 #define GQ_VEC_TEMP template<uint32_t n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
-
-namespace gquake
-{
 
 template<uint32_t n, typename T, typename U>
 T dot(Vector<n, T> a, Vector<n, U> b)
@@ -88,5 +85,3 @@ void print_mat(const Matrix<r, c, float32_t>& m)
 		printf("\n");
 	}
 }
-
-} // namespace gquake

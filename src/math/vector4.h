@@ -9,9 +9,6 @@
 #include "qualifier.h"
 #include "../core/utils.h"
 
-namespace gquake
-{
-
 template<typename T>
 struct alignas(T) Vector<4, T>
 {
@@ -217,5 +214,3 @@ Vector<4, T> operator/ (U scalar, const Vector<4, T>& v)
 {
 	return Vector<4, T>(v.x / scalar, v.y / scalar, v.z / scalar, v.w / scalar);
 }
-
-} // namespace gquake
