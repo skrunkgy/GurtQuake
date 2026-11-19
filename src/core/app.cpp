@@ -88,7 +88,7 @@ void App::run()
 		m_Tree->traverse([](GQObject* node) -> void
 		{
 			if (!node->get_parent()) return;
-			node->m_GlobalTrans = node->get_parent()->m_GlobalTrans * node->transform;
+			node->m_GlobalTrans = node->transform * node->get_parent()->m_GlobalTrans;
 		});
 		
 		// Perform logic traversals, and a custom call to loop()
