@@ -9,16 +9,14 @@
 #include <vector>
 #include "actor.h"
 
+// FIXME: should it inheret gqActor? i dunno!
 class gqWorld : public gqActor
 {
 
 private:
-	// TODO: make two separate arrays for dynamic and static lights?
-	// static lights will be loaded upon level loading, while dynamic lights will be updated regularly
-	std::vector<gqLight> lights;
 
-	// gqSkybox* skybox; // we dont need to do this
-
+	std::vector<gqLight>		lights;
+	gqSkybox*					skybox;
 };
 
 #endif

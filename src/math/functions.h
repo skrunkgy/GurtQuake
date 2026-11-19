@@ -3,13 +3,20 @@
 #pragma once
 
 #include <cmath>
+#include <stdio.h>
 
 #include "../core/types.h"
 #include "../core/utils.h"
-#include "math_types.h"
-#include <stdio.h>
+#include "matrix.h"
+#include "vector3.h"
 
 #define GQ_VEC_TEMP template<uint32_t n, typename T> // may incorporate this in other headers... but just makes it easier on the eyes
+
+template <uint32_t n, typename T>
+struct Vector;
+
+template <uint32_t, uint32_t, typename>
+struct Matrix;
 
 template<uint32_t n, typename T, typename U>
 T dot(Vector<n, T> a, Vector<n, U> b)
@@ -60,7 +67,7 @@ Vector<3, T> rotate_point(Vector<3, T>  point, Vector<3, T> axis, float32_t angl
 	float32_t s = std::sin(angle);
 	float32_t c = std::cos(angle);
 
-	mat3x3 rotation_matrix = 
+	gqMat3 rotation_matrix = 
 		{
 			std::pow(axis.x, 2.0f) * (1.0f - c) + c, axis.x * axis.y * (1.0f - c) - axis.z * s, axis.x * axis.z * (1.0f - c) + axis.y * s,
 			axis.x * axis.y * (1.0f - c) + axis.z * s, std::pow(axis.y, 2.0f) * (1.0f - c) + c, axis.y * axis.z * (1.0f - c) - axis.x * s,

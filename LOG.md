@@ -1551,8 +1551,24 @@ We will probably outsource our rendering system now, instead of the App holding 
 
 idEntity may have a gqDrawModel or a visual component of some sorts, which may be derived from something that can be drawn. I would maybe make it a type, just information to give to the renderer. Individual render objects would not be responsible for how they draw themselves. Instead, they could perhaps have flags to allow features! Let us do this.
 
+The renderer will be responsible for all drawing code. It will also help instantiate render objects maybe? I don't know how I want to do this. If I have the renderer take care of everything, the Skybox will need to be referenced somehow which is a part of the world. I guess we could just parse it to the render queue anyways. I dunno.
+
 ## Input logic
 
 idSoftware seems to use usercmds or something for input. However, my implementation walked the scene tree and called the object's `_input(...)` for every input the game recieves. I may keep this, as it could be thread safe.
 
 The other way I would do it is have some universal input map. This would keep the states of all keys (or simply direct to SDLs input key). However, lets say we run input handling on one thread and game logic on the other. If input thread is much faster then logic thread, we will miss a key or an event.
+
+# 10/1
+
+I need to make a game with this before halloween. I MUST!
+
+I will be using the `FIXME:` tags for future notes. Also, anything related to OpenGL will be prefixed with `gl`, such as VAO and EBO in the `gqRenderModel`.
+
+# 10/3
+
+Who is resposible for who? Only the render systems should be touching the graphics api. The problem is that im not sure how to go about this. I will explore the code more.
+
+It seems that while they have a queue for draw commands (they were WAY ahead of their time), they still just keep a pool of objects that will be drawn lol. I could maybe adapt this. We can have a queue structure called a "command buffer", and we process this stuff later. It seems that id adds a bunch of objects into a draw command, which I guess is cool. However, how do they manage GPU resources in the background? They seem to use a super big buffer, which I don't want to do. Oh well...
+
+They also seem to not use resources, and just hold references to shit. Fascinating. I will also need a new log.md.

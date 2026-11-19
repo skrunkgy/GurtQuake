@@ -5,8 +5,16 @@
 #include <string.h>
 #include <cassert>
 
-#include "qualifier.h"
 #include "../core/utils.h"
+#include "../core/types.h"
+
+template <uint32_t n, typename T>
+struct Vector;
+
+template <uint32_t, uint32_t, typename>
+struct Matrix;
+
+typedef Vector<2, float32_t> gqVec2;
 
 template<typename T>
 struct alignas(T) Vector<2, T>

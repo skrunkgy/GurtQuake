@@ -6,10 +6,11 @@
 #include <string.h>
 #include <initializer_list>
 
-#include "qualifier.h"
 #include "../core/utils.h"
 #include "../core/types.h"
 
+template <uint32_t n, typename T>
+struct Vector;
 
 template<uint32_t r, uint32_t c, typename T>
 struct alignas(T) Matrix
@@ -181,3 +182,7 @@ struct alignas(T) Matrix
 		return result;
 	}
 };
+
+typedef Matrix<2, 2, float32_t> gqMat2;
+typedef Matrix<3, 3, float32_t> gqMat3;
+typedef Matrix<4, 4, float32_t> gqMat4;

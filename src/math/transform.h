@@ -2,27 +2,31 @@
 
 #pragma once 
 
-#include "math_types.h"
 #include "functions.h"
 
-struct Transform 
+#include "vector3.h"
+#include "vector4.h"
+#include "matrix.h"
+
+struct gqTransform 
 {
-	mat3x3 basis;
-	vec3 position;
+	gqMat3 basis;
+	gqVec3 position;
 	
-	Transform(){}
+	gqTransform();
+	~gqTransform();
 
 	
 	// turns all these into a 4x4 transform matrix, left to right scale * rotation * position
-	mat4x4 matrix() const
+	gqMat4 GetMatrix() const
 	{
-		mat4x4 result = basis;
+		gqMat4 result = basis;
 		result[3] = position;
 		result[3].w = 1.0;
-		return mat4x4(result);
+		return gqMat4(result);
 	}
 
-	void rotate_axis(float32_t angle, vec3 axis)
+	void RotateAxis(float32_t angle, gqVec3 axis)
 	{
 		AUTOFOR(i, 3)
 		{
@@ -31,10 +35,10 @@ struct Transform
 	}
 	
 	// A bit ugly, we should write code to convert matrices and vectors to different sizes
-	Transform operator* (const Transform& t)
+	gqTransform operator* (const gqTransform& t)
 	{
-		Transform result_t;
-		mat4x4 result = this->matrix() * t.matrix();
+		gqTransform result_t;
+		gqMat4 result = this->GetMatrix() * t.GetMatrix();
 		result_t.basis = result;
 		result_t.position = result[3];
 		return result_t;

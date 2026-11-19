@@ -6,8 +6,14 @@
 #include <string.h>
 #include <cassert>
 
-#include "qualifier.h"
 #include "../core/utils.h"
+#include "../core/types.h"
+
+template <uint32_t n, typename T>
+struct Vector;
+
+template <uint32_t, uint32_t, typename>
+struct Matrix;
 
 template<typename T>
 struct alignas(T) Vector<3, T>
@@ -205,3 +211,5 @@ Vector<3, T> operator/ (U scalar, const Vector<3, T>& v)
 {
 	return Vector<3, T>(v.x / scalar, v.y / scalar, v.z / scalar);
 }
+
+typedef Vector<3, float32_t> gqVec3;

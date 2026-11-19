@@ -10,4 +10,3 @@
 #include "matrix.h"
 #include "functions.h"
 #include "transform.h"
-#include "math_types.h"
